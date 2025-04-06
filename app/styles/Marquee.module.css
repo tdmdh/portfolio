@@ -1,0 +1,28 @@
+.marqueeContainer{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marquee{
+    width: 100%;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.icon{
+    padding: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+    .marquee{
+        padding: 0.5rem;
+    }
+
+    .icon{
+        padding: 1rem;
+    }
+
+}

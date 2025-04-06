@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --primary-color: #252422;
+  --secondary-color: #403d39;
+  --tertiary-color: #eb5e28;
+  --quaternary-color: #ccc5b9;
+  --quinary-color: #fffcf2;
+  --primary-font: 'Orbitron', sans-serif;
+  --secondary-font: 'Roboto', sans-serif;
+  --border-radius: 1rem;
+
+}
+
+
+body{
+    font-family: 'Orbitron', sans-serif ;
+    background-color: var(--quinary-color);
+    color: var(--primary-color);  
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    scroll-behavior: smooth;  
+}
+
+
+ body::-webkit-scrollbar {
+    display: none;
+
+  }
+  html {
+    scrollbar-gutter: stable;
+  } 
+
