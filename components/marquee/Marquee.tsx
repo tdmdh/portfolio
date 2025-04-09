@@ -1,5 +1,5 @@
 import Marquee from 'react-fast-marquee';
-import styles from '@/styles/Marquee.module.css';
+import styles from '@/app/styles/Marquee.module.css';
 import Image from 'next/image';
 
 const MarqueeDemo = () => {

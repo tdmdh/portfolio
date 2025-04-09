@@ -1,7 +1,8 @@
+"use client"
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import styles from "../../styles/Navbar.module.css";
+import styles from "@/app/styles/Navbar.module.css";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
