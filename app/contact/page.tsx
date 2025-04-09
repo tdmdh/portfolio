@@ -6,17 +6,11 @@ import { motion } from "framer-motion";
 
 
 
-const Contact = () => {
+const ContactPage = () => {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <div>
-          <ContactForm />
-        </div>
-      </motion.div>
+      <div>
+
+      </div>
     );
   };
-  export default Contact; 
+  export default ContactPage; 
