@@ -3,29 +3,25 @@
     display: flex;
     justify-content: center;
     position: sticky;
-    top: 0.8rem; /* slight spacing from the top */
+    top: 0rem; 
     z-index: 1000;
-    pointer-events: none; /* ensures nav blur doesn't block clicks */
-    padding: 0 1rem;
+    pointer-events: none; 
+    
 }
 
 .navbar {
     width: 100%;
-    max-width: 1280px;
-    background-color: var(--quinary-color); /* keep your color */
-    border-radius: 0.5rem;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* floaty shadow */
-    backdrop-filter: blur(10px); /* glass effect */
+    max-width: 1000px;
+    background-color: var(--quinary-color);
+    border-radius: 0rem 0rem 1.7rem 1.7rem; 
+
+    backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     pointer-events: auto;
 }
 
-/* floating lift on hover (optional) */
-.navbar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.25);
-}
+
 
 .navbar ul {
     display: flex;
@@ -37,27 +33,30 @@
 }
 
 .navbar li {
-    padding: 0.5rem 1rem;
+    flex: 1;
+    text-align: center;
+    padding: 1em 0em;
+    position: relative;
 }
 
 .navbar li a {
-    display: block;
-    padding: 0.4rem 2rem;
-    border-radius: 0.5rem;
+    border-radius: 0.8rem;
     text-decoration: none;
     color: var(--primary-color);
     font: 100 1.2rem var(--primary-font);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 0.5rem 1rem;
 }
 
 .navbar li a:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
-.active {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: var(--accent-color, var(--primary-color)); /* optional highlight */
+navbar li a.active {
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 .hamburger {
@@ -74,3 +73,4 @@
     transition: all 0.3s ease;
     border-radius: 1px;
 }
+

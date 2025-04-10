@@ -12,29 +12,7 @@ interface NavbarProps {
   toggleMenu: () => void;
 }
 
-const float = {
-  initial: { y: 0 },
-  animate: {
-    y: [0, -10, 0],
-    transition: {
-      duration: 2,
-      ease: "easeInOut",
-      repeat: Infinity,
-      repeatType: "loop",
-      repeatDelay: 1,
-      type: "spring",
-      stiffness: 100,
-      damping: 10,
-      when: "afterChildren",
-      staggerChildren: 0.5,
-      staggerDirection: 1,
-      delayChildren: 0.5,
-      delay: 0.5,
-      bounce: 0.5,
-      
-    },
-  },
-};
+
 
 
 const NAV_LINKS = [
@@ -45,6 +23,8 @@ const NAV_LINKS = [
   { name: "Contact", path: "/contact" },
 ];
 
+
+
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -54,12 +34,33 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <div className={styles.nav_container}>
+    <motion.div 
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      exit={{ opacity: 0, y: -50 }}
+      className={styles.nav_container}>
+      <svg
+            className={styles.topLeft}
+            width="30"
+            height="30"
+            viewBox="0 0 50 50"
+            fill="#f2e9e4"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ transform: 'rotate(90deg)' }} 
+          >
+            <g transform="scale(2)" clipPath="url(#clip0_310_2)">
+              <path d="M30 0H0V30C0 13.431 13.431 0 30 0Z" fill="#f2e9e4" />
+            </g>
+            <defs>
+              <clipPath id="clip0_310_2">
+                <rect width="30" height="30" fill="#f2e9e4" />
+              </clipPath>
+            </defs>
+          </svg>
       <motion.nav 
       className={styles.navbar}
-      initial="initial"
-      animate="animate"
-      variants={float}
+          
       >
         <ul
           className={`${styles.navLinks} ${isMenuOpen ? styles.showMenu : ""}`}
@@ -69,6 +70,7 @@ const Navbar: React.FC = () => {
             <li key={item.path}>
               <Link
                 href={item.path}
+              
                 className={`${styles.navLink} ${
                   pathname.startsWith(item.path) ? styles.active : ""
                 }`}
@@ -89,7 +91,25 @@ const Navbar: React.FC = () => {
           <span></span>
         </div>
       </motion.nav>
-    </div>
+      <svg
+            className={styles.bottomRight}
+            width="30"
+            height="30"
+            viewBox="0 0 50 50"
+            fill="#f2e9e4"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ transform: 'rotate(360deg)' }} 
+          >
+            <g transform="scale(2)" clipPath="url(#clip0_310_2)">
+              <path d="M30 0H0V30C0 13.431 13.431 0 30 0Z" fill="#f2e9e4" />
+            </g>
+            <defs>
+              <clipPath id="clip0_310_2">
+                <rect width="30" height="30" fill="#f2e9e4" />
+              </clipPath>
+            </defs>
+          </svg>
+    </motion.div>
   );
 };
 

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-
-@tailwind base;
-@tailwind components;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400..900&display=swap');
+@tailwind utilities;
+@import "tailwindcss/preflight";
 @tailwind utilities;
 
 :root{
@@ -20,7 +20,9 @@
 body{
     overflow: hidden;
     scroll-behavior: smooth;  
-  background-color: var(--primary-color);
+    background-color: var(--primary-color);
+    margin: 0;
+    padding: 0; 
 }
 
 
