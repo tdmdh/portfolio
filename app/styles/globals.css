@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400..900&display=swap');
+
 @tailwind utilities;
 @import "tailwindcss/preflight";
 @tailwind utilities;
@@ -20,10 +21,18 @@
 body{
     overflow: hidden;
     scroll-behavior: smooth;  
-    background-color: var(--primary-color);
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 10%,    /* #050a30 - Deep navy */
+        var(--secondary-color) 50%,   /* #9a8c98 - Soft gray-purple */
+        var(--quinary-color) 100%    /* #f2e9e4 - Light beige */
+      );
     margin: 0;
     padding: 0; 
 }
+
+
+
 
 
  body::-webkit-scrollbar {
