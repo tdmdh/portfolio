@@ -21,7 +21,7 @@
 body{
     overflow: hidden;
     scroll-behavior: smooth;  
-    background: linear-gradient(
+    background:  linear-gradient(
         135deg,
         var(--primary-color) 10%,    /* #050a30 - Deep navy */
         var(--secondary-color) 50%,   /* #9a8c98 - Soft gray-purple */

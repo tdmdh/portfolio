@@ -127,12 +127,12 @@
   
   .activeIndicator {
     position: absolute;
-    bottom: -5px;
+    bottom: -7px;
     left: 50%;
     transform: translateX(-50%);
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
   }
   

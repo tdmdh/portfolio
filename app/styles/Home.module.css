@@ -70,6 +70,7 @@
     box-shadow: 0 4px 15px rgba(74, 78, 105, 0.2);
     position: relative;
     overflow: hidden;
+    z-index: 1000;
   }
   
   .ctaButton::after {
@@ -112,6 +113,22 @@
     background-color: #4a4e69;
     border-radius: 50%;
   }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(32%, 1fr));
+    gap: 1rem;
+
+  }
+  .container > div {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(74, 78, 105, 0.2);
+    transition: transform 0.3s ease;
+
+  }
+
   
   @media (max-width: 768px) {
     .heroTitle {
@@ -133,3 +150,4 @@
     }
   }
   
+

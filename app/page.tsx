@@ -2,9 +2,9 @@
 // import { useSpring, animated, config } from "@react-spring/web"
 import { motion, useScroll, useTransform, Variants } from "framer-motion"
 import styles from "./styles/Home.module.css"
-// import React, { useEffect } from "react"
 import React from "react"
 import Magnet from "@/components/magnet/Magnet"
+import { AnimatedList } from "@/components/ui/animated-list"
 
 const Home: React.FC = () => {
 
@@ -132,6 +132,33 @@ const Home: React.FC = () => {
             />
           </motion.div>
         </motion.div>
+        <motion.div
+          className={styles.container}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}  
+          transition={{ delay: 2.5, duration: 0.5 }}
+          exit={{ opacity: 0, y: 50 }}
+          >
+            <div>
+            </div>
+            <div>
+              <AnimatedList
+      
+                className={styles.animatedList}
+              >
+                <p>sd</p>
+                <p>sd</p>
+                <p>sd</p>
+                <p>sd</p>
+                <p>sd</p>
+                <p>sd</p>
+              </AnimatedList>
+
+            </div>
+              <div>
+
+              </div>
+          </motion.div>
     </div>
   )
 }
