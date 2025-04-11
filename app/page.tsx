@@ -84,7 +84,7 @@ const Home: React.FC = () => {
                   custom={i}
                   variants={letterVariants}
                   initial="hidden"
-                  animate="visible"
+                  animate="visible" 
                   className={styles.animatedLetter}
                   style={{ display: "inline-block" }}
                   whileHover={{ scale: 1.05 }}
@@ -145,8 +145,7 @@ const Home: React.FC = () => {
             <div>
             </div>
             <div>
-              <AnimatedListDemo className={styles.animatedList} />
-            </div>
+             </div>
               <div>
 
               </div>

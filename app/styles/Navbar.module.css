@@ -116,16 +116,35 @@
   
   .progressBar {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 0;
+    left: 2;
     right: 0;
-    height: 2px;
-    background: var(--primary-color);
+    height: 7px;
+    border-radius: 5px;
+    width: 90%;
+    margin: 0 auto;
+    background: linear-gradient(
+      90deg,
+      var(--secondary-color) 0%,
+      #6366f1 50%,
+      var(--secondary-color) 100%
+    );
+    background-size: 200% 100%;
     transform-origin: 0%;
     z-index: 10;
+    animation: gradientMove 2s linear infinite;
+  }
+
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
   }
   
-  .activeIndicator {
+  /* .activeIndicator {
     position: absolute;
     bottom: -7px;
     left: 50%;
@@ -134,5 +153,27 @@
     height: 5px;
     border-radius: 50%;
     background-color: var(--secondary-color);
-  }
+  } */
   
+.topright{
+  transform: rotate(90deg);
+}
+
+.navbarBlur {
+  backdrop-filter: blur(10px);
+  background-color: #f2e9e4a8; 
+  transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+}
+
+
+.navbarBlur:hover {
+  backdrop-filter: blur(20px);
+  background-color: #f2e9e4; 
+}
+
+.navbarBlur:hover .navbar li a {
+  color: var(--quinary-color);
+}
+.navbarBlur:hover .navbar li a:hover {
+  color: var(--quinary-color);
+}

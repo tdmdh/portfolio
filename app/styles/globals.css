@@ -19,7 +19,6 @@
 
 
 body{
-    overflow: hidden;
     scroll-behavior: smooth;  
     background:  linear-gradient(
         135deg,

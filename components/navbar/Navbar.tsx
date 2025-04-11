@@ -1,5 +1,5 @@
 "use client"
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, use } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import styles from "@/app/styles/Navbar.module.css"
@@ -14,21 +14,35 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
+  const [scrollYValue, setScrollYValue] = useState(0);
+  const [isBlurred, setIsBlurred] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isMounted, setIsMounted] = useState(false)
   const pathname = usePathname()
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
   const { scrollY } = useScroll()
+   
+useEffect(() => {
+  const unsubscribe = scrollY.on("change", (latest) => {
+    setScrollYValue(latest);
+    setIsBlurred(latest > 50);
+  });
+  return () => unsubscribe();
+}, [scrollY]);
+
   const navHeight = useTransform(scrollY, [0, 100], ["67px", "70px"])
-  const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "0rem 0rem 1rem 1rem"])
+  const navWidth = useTransform(scrollY, [0, 100], ["100vw", "40vw"])
+  const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
   const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
+  const navPadding = useTransform(scrollY, [0, 100], ["0rem 0rem", "0rem 0.5rem"])
+  const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
+  const navOpacity = useTransform(scrollY, [0, 100], [1, 0])
+  const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
+
+
+
   
-  // Calculate scroll height only on client side
   const scrollMax = isMounted ? document.body.scrollHeight - window.innerHeight : 1000
   const progressScaleX = useTransform(scrollY, [0, scrollMax], [0, 1])
 
@@ -40,8 +54,13 @@ export default function Navbar() {
     setIsMenuOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
+
   if (!isMounted) {
-    return null // Or a loading placeholder
+    return null 
   }
 
   return (
@@ -51,33 +70,54 @@ export default function Navbar() {
       transition={{ duration: 0.8 }}
       className={styles.nav_container}
     >
-      <svg
+      <motion.svg
         className={styles.topLeft}
         width="30"
         height="30"
         viewBox="0 0 60 60"
         fill="#f2e9e4"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ transform: "rotate(90deg)" }}
+        style={{ transform: "rotate(180deg)", opacity: navOpacity }}
+        animate={{
+          y: scrollYValue > 50 ? -20 : 0,
+          opacity: scrollYValue > 50 ? 0 : 1,
+          rotate: 90,
+        }}
+        transition={{ duration: 0.4 }}
+        
       >
-        <g transform="scale(2)" clipPath="url(#clip0_310_2)">
-          <path d="M30 0H0V30C0 13.431 13.431 0 30 0Z" fill="#f2e9e4" />
+        <g transform="scale(2)"  clipPath="url(#clip0_310_2)">
+          <path 
+           d="M30 0H0V30C0 16.431 16.431 0 30 0Z" fill="#f2e9e4" />
         </g>
         <defs>
           <clipPath id="clip0_310_2">
             <rect width="30" height="30" fill="#f2e9e4" />
           </clipPath>
         </defs>
-      </svg>
+      </motion.svg>
 
       <motion.nav
-        className={styles.navbar}
+        className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
         style={{
           height: navHeight,
           boxShadow: navBoxShadow,
           borderRadius: navBorderRadius,
+          padding: navPadding,
+          zIndex: navZIndex,
+          width: navWidth,
+          y: navTranslateY,
         }}
         aria-label="Main navigation"
+        initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
+        animate={{
+          backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)",
+          opacity: isBlurred ? 0.8 : 1,
+        }}
+        transition={{
+          backdropFilter: { duration: 0.3 },
+          opacity: { duration: 0.3 },
+        }}
       >
         {/* Progress indicator */}
         <motion.div
@@ -141,15 +181,21 @@ export default function Navbar() {
         </button>
       </motion.nav>
 
-      <svg
-        className={styles.bottomRight}
+      <motion.svg
+        className={styles.topRight}
         width="30"
         height="30"
         viewBox="0 0 60 60"
         fill="#f2e9e4"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ transform: "rotate(360deg)" }}
-      >
+        style={{ transform: "rotate(360deg)", opacity: navOpacity }}
+        animate={{
+          y: scrollY.get() > 50 ? -20 : 0,
+          opacity: scrollY.get() > 50 ? 0 : 1,
+        }}
+        transition={{ duration: 0.4 }}
+        
+              >
         <g transform="scale(2)" clipPath="url(#clip0_310_2)">
           <path d="M30 0H0V30C0 13.431 13.431 0 30 0Z" fill="#f2e9e4" />
         </g>
@@ -158,7 +204,7 @@ export default function Navbar() {
             <rect width="30" height="30" fill="#f2e9e4" />
           </clipPath>
         </defs>
-      </svg>
+      </motion.svg>
     </motion.div>
   )
 }
