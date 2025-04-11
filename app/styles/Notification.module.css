@@ -1,0 +1,116 @@
+.notificationCard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 1rem auto;
+    padding: 1.2rem 1.5rem;
+    border-radius: 1.3rem;
+    background-color: var(--quinary-color);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.08),         /* outer base shadow */
+      inset 0 -8px 12px rgba(0, 0, 0, 0.1);    /* soft inner bottom shadow */
+    transition: transform 0.25s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  /* Optional subtle hover effect */
+  .notificationCard:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.12),          /* slightly stronger outer shadow */
+      inset 0 -8px 12px rgba(0, 0, 0, 0.1);     /* maintain the inner shadow */
+  }
+  
+  
+  
+  .notificationCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .notificationHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .iconCircle {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--quinary-color);
+  }
+  
+  .notificationContent {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  .notificationTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .titleText {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+  
+  .timeText {
+    font-size: 0.8rem;
+    color: var(--tertiary-color);
+  }
+  
+  .description {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+    margin-top: 0.25rem;
+  }
+  
+  .badge {
+    background-color: var(--tertiary-color);
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-left: auto;
+  }
+  
+  .unreadDot {
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .dismissButton {
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+
+
+  .dismissButton:hover {
+    background-color: var(--secondary-color);
+  }
+  

@@ -10,38 +10,49 @@ import React, {
 } from "react";
 
 export function AnimatedListItem({ children }: { children: React.ReactNode }) {
-  const animations = {
-    initial: { scale: 0, opacity: 0 },
-    animate: { scale: 1, opacity: 1, originY: 0 },
-    exit: { scale: 0, opacity: 0 },
-    transition: { type: "spring", stiffness: 350, damping: 40 },
-  };
-
   return (
-    <motion.div {...animations} layout className="mx-auto w-full">
+    <motion.div
+      initial={{ y: 30, opacity: 0, scale: 0.95 }}
+      animate={{ y: 0, opacity: 1, scale: 1 }}
+      exit={{ y: -20, opacity: 0, scale: 0.9 }} 
+      transition={{
+        type: "spring",
+        stiffness: 250,
+        damping: 20,
+      }}
+      layout
+      className="mx-auto w-full"
+    >
       {children}
     </motion.div>
   );
 }
 
+
+
 export interface AnimatedListProps extends ComponentPropsWithoutRef<"div"> {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  visibleCount?: number;
+
 }
 
 export const AnimatedList = React.memo(
-  ({ children, className, delay = 1000, ...props }: AnimatedListProps) => {
+  ({
+    children,
+    className,
+    delay = 1500,
+    visibleCount = 5,
+    ...props
+  }: AnimatedListProps) => {
     const [index, setIndex] = useState(0);
-    const childrenArray = useMemo(
-      () => React.Children.toArray(children),
-      [children],
-    );
+    const childrenArray = useMemo(() => React.Children.toArray(children), [children]);
 
     useEffect(() => {
       if (index < childrenArray.length - 1) {
         const timeout = setTimeout(() => {
-          setIndex((prevIndex) => (prevIndex + 1) % childrenArray.length);
+          setIndex((prevIndex) => prevIndex + 1);
         }, delay);
 
         return () => clearTimeout(timeout);
@@ -49,15 +60,12 @@ export const AnimatedList = React.memo(
     }, [index, delay, childrenArray.length]);
 
     const itemsToShow = useMemo(() => {
-      const result = childrenArray.slice(0, index + 1).reverse();
-      return result;
-    }, [index, childrenArray]);
+      const shown = childrenArray.slice(0, index + 1);
+      return shown.slice(-visibleCount).reverse(); 
+    }, [index, childrenArray, visibleCount]);
 
     return (
-      <div
-        className={cn(`flex flex-col items-center gap-4`, className)}
-        {...props}
-      >
+      <div className={cn("flex flex-col items-center gap-4", className)} {...props}>
         <AnimatePresence>
           {itemsToShow.map((item) => (
             <AnimatedListItem key={(item as React.ReactElement).key}>
@@ -67,7 +75,9 @@ export const AnimatedList = React.memo(
         </AnimatePresence>
       </div>
     );
-  },
+  }
 );
+
+
 
 AnimatedList.displayName = "AnimatedList";

@@ -5,6 +5,7 @@ import styles from "./styles/Home.module.css"
 import React from "react"
 import Magnet from "@/components/magnet/Magnet"
 import { AnimatedList } from "@/components/ui/animated-list"
+import { AnimatedListDemo } from "@/components/animatedList/AnimatedList"
 
 const Home: React.FC = () => {
 
@@ -68,6 +69,8 @@ const Home: React.FC = () => {
                   animate="visible"
                   className={styles.animatedLetter}
                   style={{ display: "inline-block" }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {letter}
                 </motion.span>
@@ -136,24 +139,13 @@ const Home: React.FC = () => {
           className={styles.container}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}  
-          transition={{ delay: 2.5, duration: 0.5 }}
+          transition={{ delay: 0, duration: 0.5 }}
           exit={{ opacity: 0, y: 50 }}
           >
             <div>
             </div>
             <div>
-              <AnimatedList
-      
-                className={styles.animatedList}
-              >
-                <p>sd</p>
-                <p>sd</p>
-                <p>sd</p>
-                <p>sd</p>
-                <p>sd</p>
-                <p>sd</p>
-              </AnimatedList>
-
+              <AnimatedListDemo className={styles.animatedList} />
             </div>
               <div>
 
