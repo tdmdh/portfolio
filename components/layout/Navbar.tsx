@@ -1,5 +1,5 @@
 "use client"
-import { useState, useCallback, useEffect, use } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import styles from "@/app/styles/Navbar.module.css"
@@ -14,22 +14,19 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
-  const [scrollYValue, setScrollYValue] = useState(0);
   const [isBlurred, setIsBlurred] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [isMounted, setIsMounted] = useState(false)
   const pathname = usePathname()
 
   const { scrollY } = useScroll()
-   
-useEffect(() => {
-  const unsubscribe = scrollY.on("change", (latest) => {
-    setScrollYValue(latest);
-    setIsBlurred(latest > 50);
-  });
-  return () => unsubscribe();
-}, [scrollY]);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.on("change", (latest) => {
+      setIsBlurred(latest > 50)
+    })
+    return () => unsubscribe()
+  }, [scrollY])
 
   const navHeight = useTransform(scrollY, [0, 100], ["67px", "70px"])
   const navWidth = useTransform(scrollY, [0, 100], ["100vw", "40vw"])
@@ -40,10 +37,7 @@ useEffect(() => {
   const navOpacity = useTransform(scrollY, [0, 100], [1, 0])
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
 
-
-
-  
-  const scrollMax = isMounted ? document.body.scrollHeight - window.innerHeight : 1000
+  const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 1000
   const progressScaleX = useTransform(scrollY, [0, scrollMax], [0, 1])
 
   const toggleMenu = useCallback(() => {
@@ -53,15 +47,6 @@ useEffect(() => {
   useEffect(() => {
     setIsMenuOpen(false)
   }, [pathname])
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  
-
-  if (!isMounted) {
-    return null 
-  }
 
   return (
     <motion.div
@@ -77,18 +62,16 @@ useEffect(() => {
         viewBox="0 0 60 60"
         fill="#f2e9e4"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ transform: "rotate(180deg)", opacity: navOpacity }}
+        style={{ transform: "rotate(180deg)" }}
         animate={{
-          y: scrollYValue > 50 ? -20 : 0,
-          opacity: scrollYValue > 50 ? 0 : 1,
+          y: isBlurred ? -20 : 0,
+          opacity: isBlurred ? 0 : 1,
           rotate: 90,
         }}
         transition={{ duration: 0.4 }}
-        
       >
-        <g transform="scale(2)"  clipPath="url(#clip0_310_2)">
-          <path 
-           d="M30 0H0V30C0 16.431 16.431 0 30 0Z" fill="#f2e9e4" />
+        <g transform="scale(2)" clipPath="url(#clip0_310_2)">
+          <path d="M30 0H0V30C0 16.431 16.431 0 30 0Z" fill="#f2e9e4" />
         </g>
         <defs>
           <clipPath id="clip0_310_2">
@@ -119,7 +102,6 @@ useEffect(() => {
           opacity: { duration: 0.3 },
         }}
       >
-        {/* Progress indicator */}
         <motion.div
           className={styles.progressBar}
           style={{
@@ -137,14 +119,15 @@ useEffect(() => {
             <li key={item.path}>
               <Link
                 href={item.path}
-                className={`${styles.navLink} ${pathname.startsWith(item.path) ? styles.active : ""}`}
+                className={`${styles.navLink} ${pathname === item.path ? styles.active : ""}`}
                 onClick={() => setIsMenuOpen(false)}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onFocus={() => setHoveredIndex(index)}
+                prefetch={true}
               >
                 <motion.span
                   className={styles.linkText}
-                  whileHover={{ scale: 1 }}
+                  whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   {item.name}
@@ -160,7 +143,7 @@ useEffect(() => {
                     }}
                   />
                 )}
-                {pathname.startsWith(item.path) && (
+                {pathname === item.path && (
                   <motion.div className={styles.activeIndicator} layoutId="activeIndicator" />
                 )}
               </Link>
@@ -188,14 +171,13 @@ useEffect(() => {
         viewBox="0 0 60 60"
         fill="#f2e9e4"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ transform: "rotate(360deg)", opacity: navOpacity }}
+        style={{ transform: "rotate(360deg)" }}
         animate={{
-          y: scrollY.get() > 50 ? -20 : 0,
-          opacity: scrollY.get() > 50 ? 0 : 1,
+          y: isBlurred ? -20 : 0,
+          opacity: isBlurred ? 0 : 1,
         }}
         transition={{ duration: 0.4 }}
-        
-              >
+      >
         <g transform="scale(2)" clipPath="url(#clip0_310_2)">
           <path d="M30 0H0V30C0 13.431 13.431 0 30 0Z" fill="#f2e9e4" />
         </g>

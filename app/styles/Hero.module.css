@@ -1,0 +1,160 @@
+
+.main {
+    margin-top: 3rem;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .heroText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font: 100% var(--primary-font);
+    color: var(--quinary-color);
+  }
+  
+  .heroTitle {
+    font-size: clamp(4rem, 10vw, 15rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+  }
+
+  .mLetter{
+    color: var(--quinary-color);
+    font-family: var(--tertiary-font);
+    font-size: clamp(4rem, 10vw, 15rem);
+    font-weight: 700;
+  }
+
+  
+  
+  .heroSubtitle {
+    font-size: clamp(1rem, 5vw, 2rem);
+    margin: 0.5rem 0;
+    color: var(--secondary-color);
+  }
+
+ 
+
+
+ .ctaButton {
+    padding: 0.8rem 2rem;
+    background-color: var(--tertiary-color);
+    color: var(--quinary-color);
+    border-radius: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(74, 78, 105, 0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  
+  .ctaButton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+  
+  .ctaButton:hover::after {
+    transform: translateX(100%);
+  }
+  
+  .scrollIndicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+  
+  .scrollDot {
+    width: 6px;
+    height: 6px;
+    background-color: #4a4e69;
+    border-radius: 50%;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(32%, 1fr));
+    gap: 1rem;
+
+  }
+  
+  .sloganContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font: 100% var(--primary-font);
+    color: var(--quinary-color);
+  }
+
+.slogan {
+    margin-top: 1rem;
+    font-size: clamp(1rem, 5vw, 2rem);
+    width: 60%;
+    color: var(--quinary-color);
+    text-shadow: 0 0 0.75rem rgba(124, 124, 124, 0.5);
+    margin-bottom: 1rem;
+}
+
+ 
+@media (max-width: 768px) {
+    .heroTitle {
+      font-size: 3rem;
+    }
+  
+    .heroSubtitle {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .heroTitle {
+      font-size: 2.5rem;
+    }
+  
+    .heroSubtitle {
+      font-size: 1rem;
+    }
+  }
+  
+
