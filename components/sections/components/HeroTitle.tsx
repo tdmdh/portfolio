@@ -5,8 +5,10 @@ import { motion, Variants } from "framer-motion"
 import styles from "@/app/styles/Hero.module.css"
 
 interface HeroTitleProps {
-  title: string
+  title?: string
   subtitle?: string 
+  isBlurred?: boolean
+  className?: string
 }
 
 const letterVariants: Variants = {
@@ -23,7 +25,7 @@ const letterVariants: Variants = {
 }
 
 const HeroTitle: React.FC<HeroTitleProps> = ({ title, subtitle }) => {
-  const titleLetters = title.split("")
+  const titleLetters = title ? title.split("") : []
   const subtitleLetters = subtitle ? subtitle.split("") : []
 
   return (
@@ -39,12 +41,16 @@ const HeroTitle: React.FC<HeroTitleProps> = ({ title, subtitle }) => {
             custom={i}
             viewport={{ once: false, amount: 0.2 }}
           >
-            {letter === "M" ? <span className={styles.mLetter}>M</span> : letter}
+            {(letter === "m" || letter === "M") ? (
+              <span className={styles.mLetter}>{letter}</span>
+            ) : (
+              letter
+            )}
           </motion.span>
         ))}
       </h1>
       {subtitle && (
-        <h2 className={styles.heroSubtitle}>
+        <h2 >
           {subtitleLetters.map((letter, i) => (
             <motion.span
               key={`subtitle-${i}`}

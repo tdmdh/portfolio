@@ -1,6 +1,6 @@
 
 .main {
-    margin-top: 3rem;
+    margin-top: 10vh;
     position: relative;
     width: 100%;
     min-height: 100vh;
@@ -40,7 +40,7 @@
   }
 
   .mLetter{
-    color: var(--quinary-color);
+    color: var(--tertiary-color);
     font-family: var(--tertiary-font);
     font-size: clamp(4rem, 10vw, 15rem);
     font-weight: 700;
@@ -51,45 +51,53 @@
   .heroSubtitle {
     font-size: clamp(1rem, 5vw, 2rem);
     margin: 0.5rem 0;
-    color: var(--secondary-color);
+    color: var(--quinary-color);
   }
 
  
 
-
- .ctaButton {
-    padding: 0.8rem 2rem;
-    background-color: var(--tertiary-color);
-    color: var(--quinary-color);
-    border-radius: 1.3rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(74, 78, 105, 0.2);
+  .ctaWarp {
     position: relative;
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-family: var(--primary-font);
+    color: var(--quinary-color);
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    border-radius: 2rem;
+    cursor: pointer;
     overflow: hidden;
-    z-index: 1000;
+    z-index: 0;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    isolation: isolate;
   }
   
-  .ctaButton::after {
-    content: "";
+  .ctaWarp::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+    top: 0; left: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--secondary-color) 0%, transparent 80%);
+    opacity: 0;
+    transform: scale(1.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
   }
   
-  .ctaButton:hover::after {
-    transform: translateX(100%);
+  .ctaWarp:hover::before {
+    opacity: 0.2;
+    transform: scale(1);
   }
+  
+  .ctaWarp:hover {
+    color: var(--primary-color);
+    border-color: var(--quaternary-color);
+    box-shadow: 0 0 15px var(--secondary-color);
+  }
+  
   
   .scrollIndicator {
     position: absolute;
@@ -131,7 +139,7 @@
     margin-top: 1rem;
     font-size: clamp(1rem, 5vw, 2rem);
     width: 60%;
-    color: var(--quinary-color);
+    color: var(--tertiary-color);
     text-shadow: 0 0 0.75rem rgba(124, 124, 124, 0.5);
     margin-bottom: 1rem;
 }

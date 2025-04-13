@@ -19,15 +19,14 @@
 
 
 body{
-    scroll-behavior: smooth;  
-    background:  linear-gradient(
-        135deg,
-        var(--primary-color) 10%,    /* #050a30 - Deep navy */
-        var(--secondary-color) 50%,   /* #9a8c98 - Soft gray-purple */
-        var(--quinary-color) 100%    /* #f2e9e4 - Light beige */
-      );
-    margin: 0;
-    padding: 0; 
+  scroll-behavior: smooth;
+
+  background: 
+  linear-gradient(135deg, var(--primary-color) 0%, var(--quinary-color) 50%, var(--secondary-color) 100%);
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  margin: 0;
+  padding: 0; 
 }
 
 
