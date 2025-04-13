@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import styles from "@/app/styles/Navbar.module.css"
+import styles from "@/app/styles/Contact.module.css"
 
 import { forwardRef } from "react"
 
@@ -24,13 +24,11 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
     return (
         <motion.div
         ref={ref}
-        className={styles.contact_container}
+        className={styles.main}
         initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
         animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)", opacity: isBlurred ? 0.8 : 1 }}
         transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
         >
-        <h2>Contact Me</h2>
-        <p>If you would like to get in touch, feel free to reach out!</p>
         </motion.div>
     )
     }

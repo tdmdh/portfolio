@@ -9,6 +9,8 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { forwardRef } from "react"
 import HeroTitle from "../components/HeroTitle"
+import { TopCorners } from "@/components/sections/components/Topcorners"
+import { TextReveal } from "@/components/sections/components/TextReveal"
 
 const About = forwardRef<HTMLDivElement>((props, ref) => {
     const { scrollY } = useScroll()
@@ -16,9 +18,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     const pathname = usePathname()
     
     const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 1000
-    const progressScaleX = useTransform(scrollY, [0, scrollMax], [0, 1])
 
-    // Animation variants
     const containerVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: { 
@@ -57,10 +57,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
             variants={containerVariants}
         >
             <motion.div 
-                className={styles.progressBar} 
-                style={{ scaleX: progressScaleX, transformOrigin: "left" }} 
-            />
-            <motion.div 
                 className={styles.aboutContainer}
                 variants={containerVariants}
             >
@@ -80,21 +76,24 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
                         subtitle="Who am I?"
                     />
                 </motion.div>
-                <motion.div 
-                    className={styles.aboutContent}
-                    variants={itemVariants}
-                >
+                <div className={styles.cornersContainer} >
                     <motion.div 
-                        className={styles.textContainer}
+                        className={styles.aboutContent}
                         variants={itemVariants}
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 300 }}
                     >
-                        <p className={styles.aboutText}>
-                            I am a passionate computer science student with a keen interest in web development and artificial intelligence. I love exploring new technologies and applying them to real-world problems. My goal is to create innovative solutions that make a positive impact on people's lives.
-                        </p>
+                        <motion.div 
+                            className={styles.textContainer}
+                            variants={itemVariants}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        >
+                                <TextReveal 
+                                className={styles.textReveal}>
+                                    dfsgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsd
+                                </TextReveal>
+                        </motion.div>
                     </motion.div>
-                </motion.div>
+
+                </div>
             </motion.div>
         </motion.div>
     )

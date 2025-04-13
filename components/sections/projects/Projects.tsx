@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import styles from "@/app/styles/Navbar.module.css"
+import styles from "@/app/styles/Projects.module.css"
+
 import { useInView } from "framer-motion"
 import { forwardRef } from "react"
 
