@@ -1,9 +1,12 @@
 .main{
+    padding-top: 12vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: first baseline;
     height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, var(--quinary-color) 1%, var(--quinary-color) 50%, var(--secondary-color) 100%);
 }
 
 .title{
@@ -27,27 +30,96 @@
     justify-content: center;
 }
 
-.textContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font: 400 1.2rem var(--primary-font);
-    color: var(--secondary-color);
-    padding: 2rem;
-}
 
-.textReveal{
-    margin: 0.5rem 0;
-    line-height: 1.5;
-    font-size: clamp(1rem, 2vw, 2rem);
-    font-family: var(--secondary-font);
-    color: var(--quinary-color);
-}
 
 .cornersContainer{
     position: relative;
     display: flex;
     flex-direction: column;
     overflow:visible;
+}
+
+
+/* TextReveal.module.css */
+.revealContainer {
+    position: relative;
+    height: 200vh; 
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1rem;
+    background-color: transparent;
+  }
+  
+
+  .textContainer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.25rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+  
+
+  @media (min-width: 768px) {
+    .textContainer {
+      padding: 2rem;
+      font-size: 1.875rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .textContainer {
+      padding: 2.5rem;
+      font-size: 2.25rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .textContainer {
+      font-size: 3rem;
+    }
+  }
+
+.wordWrapper {
+  position: relative;
+  margin: 0 0.25rem;
+  white-space: pre;
+}
+
+.trail {
+  position: absolute;
+  opacity: 0.3;
+}
+
+/* Trail and Highlight color classes */
+
+.textTrail {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.textHighlight {
+  color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .textTrail {
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  .textHighlight {
+    color: #ffffff;
+  }
+}
+
+.word {
+  position: relative;
 }

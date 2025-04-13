@@ -37,9 +37,9 @@ export function SectionProvider({ children }: { children: React.ReactNode}){
     }
 
     const sections = [
-        { name : "Home", id: "hero", ref: heroRef },
-        { name : "About", id: "about", ref: aboutRef },
         { name : "Projects", id: "projects", ref: projectsRef },
+        { name : "About", id: "about", ref: aboutRef },
+        { name : "Home", id: "hero", ref: heroRef },
         { name : "Skills", id: "skills", ref: skillsRef },
         { name : "Contact", id: "contact", ref: contactRef }
     ]

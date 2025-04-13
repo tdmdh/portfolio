@@ -3,8 +3,6 @@
 import React from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import styles from "@/app/styles/About.module.css"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
 import { useEffect } from "react"
 import { useState } from "react"
 import { forwardRef } from "react"
@@ -15,9 +13,7 @@ import { TextReveal } from "@/components/sections/components/TextReveal"
 const About = forwardRef<HTMLDivElement>((props, ref) => {
     const { scrollY } = useScroll()
     const [isBlurred, setIsBlurred] = useState(false)
-    const pathname = usePathname()
     
-    const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 1000
 
     const containerVariants = {
         hidden: { opacity: 0, y: 50 },
@@ -39,7 +35,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
             transition: { duration: 0.5 }
         }
     }
-
     useEffect(() => {
         const unsubscribe = scrollY.on("change", (latest) => {
         setIsBlurred(latest > 50)
@@ -72,9 +67,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
                     className={styles.subtitle}
                     variants={itemVariants}
                 >
-                    <HeroTitle
-                        subtitle="Who am I?"
-                    />
                 </motion.div>
                 <div className={styles.cornersContainer} >
                     <motion.div 
@@ -85,11 +77,13 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
                             className={styles.textContainer}
                             variants={itemVariants}
                             transition={{ type: "spring", stiffness: 300 }}
+                            
                         >
-                                <TextReveal 
-                                className={styles.textReveal}>
-                                    dfsgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsdfgsd
-                                </TextReveal>
+                            <TextReveal
+                            >
+                                    I'm a passionate software engineer with a knack for creating innovative solutions. I thrive on challenges and love to learn new technologies. My goal is to build applications that make a positive impact on people's lives.
+                            
+                            </TextReveal>
                         </motion.div>
                     </motion.div>
 

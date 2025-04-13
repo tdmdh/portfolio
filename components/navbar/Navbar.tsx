@@ -21,11 +21,10 @@ export default function Navbar() {
     return () => unsubscribe()
   }, [scrollY])
 
-  const navHeight = useTransform(scrollY, [0, 100], ["60px", "60px"])
-  const navWidth = useTransform(scrollY, [0, 100], ["100vw", "35vw"])
+  const navHeight = useTransform(scrollY, [0, 100], ["30px", "30px"])
+  const navWidth = useTransform(scrollY, [0, 100], ["100vw", "50vw"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
   const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
-  const navPadding = useTransform(scrollY, [0, 100], ["0rem 0rem", "0rem 0.5rem"])
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
   const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 1000
@@ -49,14 +48,22 @@ export default function Navbar() {
 
       <motion.nav
         className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
-        style={{ height: navHeight, boxShadow: navBoxShadow, borderRadius: navBorderRadius, padding: navPadding, zIndex: navZIndex, width: navWidth, y: navTranslateY }}
         aria-label="Main navigation"
         initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
         animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)", opacity: isBlurred ? 0.8 : 1 }}
+        exit={{ backdropFilter: "blur(0px)", opacity: 0 }}
         transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
+        style={{ height: navHeight, boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY }}
       >
-        <motion.div className={styles.progressBar} style={{ scaleX: progressScaleX, transformOrigin: "left" }} />
-        <NavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
+        <motion.div
+         className={styles.progressBar} 
+         style={{ scaleX: progressScaleX, transformOrigin: "left"  }} 
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.5 }}
+         />
+        <NavLinks
+         isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
         <Hamburger isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
       </motion.nav>
 

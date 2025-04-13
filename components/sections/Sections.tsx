@@ -7,8 +7,7 @@ import Skills from "@/components/sections/skills/Skills";
 import Contact from "@/components/sections/contact/Contact";
 import About from "@/components/sections/about/About";
 import { useSectionRefs } from "@/context/section-context";
-import styles from "@/app/styles/Home.module.css";
-
+import styles from "@/app/styles/Sections.module.css";
 const Sections = () => {
   const { refs } = useSectionRefs();
   const { heroRef, aboutRef, projectsRef, skillsRef, contactRef } = refs;

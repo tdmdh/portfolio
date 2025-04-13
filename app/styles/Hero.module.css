@@ -3,7 +3,7 @@
     margin-top: 10vh;
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -49,7 +49,10 @@
   
   
   .heroSubtitle {
-    font-size: clamp(1rem, 5vw, 2rem);
+    font-size: clamp(1rem, 5vw, 1rem);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 1rem;
     margin: 0.5rem 0;
     color: var(--quinary-color);
   }
@@ -93,7 +96,6 @@
   }
   
   .ctaWarp:hover {
-    color: var(--primary-color);
     border-color: var(--quaternary-color);
     box-shadow: 0 0 15px var(--secondary-color);
   }
