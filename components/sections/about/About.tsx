@@ -73,18 +73,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
                         className={styles.aboutContent}
                         variants={itemVariants}
                     >
-                        <motion.div 
-                            className={styles.textContainer}
-                            variants={itemVariants}
-                            transition={{ type: "spring", stiffness: 300 }}
-                            
-                        >
-                            <TextReveal
-                            >
-                                    I'm a passionate software engineer with a knack for creating innovative solutions. I thrive on challenges and love to learn new technologies. My goal is to build applications that make a positive impact on people's lives.
-                            
-                            </TextReveal>
-                        </motion.div>
                     </motion.div>
 
                 </div>

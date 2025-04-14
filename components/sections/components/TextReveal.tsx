@@ -11,6 +11,7 @@ import {
   FC,
   ReactNode,
   useMemo,
+  useEffect
 } from "react";
 
 import styles from "@/app/styles/About.module.css"; 
@@ -30,6 +31,10 @@ export const TextReveal: FC<TextRevealProps> = ({
   speed = 1,
   ...props
 }) => {
+
+
+
+
   const { scrollYProgress } = useScroll();
 
   if (typeof children !== "string") {
@@ -37,6 +42,8 @@ export const TextReveal: FC<TextRevealProps> = ({
   }
 
   const units = useMemo(() => children.split(" "), [children]);
+
+
 
   return (
     <div className={styles.revealContainer}>

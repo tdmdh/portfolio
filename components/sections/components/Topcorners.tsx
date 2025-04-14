@@ -13,6 +13,7 @@ interface TopCornersProps {
   className?: string
   color?: string
   size?: number
+  
 }
 
 export const TopCorners = ({
