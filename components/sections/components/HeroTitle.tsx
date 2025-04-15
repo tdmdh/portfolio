@@ -5,6 +5,8 @@ import { motion, Variants } from "framer-motion"
 import styles from "@/app/styles/Hero.module.css"
 
 interface HeroTitleProps {
+  text?: string
+  children? : string
   title?: string
   subtitle?: string 
   isBlurred?: boolean
@@ -24,9 +26,10 @@ const letterVariants: Variants = {
   }),
 }
 
-const HeroTitle: React.FC<HeroTitleProps> = ({ title, subtitle }) => {
+const HeroTitle: React.FC<HeroTitleProps> = ({ title, subtitle, text }) => {
   const titleLetters = title ? title.split("") : []
   const subtitleLetters = subtitle ? subtitle.split("") : []
+  const textLetters = text ? text.split("") : []
 
   return (
     <div className={styles.heroContainer}>
@@ -65,6 +68,23 @@ const HeroTitle: React.FC<HeroTitleProps> = ({ title, subtitle }) => {
             </motion.span>
           ))}
         </h2>
+      )}
+      {text && (
+        <p>
+          {textLetters.map((letter, i) => (
+            <motion.span
+            key={`text-${i}`}
+            className={styles.textLetters}
+            variants={letterVariants}
+            initial="hidden"
+            whileInView="visible"
+            custom={i + textLetters.length}
+            viewport={{once: false, amount: 0.2}}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </p>
       )}
     </div>
   )

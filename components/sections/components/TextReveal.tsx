@@ -1,70 +1,49 @@
 "use client";
 
-import {
-  motion,
-  MotionValue,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import {
-  ComponentPropsWithoutRef,
-  FC,
-  ReactNode,
-  useMemo,
-  useEffect
-} from "react";
+import { motion, MotionValue, useScroll, useTransform } from "motion/react";
+import { ComponentPropsWithoutRef, FC, ReactNode, useRef } from "react";
 
-import styles from "@/app/styles/About.module.css"; 
+import { cn } from "@/app/utils/lib/utils";
 
 export interface TextRevealProps extends ComponentPropsWithoutRef<"div"> {
   children: string;
-  trailColor?: string;
-  highlightColor?: string;
-  speed?: number;
 }
 
-export const TextReveal: FC<TextRevealProps> = ({
-  children,
-  className,
-  trailColor = "textTrail",
-  highlightColor = "textHighlight",
-  speed = 1,
-  ...props
-}) => {
-
-
-
-
-  const { scrollYProgress } = useScroll();
+export const TextReveal: FC<TextRevealProps> = ({ children, className }) => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
 
   if (typeof children !== "string") {
     throw new Error("TextReveal: children must be a string");
   }
 
-  const units = useMemo(() => children.split(" "), [children]);
-
-
+  const words = children.split(" ");
 
   return (
-    <div className={styles.revealContainer}>
-      <div className={styles.sticky}>
-        <div className={styles.textContainer}>
-          {units.map((unit, i) => {
-            const start = (i * speed) / units.length;
-            const end = start + speed / units.length;
+    <div ref={targetRef} className={cn("relative z-0 h-[200vh]", className)}>
+      <div
+        className={
+          "sticky top-0 mx-auto flex h-[50%] max-w-4xl items-center bg-transparent px-[1rem] py-[5rem]"
+        }
+      >
+        <span
+          ref={targetRef}
+          className={
+            "flex flex-wrap p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl"
+          }
+        >
+          {words.map((word, i) => {
+            const start = i / words.length;
+            const end = start + 1 / words.length;
             return (
-              <Word
-                key={i}
-                progress={scrollYProgress}
-                range={[start, end]}
-                trailColor={trailColor}
-                highlightColor={highlightColor}
-              >
-                {unit}
+              <Word key={i} progress={scrollYProgress} range={[start, end]}>
+                {word}
               </Word>
             );
           })}
-        </div>
+        </span>
       </div>
     </div>
   );
@@ -74,26 +53,16 @@ interface WordProps {
   children: ReactNode;
   progress: MotionValue<number>;
   range: [number, number];
-  trailColor: string;
-  highlightColor: string;
 }
 
-const Word: FC<WordProps> = ({
-  children,
-  progress,
-  range,
-  trailColor,
-  highlightColor,
-}) => {
+const Word: FC<WordProps> = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1]);
-  const y = useTransform(progress, range, [10, 0]);
-
   return (
-    <span className={styles.wordWrapper}>
-      <span className={`${styles.trail} ${trailColor}`}>{children}</span>
+    <span className="xl:lg-3 relative mx-1 lg:mx-1.5">
+      <span className="absolute opacity-30">{children}</span>
       <motion.span
-        style={{ opacity, y }}
-        className={`${styles.word} ${highlightColor}`}
+        style={{ opacity: opacity }}
+        className={"text-black dark:text-white"}
       >
         {children}
       </motion.span>

@@ -2,8 +2,8 @@
     padding-top: 15vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: first baseline;
+    align-items: center;
     height: 100vh;
     width: 100%;
     background: linear-gradient(135deg, var(--quinary-color) 1%, var(--quinary-color) 50%, var(--secondary-color) 100%);
@@ -21,105 +21,19 @@
     padding: 0 1rem;
 }
 
-
-.aboutContent{
+.aboutContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-
-
-.cornersContainer{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow:visible;
+.aboutContent {
+    width: 50%;
+    color: var(--secondary-color);
+    font: 400 clamp(1rem, 5vw, 2rem) var(--secondary-font);
+    text-align: center;
+    margin-top: 3rem;
 }
 
-
-.revealContainer {
-  position: relative;
-  height: 450vh; 
-}
-
-
-  .sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 1rem;
-    background-color: transparent;
-  }
-  
-
-  .textContainer {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1.25rem;
-    font-weight: bold;
-    font-size: 1.5rem;
-    max-width: 64rem;
-    margin: 0 auto;
-  }
-  
-
-  @media (min-width: 768px) {
-    .textContainer {
-      padding: 2rem;
-      font-size: 1.875rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .textContainer {
-      padding: 2.5rem;
-      font-size: 2.25rem;
-    }
-  }
-  
-  @media (min-width: 1280px) {
-    .textContainer {
-      font-size: 3rem;
-    }
-  }
-
-.wordWrapper {
-  position: relative;
-  margin: 0 0.25rem;
-  white-space: pre;
-}
-
-.trail {
-  position: absolute;
-  opacity: 0.3;
-}
-
-/* Trail and Highlight color classes */
-
-.textTrail {
-  color: rgba(0, 0, 0, 0.2);
-}
-
-.textHighlight {
-  color: #000000;
-}
-
-@media (prefers-color-scheme: dark) {
-  .textTrail {
-    color: rgba(255, 255, 255, 0.2);
-  }
-
-  .textHighlight {
-    color: #ffffff;
-  }
-}
-
-.word {
-  position: relative;
-}
