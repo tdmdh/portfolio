@@ -15,7 +15,6 @@
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 12; 
-    
   }
 
   .linkText {
@@ -179,8 +178,6 @@
   }
 
   .navbarBlur {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     background-color: var(--quinary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
@@ -188,7 +185,6 @@
 
 
   .navbarBlur:hover {
-    backdrop-filter: blur(20px);
     background-color: #f2e9e4; 
   }
 

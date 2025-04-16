@@ -7,7 +7,6 @@ type SectionRefs = {
     heroRef: React.RefObject<HTMLDivElement | null>
     aboutRef: React.RefObject<HTMLDivElement | null>
     projectsRef: React.RefObject<HTMLDivElement | null>
-    skillsRef: React.RefObject<HTMLDivElement | null>
     contactRef: React.RefObject<HTMLDivElement | null>
 };
 
@@ -25,14 +24,12 @@ export function SectionProvider({ children }: { children: React.ReactNode}){
     const heroRef = useRef<HTMLDivElement>(null)
     const aboutRef = useRef<HTMLDivElement>(null)
     const projectsRef = useRef<HTMLDivElement>(null)
-    const skillsRef = useRef<HTMLDivElement>(null)
     const contactRef = useRef<HTMLDivElement>(null)
 
     const refs ={
         heroRef,
         aboutRef,
         projectsRef,
-        skillsRef,
         contactRef
     }
 
@@ -40,7 +37,6 @@ export function SectionProvider({ children }: { children: React.ReactNode}){
         { name : "Projects", id: "projects", ref: projectsRef },
         { name : "About", id: "about", ref: aboutRef },
         { name : "Home", id: "hero", ref: heroRef },
-        { name : "Skills", id: "skills", ref: skillsRef },
         { name : "Contact", id: "contact", ref: contactRef }
     ]
 

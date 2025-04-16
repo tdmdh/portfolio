@@ -34,7 +34,7 @@ export default function Navbar() {
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev)
   }, [])
-
+ 
   useEffect(() => {
     setIsMenuOpen(false)
   }, [pathname])
@@ -51,8 +51,8 @@ export default function Navbar() {
         className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
         aria-label="Main navigation"
         initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
-        animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)", opacity: isBlurred ? 0.8 : 1 }}
-        exit={{ backdropFilter: "blur(0px)", opacity: 0 }}
+        animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)"}}
+        exit={{ backdropFilter: "blur(0px)", opacity: 1 }}
         transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
         style={{ height: navHeight, boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition }}
       >

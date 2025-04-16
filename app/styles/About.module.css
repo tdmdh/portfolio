@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: first baseline;
     align-items: center;
-    height: 100vh;
+    height: 200vh;
     width: 100%;
     background: linear-gradient(135deg, var(--quinary-color) 1%, var(--quinary-color) 50%, var(--secondary-color) 100%);
 }
@@ -30,10 +30,12 @@
 }
 
 .aboutContent {
+    margin: 0 auto;
     width: 50%;
     color: var(--secondary-color);
     font: 400 clamp(1rem, 5vw, 2rem) var(--secondary-font);
     text-align: center;
     margin-top: 3rem;
 }
+
 
