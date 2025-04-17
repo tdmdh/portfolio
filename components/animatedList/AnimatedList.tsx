@@ -55,7 +55,6 @@ const Notification = ({
   description,
   icon,
   time,
-  color,
   isUnread = false,
   category = "Reminder",
 }: NotificationProps) => {
@@ -63,7 +62,7 @@ const Notification = ({
     <div className={styles.notificationCard}>
       {isUnread && <div className={styles.unreadDot} />}
       <div className={styles.notificationHeader}>
-        <div className={styles.iconCircle} style={{ backgroundColor: color }}>
+        <div className={styles.iconCircle}>
           {icon}
         </div>
         <div className={styles.notificationContent}>

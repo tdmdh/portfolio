@@ -29,7 +29,7 @@
     right: 0;
     bottom: 0;
     background: var(--secondary-color);
-    border-radius: 0.8rem;
+    border-radius: 1rem;
     z-index: 1; 
   }
 

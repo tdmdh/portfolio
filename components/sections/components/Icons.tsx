@@ -5,36 +5,8 @@ import { OrbitControls, Html } from "@react-three/drei";
 import { Suspense } from "react";
 
 const slugs = [
-  "typescript",
-  "javascript",
-  "dart",
-  "java",
-  "react",
-  "flutter",
-  "android",
-  "html5",
-  "css3",
-  "nodedotjs",
-  "express",
-  "nextdotjs",
-  "prisma",
-  "amazonaws",
-  "postgresql",
-  "firebase",
-  "nginx",
-  "vercel",
-  "testinglibrary",
-  "jest",
-  "cypress",
-  "docker",
-  "git",
-  "jira",
-  "github",
-  "gitlab",
-  "visualstudiocode",
-  "androidstudio",
-  "sonarqube",
-  "figma",
+  "typescript", "javascript", "react", 
+  "html5", "css3", "prisma", "vercel", "git", "github","figma",
 ];
 
 function getSphereCoords(count: number, radius: number) {
@@ -59,7 +31,7 @@ function getSphereCoords(count: number, radius: number) {
 const IconTag = ({ slug, position }: { slug: string; position: [number, number, number] }) => {
   const url = `https://cdn.simpleicons.org/${slug}`;
   return (
-    <Html position={position} transform distanceFactor={8}>
+    <Html position={position} transform distanceFactor={25}>
       <img src={url} alt={slug} width={24} height={24} />
     </Html>
   );
@@ -69,12 +41,17 @@ export const IconCloud3D = () => {
   const positions = getSphereCoords(slugs.length, 2.5);
 
   return (
-    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+    <Canvas camera={{ position: [5, 5, 5], fov: 90 }}>
       <ambientLight intensity={0.6} />
       <directionalLight position={[5, 5, 5]} />
       <Suspense fallback={null}>
         {slugs.map((slug, i) => (
-          <IconTag key={slug} slug={slug} position={positions[i]} />
+          <mesh
+            key={slug}
+            position={positions[i] as [number, number, number]}
+          >
+            <IconTag slug={slug} position={positions[i] as [number, number, number]} />
+          </mesh>
         ))}
       </Suspense>
       <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.5} />

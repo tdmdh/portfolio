@@ -39,3 +39,10 @@
 }
 
 
+.mySkillContainer{
+    margin-top: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

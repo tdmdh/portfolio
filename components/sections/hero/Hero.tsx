@@ -18,7 +18,6 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
   return (
     <div
       ref={ref}
-      style={{ height: "100vh", overflow: "hidden" }}
       className={styles.main}>
       <motion.div
         className={styles.hero}
