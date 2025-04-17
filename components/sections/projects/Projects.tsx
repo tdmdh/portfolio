@@ -16,9 +16,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
         <motion.div
             ref={ref}
             className={styles.main}
-            initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
-            animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)", opacity: isBlurred ? 0.8 : 1 }}
-            transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
         >
             <h2>Projects</h2>
             <p>Here are some of my projects!</p>

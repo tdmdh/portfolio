@@ -22,7 +22,7 @@ export default function Navbar() {
   }, [scrollY])
 
   const navHeight = useTransform(scrollY, [0, 100], ["60px", "60px"])
-  const navWidth = useTransform(scrollY, [0, 100], ["100vw", "45rem"])
+  const navWidth = useTransform(scrollY, [0, 100], ["100vw", "40rem"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
   const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])

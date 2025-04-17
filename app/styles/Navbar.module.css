@@ -9,7 +9,6 @@
     position: relative;
     border-radius: 0.8rem;
     padding: 0.5rem 2rem;
-    font: 400 1.2rem var(--primary-font);
     color: var(--primary-color);
     background: transparent;
     cursor: pointer;
@@ -53,7 +52,7 @@
     background-color: var(--quinary-color);
     padding: 1rem 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 58.5rem;
+    max-width: 43rem;
   }
     
     /* .topright .topLeft{
@@ -88,7 +87,7 @@
     border-radius: 0.8rem;
     text-decoration: none;
     color: var(--primary-color);
-    font: 400 1.2rem var(--primary-font);
+    font: bold 1.2rem var(--primary-font);
     font-size: 1.2rem;
     transition: color 0.3s ease; 
     display: inline-block;
@@ -138,6 +137,7 @@
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
   }
+
   
   .progressBar {
     position: absolute;
@@ -145,7 +145,7 @@
     left: 2;
     right: 0;
     height: 7px;
-    border-radius: 20rem;
+    border-radius: 90%;
     width: 90%;
     margin: 0 auto;
     background: linear-gradient(

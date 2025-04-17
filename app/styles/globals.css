@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Carattere&family=Mrs+Sheppards&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
 
 
 @import "tailwindcss";
@@ -13,7 +14,7 @@
   --tertiary-color: #9a8c98;
   --quaternary-color: #c9ada7;
   --quinary-color: #f2e9e4;
-  --primary-font: 'Jura', sans-serif;
+  --primary-font: 'Madimi One', sans-serif;
   --secondary-font: 'Roboto', sans-serif;
   --tertiary-font: 'Carattere', cursive;
   --border-radius: 1rem;

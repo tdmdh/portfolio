@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import styles from "@/app/styles/Hero.module.css"
 import { useSectionRefs } from "@/context/section-context"
-
+import { motion } from "framer-motion"
 
 interface HeroProps {
   title?: string 
@@ -35,15 +35,22 @@ export default function Cta({ title, subtitle, isBlurred, className }: HeroProps
 
   return (
     <section ref={refs.heroRef}>
-      {/* Hero content here */}
-        <button
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.button
           ref={buttonRef}
           className={styles.ctaWarp}
           onClick={scrollToProjects}
           onMouseMove={handleMouseMove}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           Explore The Galaxy
-        </button>
+        </motion.button>
+      </motion.div>
     </section>
   )
 }
