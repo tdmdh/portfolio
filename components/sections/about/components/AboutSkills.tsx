@@ -13,12 +13,12 @@ export default function AboutSkills({ isBlurred, showIcon, setShowIcon }: {
       <motion.div
         className={styles.title}
         animate={{ scale: [0.9, 1], opacity: [0, 1] }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.1 }}
       >
         <HeroTitle
           isBlurred={isBlurred}
           animationDuration={5}
-          animationDelay={0.5}
+          animationDelay={0.1}
           animationType="letter"
           trigger="inView"
           title="My Skills"
@@ -34,7 +34,7 @@ export default function AboutSkills({ isBlurred, showIcon, setShowIcon }: {
           animate={{ opacity: 1 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
-          <IconCloud3D />
+          {/* <IconCloud3D /> */}
         </motion.div>
       )}
     </div>

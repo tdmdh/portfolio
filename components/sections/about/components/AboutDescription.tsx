@@ -8,7 +8,7 @@ export default function AboutDescription({ isBlurred }: { isBlurred: boolean }) 
       className={styles.aboutContent}
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8, delay: 0.3 }}
+      transition={{ duration: 0.1, delay: 0.3 }}
     >
       <HeroTitle
         isBlurred={isBlurred}

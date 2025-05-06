@@ -22,11 +22,11 @@ export default function AboutIntro({ isBlurred }: { isBlurred: boolean }) {
         className={styles.title}
         variants={itemVariants}
         animate={{ scale: [0.9, 1], opacity: [0, 1] }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.1 }}
       >
         <HeroTitle
           isBlurred={isBlurred}
-          animationDelay={0.5}
+          animationDelay={0.1}
           animationType="letter"
           trigger="inView"
           animationDuration={5}
