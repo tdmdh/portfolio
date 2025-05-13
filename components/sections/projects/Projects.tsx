@@ -25,4 +25,4 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
 
 Projects.displayName = "Projects" 
 
-export default Projects 
+export default Projects  

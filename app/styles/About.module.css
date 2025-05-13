@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: first baseline;
     align-items: center;
-    height: 200vh;
+    height: 100%;
     width: 100%;
     background: linear-gradient(135deg, var(--quinary-color) 1%, var(--quinary-color) 50%, var(--secondary-color) 100%);
 }
