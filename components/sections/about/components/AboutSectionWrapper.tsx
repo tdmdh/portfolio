@@ -18,7 +18,6 @@ const AboutSectionWrapper = forwardRef<HTMLElement, AboutSectionProps>(({ childr
           else (ref as React.MutableRefObject<HTMLElement | null>).current = el
         }
       }}
-      className={styles.main}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}

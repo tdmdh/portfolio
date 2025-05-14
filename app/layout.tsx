@@ -4,6 +4,7 @@ import "@/app/styles/globals.css"
 import styles from "@/app/styles/Layout.module.css"
 import Navbar from "@/components/navbar/Navbar"
 import { SectionProvider } from "@/context/section-context";
+import SchoolBtn from "./school/components/Schoolbtn"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <SectionProvider>
           <Navbar />
+          <SchoolBtn />
           <div className={styles.main}>
             <main className={styles.pageContent}>{children}</main>
           </div>

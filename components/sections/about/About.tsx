@@ -6,6 +6,7 @@ import AboutSectionWrapper from "@/components/sections/about/components/AboutSec
 import AboutIntro from "@/components/sections/about/components/AboutIntro";
 import AboutDescription from "@/components/sections/about/components/AboutDescription";
 import AboutSkills from "@/components/sections/about/components/AboutSkills";
+import styles from "@/app/styles/About.module.css"
 
 const About = forwardRef<HTMLDivElement>((props, ref) => {
   const [isBlurred, setIsBlurred] = useState(false);
@@ -20,7 +21,10 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
   }, [scrollY]);
 
   return (
-    <div ref={ref}>
+    <div 
+    ref={ref}
+        className={styles.main}
+      >
       <AboutSectionWrapper
         variants={{
           hidden: { opacity: 0, y: 100 },
@@ -37,11 +41,11 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
       >
         <AboutIntro isBlurred={isBlurred} />
         <AboutDescription isBlurred={isBlurred} />
-        <AboutSkills
+        {/* <AboutSkills
           isBlurred={isBlurred}
           showIcon={showIcon}
           setShowIcon={setShowIcon}
-        />
+        /> */}
       </AboutSectionWrapper>
     </div>
   );

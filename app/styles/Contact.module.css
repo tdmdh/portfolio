@@ -2,7 +2,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: first baseline;
-    height: 100vh;
-    padding: 5rem;
+    justify-content: flex-start;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: linear-gradient(
+        45deg,
+        var(--quinary-color) 1%,
+        var(--quinary-color) 50%,
+        var(--secondary-color) 100%
+    );
 }

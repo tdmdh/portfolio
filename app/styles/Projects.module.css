@@ -3,12 +3,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    color: var(--quinary-color);
 }
 
 .main h2{
     font-size: 2rem;
     margin-bottom: 20px;
     color: #333;
-} 
+}  
+
+.title{
+    color: var(--quinary-color);
+}
+
+.subTitle{
+    color: var(--quinary-color);
+    width: 70%;
+    text-align: center;
+    font-size:2rem;
+}

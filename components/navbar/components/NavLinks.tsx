@@ -19,6 +19,8 @@ export default function NavLinks({
 
   const { scrollY } = useScroll()
 
+  const isActive = 
+
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
       setIsScrolled(latest > 50)
@@ -27,44 +29,46 @@ export default function NavLinks({
   }, [scrollY])
 
   const NavLinksStyle = {
-    height: isScrolled ? "70px" : "67px",
     borderRadius: isScrolled ? "2rem" : "3rem",
     zIndex: isScrolled ? 10 : 0,
   }
 
-  
-  
 
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-      const currentPosition = window.scrollY + 100
-      
+      setIsScrolled(window.scrollY > 70);
+      const currentPosition = window.scrollY;
+  
       for (const section of sections) {
-        const el = section.ref.current
+        const el = section.ref.current;
         if (el) {
-          const { offsetTop, offsetHeight } = el
-          if (currentPosition >= offsetTop && currentPosition < offsetTop + offsetHeight) {
-            setActiveId(section.id)
-            break
+          const offsetTop = el.offsetTop;
+          const sectionHeight = window.innerHeight;
+          
+          if (currentPosition >= offsetTop && currentPosition < offsetTop + sectionHeight) {
+            setActiveId(section.id);
+            break;
           }
         }
       }
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [sections])
-
+    };
+  
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections]);
+  
+  
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
-        requestAnimationFrame(() => {
-          const y = ref.current!.getBoundingClientRect().top + window.scrollY - 70;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        })
+      const y = ref.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
-    closeMenu()
-  }
+    closeMenu();
+  };
+  
+  
+  
 
 
   return (

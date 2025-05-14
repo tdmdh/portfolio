@@ -41,7 +41,6 @@
     top: 0rem;
     z-index: 1000;
     pointer-events: auto; 
-
   }
   
   .navbar {
@@ -98,7 +97,7 @@
   .navbar li button:hover {
     color: var(--quinary-color);
   }
-  
+
  
 
   

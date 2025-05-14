@@ -21,7 +21,7 @@ export default function Navbar() {
   }, [scrollY])
 
   const navHeight = useTransform(scrollY, [0, 100], ["60px", "60px"])
-  const navWidth = useTransform(scrollY, [0, 100], ["100vw", "70rem"])
+  const navWidth = useTransform(scrollY, [0, 100], ["80rem", "48rem"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
   const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
@@ -53,7 +53,7 @@ export default function Navbar() {
         animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)"}}
         exit={{ backdropFilter: "blur(0px)", opacity: 1 }}
         transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
-        style={{ height: navHeight, boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition }}
+        style={{ height: navHeight, boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, }}
       >
         <motion.div
          className={styles.progressBar} 

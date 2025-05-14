@@ -6,9 +6,9 @@ import styles from "@/app/styles/Projects.module.css"
 
 import { useInView } from "framer-motion"
 import { forwardRef } from "react"
+import HeroTitle from "../components/HeroTitle"
 
 const Projects = forwardRef<HTMLDivElement>((props, ref) => {
-    const [isBlurred, setIsBlurred] = useState(false)
 
     
 
@@ -17,8 +17,12 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
             ref={ref}
             className={styles.main}
         >
-            <h2>Projects</h2>
-            <p>Here are some of my projects!</p>
+            <HeroTitle title="My project"  className={styles.title} />
+            <HeroTitle text="
+
+          As a new developer, I haven’t built many projects yet, but I’m currently working on Leornian — a platform designed to make learning more enjoyable and productive."
+          className={styles.subTitle}
+          />
         </motion.div>
     )
 });
