@@ -22,10 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <SectionProvider>
           <Navbar />
-        </SectionProvider>
           <div className={styles.main}>
             <main className={styles.pageContent}>{children}</main>
           </div>
+        </SectionProvider>
       </body>
     </html>
   )

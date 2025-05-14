@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, } from "framer-motion"
 import styles from "@/app/styles/Navbar.module.css"
 import { useSectionRefs } from "@/context/section-context"
 
@@ -30,7 +30,6 @@ export default function NavLinks({
     height: isScrolled ? "70px" : "67px",
     borderRadius: isScrolled ? "2rem" : "3rem",
     zIndex: isScrolled ? 10 : 0,
-    padding: isScrolled ? "0rem 0.5rem" : "0rem 1rem",
   }
 
   
@@ -41,7 +40,7 @@ export default function NavLinks({
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
       const currentPosition = window.scrollY + 100
-
+      
       for (const section of sections) {
         const el = section.ref.current
         if (el) {
@@ -53,18 +52,20 @@ export default function NavLinks({
         }
       }
     }
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [sections])
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
-      const y = ref.current.getBoundingClientRect().top + window.scrollY - 70
-      window.scrollTo({ top: y, behavior: "smooth" })
+        requestAnimationFrame(() => {
+          const y = ref.current!.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        })
     }
     closeMenu()
   }
+
 
   return (
     <motion.ul
