@@ -2,10 +2,8 @@
 import React from "react"
 import { forwardRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import styles from "@/app/styles/Hero.module.css"
-import Slogan from "@/components/sections/components/Slogan"
+import styles from "@/app/school/styles/Hero.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
-import Cta from "../../ui/Cta"
 
 
 const Home = forwardRef<HTMLDivElement> ((props, ref) => {
@@ -24,14 +22,12 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
       >
         <div className={styles.heroText}>
           <div className={styles.heroTitle}>
-            <HeroTitle title="Hi, I'm" />
-            <HeroTitle title="Mohammed" />
+            <HeroTitle title="Grafisch Lyceum" />
+            <HeroTitle title="Rotterdam" />
             <div className={styles.heroSubtitle} >
-              <HeroTitle subtitle="Student at Grafish Lyceum Rotterdam"  />
+              <HeroTitle subtitle="Student"  />
             </div>
-            <Slogan />
           </div>
-          <Cta title="Explore the Galaxy" />
         </div>
       </motion.div>
     </div>

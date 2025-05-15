@@ -4,7 +4,10 @@ import "@/app/styles/globals.css"
 import styles from "@/app/styles/Layout.module.css"
 import Navbar from "@/components/navbar/Navbar"
 import { SectionProvider } from "@/context/section-context";
-import SchoolBtn from "./school/components/Schoolbtn"
+import LayoutSwitchButton from "../components/ui/LayoutSwitchButton"
+import SchoolNavbar from "@/components/navbar/SchoolNavbar"
+import NavbarSwitcher from "@/components/layout/NavbarSwitcher"
+import { SectionProviderSwitcher } from "@/context/section-provider-switcher"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,16 +21,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SectionProvider>
-          <Navbar />
-          <SchoolBtn />
-          <div className={styles.main}>
-            <main className={styles.pageContent}>{children}</main>
-          </div>
-        </SectionProvider>
+        <SectionProviderSwitcher>
+          <NavbarSwitcher />
+          <LayoutSwitchButton />
+          <main className={styles.main}>
+            <div className={styles.pageContent}>{children}</div>
+          </main>
+        </SectionProviderSwitcher>
       </body>
     </html>
   )

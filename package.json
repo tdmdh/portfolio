@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@iconify/react": "^5.2.1",
+    "@radix-ui/react-popover": "^1.1.13",
     "@react-spring/web": "^9.7.5",
     "@react-three/drei": "^10.0.6",
     "@react-three/fiber": "^9.1.2",
@@ -19,6 +20,7 @@
     "framer-motion": "^12.6.3",
     "gasp": "^0.0.2",
     "gsap": "^3.12.7",
+    "lucide-react": "^0.510.0",
     "motion": "^12.6.3",
     "next": "15.2.4",
     "postcss": "^8.5.3",

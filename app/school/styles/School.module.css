@@ -1,8 +1,8 @@
 .main{
-    z-index: 5;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1000;
 }
 
 .btncontainer{
@@ -12,14 +12,19 @@
 .schoolbtn{
     background-color: var(--secondary-color);
     color: var(--quinary-color);
-    padding: 1.3rem;
-    border-radius:0 0 2rem 0;
+    padding: 1.2rem;
     font-family: var(--primary-font);
     font-weight: 600;
-    
+    z-index: 1000;
 }
 
-.schoolbtn:hover{
+.btnLink{
+    padding: 0.5rem 2rem;
+    border-radius: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btnLink:hover{
     background-color: var(--quinary-color);
     color: var(--secondary-color);
 }

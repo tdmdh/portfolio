@@ -2,11 +2,11 @@
 import { useState, useCallback, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { motion, useScroll, useTransform } from "framer-motion"
-import styles from "@/app/styles/Navbar.module.css"
-import  NavLinks  from "@/components/navbar/components/NavLinks"
+import styles from "@/app/school/styles/Navbar.module.css"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
+import SchoolNavLinks from "./components/SchoolNavLinks"
 
-export default function Navbar() {
+export default function SchoolNavbar() {
   const [isBlurred, setIsBlurred] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -20,9 +20,8 @@ export default function Navbar() {
     return () => unsubscribe()
   }, [scrollY])
 
-  const navWidth = useTransform(scrollY, [0, 100], ["80rem", "47.5rem"])
+  const navWidth = useTransform(scrollY, [0, 100], ["80rem", "26.2rem"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
-  const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
   const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
@@ -43,16 +42,12 @@ export default function Navbar() {
 
   return (
     <motion.div className={styles.nav_container} initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-      <TopCorners isBlurred={isBlurred} position="left" />
+      <TopCorners isBlurred={isBlurred} position="left" fill="#050a30" />
 
       <motion.nav
-        className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
+        className={styles.navbar}
         aria-label="Main navigation"
-        initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
-        animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)"}}
-        exit={{ backdropFilter: "blur(0px)", opacity: 1 }}
-        transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
-        style={{ boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, }}
+        style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, }}
       >
         <motion.div
          className={styles.progressBar} 
@@ -61,10 +56,10 @@ export default function Navbar() {
         animate={{ scaleX: 1 }}
         transition={{ duration: 0.5 }}
          />
-        <NavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
+          <SchoolNavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
       </motion.nav>
 
-      <TopCorners isBlurred={isBlurred} position="right" />
+      <TopCorners isBlurred={isBlurred} position="right" fill="#050a30" />
     </motion.div>
   )
 }

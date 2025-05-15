@@ -4,10 +4,18 @@ import { usePathname } from "next/navigation"
 import { motion, useScroll, useTransform } from "framer-motion"
 import styles from "@/app/school/styles/School.module.css"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
-export default function SchoolBtn() {
+export default function LayoutSwitchButton() {
   const [isBlurred, setIsBlurred] = useState(false)
   const { scrollY } = useScroll()
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push(pathname === "/school" ? "/" : "/school")
+  }
+
   useEffect(() => {
     return scrollY.onChange((latest) => {
       if (latest > 50) {
@@ -26,9 +34,9 @@ export default function SchoolBtn() {
   const borderBottomRightRadius = useTransform(scrollY, [0, 100], ["2rem", "2rem"])
   const borderBottomLeftRadius = useTransform(scrollY, [0, 100], ["0rem", "2rem"])  
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
-  const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
-  const navTranslateX = useTransform(scrollY, [0, 100], ["0px", "15px"])
-  const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
+  const btnTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
+  const btnTranslateX = useTransform(scrollY, [0, 100], ["0px", "15px"])
+  const btnTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
 
 
 
@@ -40,21 +48,25 @@ export default function SchoolBtn() {
     <motion.div className={styles.main} initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
 
       <motion.div
-        className={styles.btncontainer}
+        className={styles.btncontainer}>
+        <motion.button 
+        className={styles.schoolbtn}
         style={{
           borderTopLeftRadius,
           borderTopRightRadius,
           borderBottomRightRadius,
           borderBottomLeftRadius,
           zIndex: navZIndex,
-          x: navTranslateX,
-          y: navTranslateY,
-          transition: navTransition
+          x: btnTranslateX,
+          y: btnTranslateY,
+          transition: btnTransition
         }}
-              >
-        <button className={styles.schoolbtn} >
-          School
-        </button>
+        onClick={handleClick}
+        >
+          <span className={styles.btnLink} >
+            {pathname === "/school" ? "Back to Portfolio" : "School Section"}
+          </span>
+        </motion.button>
       <TopCorners position="right" isBlurred={isBlurred} rotate={0}  fill="#4a4e69"  />
       </motion.div>
 

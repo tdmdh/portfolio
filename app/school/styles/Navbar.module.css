@@ -8,7 +8,7 @@
   .nav_link {
     position: relative;
     padding: 0.5rem 2rem;
-    color: var(--primary-color);
+    color: var(--quinary-color);
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -53,7 +53,7 @@
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
-    background-color: var(--quinary-color);
+    background-color: var(--primary-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
     
@@ -88,7 +88,7 @@
   .navbar li button {
     border-radius: 0.8rem;
     text-decoration: none;
-    color: var(--primary-color);
+    color: var(--quinary-color);
     font: bold 1.2rem var(--primary-font);
     font-size: 1.2rem;
     transition: color 0.3s ease; 
@@ -173,26 +173,3 @@
     }
   }
   
-
-    
-  .topright{
-    transform: rotate(90deg);
-  }
-
-  .navbarBlur {
-    background-color: var(--quinary-color);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
-  }
-
-
-  .navbarBlur:hover {
-    background-color: #f2e9e4; 
-  }
-
-  .navbarBlur:hover .navbar li a {
-    color: var(--quinary-color);
-  }
-  .navbarBlur:hover .navbar li a:hover {
-    color: var(--quinary-color);
-  }
