@@ -8,6 +8,7 @@ import LayoutSwitchButton from "../components/ui/LayoutSwitchButton"
 import SchoolNavbar from "@/components/navbar/SchoolNavbar"
 import NavbarSwitcher from "@/components/layout/NavbarSwitcher"
 import { SectionProviderSwitcher } from "@/context/section-provider-switcher"
+import Logo from "@/components/layout/Logo"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <main className={styles.main}>
             <div className={styles.pageContent}>{children}</div>
           </main>
+          <Logo/>
         </SectionProviderSwitcher>
       </body>
     </html>

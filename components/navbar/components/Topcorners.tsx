@@ -3,7 +3,7 @@ import styles from "@/app/styles/Navbar.module.css"
 
 interface TopCornersProps {
   isBlurred?: boolean
-  position: "left" | "right"
+  position?: "left" | "right"
   className?: string
   rotate?: number
   scale?: number

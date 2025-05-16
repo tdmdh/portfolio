@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .btncontainer{
@@ -15,7 +15,6 @@
     padding: 1.2rem;
     font-family: var(--primary-font);
     font-weight: 600;
-    z-index: 1000;
 }
 
 .btnLink{

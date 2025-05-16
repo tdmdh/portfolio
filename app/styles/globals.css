@@ -22,8 +22,8 @@
 
 
 body{
-  scroll-behavior: smooth;
-
+  scroll-behavior: smooth; 
+  
   background: 
   
   linear-gradient(135deg, var(--primary-color) 1%, var(--secondary-color) 50%, var(--quinary-color) 100%);

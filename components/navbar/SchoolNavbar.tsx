@@ -6,7 +6,7 @@ import styles from "@/app/school/styles/Navbar.module.css"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
 import SchoolNavLinks from "./components/SchoolNavLinks"
 
-export default function SchoolNavbar() {
+export default function Navbar() {
   const [isBlurred, setIsBlurred] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -20,7 +20,7 @@ export default function SchoolNavbar() {
     return () => unsubscribe()
   }, [scrollY])
 
-  const navWidth = useTransform(scrollY, [0, 100], ["80rem", "26.2rem"])
+  const navWidth = useTransform(scrollY, [0, 100], ["60rem", "26.2rem"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
@@ -45,9 +45,13 @@ export default function SchoolNavbar() {
       <TopCorners isBlurred={isBlurred} position="left" fill="#050a30" />
 
       <motion.nav
-        className={styles.navbar}
+        className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
         aria-label="Main navigation"
-        style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, }}
+        initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
+        animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)"}}
+        exit={{ backdropFilter: "blur(0px)", opacity: 1 }}
+        transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
+        style={{borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, }}
       >
         <motion.div
          className={styles.progressBar} 
@@ -56,10 +60,11 @@ export default function SchoolNavbar() {
         animate={{ scaleX: 1 }}
         transition={{ duration: 0.5 }}
          />
-          <SchoolNavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
+        <SchoolNavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
       </motion.nav>
 
       <TopCorners isBlurred={isBlurred} position="right" fill="#050a30" />
     </motion.div>
   )
 }
+ 

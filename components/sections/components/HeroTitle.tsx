@@ -6,6 +6,7 @@ import { motion, Variants } from "framer-motion"
 import styles from "@/app/styles/Hero.module.css"
 
 interface HeroTitleProps {
+  size?: string
   title?: string
   subtitle?: string
   text?: string
@@ -13,7 +14,6 @@ interface HeroTitleProps {
   animationDelay?: number
   animationDuration?: number
   trigger?: "inView" | "onMount" | "hover" | "manual"
-  isBlurred?: boolean
   className?: string
   onAnimationComplete?: () => void
 }
@@ -26,7 +26,6 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
   animationDelay = 0.05,
   animationDuration = 1,
   trigger = "inView",
-  isBlurred,
   className,
   onAnimationComplete
 }) => {

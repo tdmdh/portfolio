@@ -1,0 +1,27 @@
+.main{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+
+
+}
+
+.btncontainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: flex-end;
+}
+.logobtn{
+    background-color: var(--secondary-color);
+    color: var(--quinary-color);
+    padding: 1rem 1.3rem;
+    font-family: var(--primary-font);
+    font-weight: 600;
+    
+}
