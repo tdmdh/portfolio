@@ -11,7 +11,6 @@ export default function AboutDescription({ isBlurred }: { isBlurred: boolean }) 
       transition={{ duration: 0.1, delay: 0.3 }}
     >
       <HeroTitle
-        isBlurred={isBlurred}
         animationDuration={25}
         animationDelay={0.1}
         animationType="word"

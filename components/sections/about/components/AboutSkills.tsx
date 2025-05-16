@@ -16,7 +16,6 @@ export default function AboutSkills({ isBlurred, showIcon, setShowIcon }: {
         transition={{ duration: 0.1 }}
       >
         <HeroTitle
-          isBlurred={isBlurred}
           animationDuration={5}
           animationDelay={0.1}
           animationType="letter"
