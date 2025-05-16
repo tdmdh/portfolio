@@ -7,7 +7,7 @@
     box-sizing: border-box;
     width: 100%;
     background: linear-gradient(
-        0deg,
+        220deg,
         var(--quinary-color) 1%,
         var(--quinary-color) 50%,
         var(--secondary-color) 100%

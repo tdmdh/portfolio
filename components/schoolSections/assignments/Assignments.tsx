@@ -9,6 +9,8 @@ import styles from "@/app/school/styles/Assignments.module.css"
 
 import { AssignmentOne } from "@/app/school/components/assignments/AssignmentOne"
 import { AssignmentTwo } from "@/app/school/components/assignments/AssignmentTwo"
+import { AssignmentThree } from "@/app/school/components/assignments/AssignmentThree"
+import { AssignmentFour } from "@/app/school/components/assignments/AssignmentFour"
 
 const Assignments = forwardRef<HTMLDivElement> ((props, ref) => {
   const { scrollYProgress } = useScroll()
@@ -30,9 +32,11 @@ const Assignments = forwardRef<HTMLDivElement> ((props, ref) => {
           trigger="inView"
           animationDuration={5}
           />
-     <div className=" flex gap-10" >
+     <div className=" flex gap-10 flex-wrap" >
         <AssignmentOne />
         <AssignmentTwo />
+        <AssignmentThree />
+        <AssignmentFour />  
       </div>
     </div>
   )
