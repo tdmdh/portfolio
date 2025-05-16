@@ -17,7 +17,10 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
             ref={ref}
             className={styles.main}
         >
-            <HeroTitle title="My project"  className={styles.title} />
+            <HeroTitle title="My project"  className={styles.title} animationDelay={0.1}
+          animationType="letter"
+          trigger="inView"
+          animationDuration={5} />
             <HeroTitle text="
 
           As a new developer, I haven’t built many projects yet, but I’m currently working on Leornian — a platform designed to make learning more enjoyable and productive."

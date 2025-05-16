@@ -24,8 +24,14 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
       >
         <div className={styles.heroText}>
           <div className={styles.heroTitle}>
-            <HeroTitle title="Hi, I'm" />
-            <HeroTitle title="Mohammed" />
+            <HeroTitle title="Hi, I'm" animationDelay={0.1}
+          animationType="letter"
+          trigger="inView"
+          animationDuration={5} />
+            <HeroTitle title="Mohammed" animationDelay={0.1}
+          animationType="letter"
+          trigger="inView"
+          animationDuration={5} />
             <div className={styles.heroSubtitle} >
               <HeroTitle subtitle="Student at Grafish Lyceum Rotterdam"  />
             </div>

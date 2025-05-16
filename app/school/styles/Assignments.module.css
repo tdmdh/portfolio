@@ -1,7 +1,9 @@
 .main{
+    padding-top: 10vh;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: first baseline;
     align-items: center;
     gap: 2rem;
 
@@ -14,6 +16,13 @@
 
 .title{
   color: var(--primary-color);
+  font-family: var(--primary-font);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem);
+  padding: 0 0 1rem;
+}
+.header{
+  color: var(--quinary-color);
   font-family: var(--primary-font);
   font-weight: 700;
   font-size: clamp(2rem, 5vw, 3rem);
@@ -59,6 +68,7 @@
   z-index: 0;
   transition: border-color 0.3s ease, color 0.3s ease;
   isolation: isolate;
+  transition: all 0.3s ease-in-out;
 }
 
 .dialogbtn::before {
@@ -83,4 +93,5 @@
 .dialogbtn:hover {
   border-color: var(--quaternary-color);
   box-shadow: 0 0 15px var(--secondary-color);
+  transform: scale(1.05);
 }

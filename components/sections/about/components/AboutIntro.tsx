@@ -25,7 +25,6 @@ export default function AboutIntro({ isBlurred }: { isBlurred: boolean }) {
         transition={{ duration: 0.1 }}
       >
         <HeroTitle
-          isBlurred={isBlurred}
           animationDelay={0.1}
           animationType="letter"
           trigger="inView"
