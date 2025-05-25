@@ -19,8 +19,6 @@ export default function SchoolNavLinks({
 
   const { scrollY } = useScroll()
 
-  const isActive = 
-
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
       setIsScrolled(latest > 50)
@@ -73,7 +71,7 @@ export default function SchoolNavLinks({
 
   return (
     <motion.ul
-      className={`${styles.nav_links} ${isScrolled ? styles.scrolled : ""}`}
+      className={`${styles.nav_links} ${isScrolled ? styles.scrolled : ""}${isMenuOpen ? styles.menu_open : ""}`}
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

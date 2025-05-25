@@ -1,4 +1,4 @@
-  .nav_item {
+.nav_item {
     position: relative;
     display: flex;
     align-items: center;
@@ -96,6 +96,7 @@
     text-transform: uppercase;
     z-index: 2;
     border: none;
+    transition: all 0.3s ease;
   }
   
   .navbar li button:hover {
@@ -103,7 +104,13 @@
   }
 
  
-  
+  .mobileMenuToggle{
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10; 
+  }
   
   .hamburger {
     display: none;
@@ -196,3 +203,83 @@
   .navbarBlur:hover .navbar li a:hover {
     color: var(--quinary-color);
   }
+
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: center;
+      max-width: 5rem;
+      min-height: 4.1rem;
+      padding: 0;
+      position: relative;
+    }
+  
+    .navbar ul {
+      display: none;
+      flex-direction: column;
+      width: auto;
+      background: var(--quinary-color);
+      position: absolute;
+      top: 120%;
+      right: -60%;
+      z-index: 20;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border-radius: 2rem;
+      padding-bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+  
+    .navbar ul.menu_open {
+      display: flex;
+      opacity: 1;
+      pointer-events: auto;
+      animation: dropdownIn 0.3s;
+    }
+  
+    @keyframes dropdownIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  
+    .navbar li {
+      width: auto;
+      text-align: left;
+      padding: 1rem;
+    }
+  
+    .navbar li button {
+      width: 100%;
+      text-align: left;
+      font-size: 1.1rem;
+      padding: 1rem;
+      border-radius: 1.5rem;
+      transition: all 0.3s ease;
+    }
+  
+    .mobileMenuToggle {
+      display: block;
+    }
+  
+    .hamburger {
+      display: block;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: -60%;
+      right: 0;
+      transform: translate(-110%);
+      transform-origin: center;
+      left: 50%;
+      cursor: pointer;
+      border: none;
+      padding: 10px;  
+      border-radius: 2rem;
+      z-index: 30;
+      background-color: var(--secondary-color);
+    }
+
+  }
+
+

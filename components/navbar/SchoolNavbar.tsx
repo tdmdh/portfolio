@@ -60,6 +60,18 @@ export default function Navbar() {
         animate={{ scaleX: 1 }}
         transition={{ duration: 0.5 }}
          />
+         <div
+        className={styles.mobileMenuToggle}
+        onClick={toggleMenu}
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isMenuOpen}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleMenu(); }}
+      >
+        <div className={`${styles.hamburger} ${isMenuOpen ? 'open' : ''}`}>
+        </div>
+      </div>
         <SchoolNavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
       </motion.nav>
 
