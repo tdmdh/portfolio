@@ -61,6 +61,11 @@ export default function Navbar() {
         animate={{ scaleX: 1 }}
         transition={{ duration: 0.5 }}
          />
+
+      <div className={styles.mobileMenuToggle} onClick={toggleMenu}>
+          <div className={styles.hamburger} />
+        </div>
+
         <NavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
       </motion.nav>
 

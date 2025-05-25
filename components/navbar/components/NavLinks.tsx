@@ -19,7 +19,6 @@ export default function NavLinks({
 
   const { scrollY } = useScroll()
 
-  const isActive = 
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {

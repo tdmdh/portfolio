@@ -6,15 +6,19 @@ import styles from "@/app/school/styles/School.module.css"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { Home, School } from "lucide-react"
 
 export default function LayoutSwitchButton() {
   const [isBlurred, setIsBlurred] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const { scrollY } = useScroll()
   const router = useRouter()
 
   const handleClick = () => {
     router.push(pathname === "/school" ? "/" : "/school")
   }
+
+
 
   useEffect(() => {
     return scrollY.onChange((latest) => {
@@ -25,6 +29,16 @@ export default function LayoutSwitchButton() {
       }
     })
   }, [scrollY])
+
+  useEffect(() =>{
+    const handleWitdh = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    handleWitdh()
+    window.addEventListener("resize", handleWitdh)
+    return () => window.removeEventListener("resize",handleWitdh)
+  }, [])
   
   const pathname = usePathname()
 
@@ -63,8 +77,12 @@ export default function LayoutSwitchButton() {
         }}
         onClick={handleClick}
         >
-          <span className={styles.btnLink} >
-            {pathname === "/school" ? "Back to Portfolio" : "School Section"}
+         <span className={styles.btnLink}>
+            {isMobile ? (
+              pathname === "/school" ? <Home size={20} /> : <School size={20} />
+            ) : (
+              pathname === "/school" ? "Back to Portfolio" : "School Section"
+            )}
           </span>
         </motion.button>
       <TopCorners position="right" isBlurred={isBlurred} rotate={0}  fill="#4a4e69"  />

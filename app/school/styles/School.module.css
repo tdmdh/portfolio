@@ -18,9 +18,10 @@
 }
 
 .btnLink{
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 1rem;
     border-radius: 1.5rem;
     transition: all 0.3s ease;
+    display: flex;
 }
 
 .btnLink:hover{
