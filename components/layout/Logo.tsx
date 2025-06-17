@@ -50,7 +50,7 @@ export default function Logo() {
             className={styles.btncontainer}>
             <TopCorners position="right" fill="#4a4e69" rotate={180} isBlurred={isBlurred} />
             <motion.button 
-            className={styles.logobtn}
+            className={`${styles.logobtn} ${isBlurred ? styles.logobtnBlur : ""}`}
             style={{
               borderTopLeftRadius,
               borderTopRightRadius,

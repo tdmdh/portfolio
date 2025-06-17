@@ -50,11 +50,7 @@ export default function Navbar() {
       <motion.nav
         className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
         aria-label="Main navigation"
-        initial={{ backdropFilter: "blur(0px)", opacity: 1 }}
-        animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)"}}
-        exit={{ backdropFilter: "blur(0px)", opacity: 1 }}
-        transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
-        style={{ boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, backdropFilter: navBlur }}
+        style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition }}
       >
         <motion.div
          className={styles.progressBar} 

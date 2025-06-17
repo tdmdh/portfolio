@@ -8,7 +8,7 @@
   .nav_link {
     position: relative;
     padding: 0.5rem 2rem;
-    color: var(--primary-color);
+    color: var(--quinary-color);
     background: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -88,7 +88,7 @@
   .navbar li button {
     border-radius: 0.8rem;
     text-decoration: none;
-    color: var(--primary-color);
+    color: var(--quinary-color);
     font: bold 1.2rem var(--primary-font);
     font-size: 1.2rem;
     transition: color 0.3s ease; 
@@ -187,9 +187,11 @@
   }
 
   .navbarBlur {
-    background-color: var(--quinary-color);
+    background-color: rgba(5, 10, 48, 0.8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+    transition: all 0.3s ease;
   }
 
 

@@ -64,7 +64,7 @@ export default function LayoutSwitchButton() {
       <motion.div
         className={styles.btncontainer}>
         <motion.button 
-        className={styles.schoolbtn}
+        className={`${styles.schoolbtn} ${isBlurred ? styles.schoolbtnBlur : ""}`}
         style={{
           borderTopLeftRadius,
           borderTopRightRadius,
