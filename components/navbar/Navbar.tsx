@@ -1,4 +1,5 @@
 "use client"
+
 import { useState, useCallback, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { motion, useScroll, useTransform } from "framer-motion"
@@ -21,6 +22,7 @@ export default function Navbar() {
   }, [scrollY])
 
   const navWidth = useTransform(scrollY, [0, 100], ["80rem", "47.5rem"])
+  const navBlur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(20px)"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
   const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
@@ -52,7 +54,7 @@ export default function Navbar() {
         animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)"}}
         exit={{ backdropFilter: "blur(0px)", opacity: 1 }}
         transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
-        style={{ boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, }}
+        style={{ boxShadow: navBoxShadow, borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, backdropFilter: navBlur }}
       >
         <motion.div
          className={styles.progressBar} 
