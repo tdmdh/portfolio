@@ -10,9 +10,10 @@ interface HeroProps {
   subtitle?: string
   isBlurred?: boolean
   className?: string
+  children?: React.ReactNode
 }
 
-export default function Cta({ title, subtitle, isBlurred, className }: HeroProps) {
+export default function Cta({ title, subtitle, isBlurred, className, children }: HeroProps) {
   const { refs } = useSectionRefs()
   const buttonRef = useRef<HTMLButtonElement>(null)
 
@@ -48,7 +49,7 @@ export default function Cta({ title, subtitle, isBlurred, className }: HeroProps
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Explore The Galaxy
+          Explore The Galaxy 
         </motion.button>
       </motion.div>
     </section>

@@ -149,6 +149,7 @@
 
   
   .progressBar {  
+    max-width: 50rem;
     position: absolute;
     bottom: -1rem;
     left: 2;
@@ -192,11 +193,6 @@
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-  }
-
-
-  .navbarBlur:hover {
-    background-color: #f2e9e4; 
   }
 
   .navbarBlur:hover .navbar li a {

@@ -1,0 +1,68 @@
+.contactCardContainer{
+    background-color: var(--primary-color);
+    padding: 2rem;
+    border-radius: 3rem;
+    color: var(--quinary-color);
+    display: flex;
+    gap: 3rem;
+}
+
+.contactImage img{
+    width: auto;
+    height: 30rem;
+
+    max-width: 100%;
+    border-radius: 2.5rem;
+    object-fit: cover;
+}
+
+
+
+.title{
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-family: var(--primary-font);
+}
+
+.contactButton {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-family: var(--primary-font);
+    color: var(--quinary-color);
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    border-radius: 2rem;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 0;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    isolation: isolate;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .contactButton::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--secondary-color) 0%, transparent 80%);
+    opacity: 0;
+    transform: scale(1.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  .contactButton:hover::before {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  
+  .contactButton:hover {
+    border-color: var(--quaternary-color);
+    box-shadow: 0 0 15px var(--secondary-color);
+    transform: scale(1.05);
+  }

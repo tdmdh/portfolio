@@ -1,35 +1,62 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from "@/app/styles/ContactCard.module.css";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import HeroTitle from './HeroTitle';
+
 
 export default function ContactCard() {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+
     const cardVariants = {
-        hidden: { opacity: 0, y: 20 },  
-        visible: { opacity: 1, y: 0 },
-        transition: { duration: 0.5 }
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0 }
     };
 
-
-
-
+    const imageVariants = {
+        hidden: { opacity: 0, scale: 1, x: 100 },
+        visible: { opacity: 1, scale: 1, x: 0 }
+    };
 
     return (
         <motion.div
+            ref={ref}
             className={styles.contactCardContainer}
             initial="hidden"
-            animate="visible"
+            animate={isInView ? "visible" : "hidden"}
             variants={cardVariants}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8 }}
         >
-            <motion.div className={styles.contactCard}>
-                <p>Contact Me</p>
-                <p>If you have any questions or just want to say hi, feel free to reach out!</p>
-                <a href="mailto:haftarou.dev@gmail.com" className={styles.contactButton}>
-                    Email Me
-                </a>
+            <motion.div 
+                className={styles.contactCard}
+                variants={cardVariants}
+                transition={{ duration: 0.8, delay: 0.2 }}
+            >
+                <HeroTitle title="Contact me" animationDelay={0.1}
+                    animationType="letter"
+                    trigger="inView"
+                    animationDuration={5} /> 
+                    <HeroTitle subtitle="Let's connect and collaborate!" 
+                    animationDelay={0.1}
+                    animationType="letter"
+                    trigger="inView"
+                    animationDuration={5}
+                    className=' text-3xl pb-12'
+                    />
+                        <a href="mailto:haftarou.dev@gmail.com" title='email' className={styles.contactButton}>
+                            Email Me
+                        </a>
             </motion.div>
-            <motion.div className={styles.contactImage}>
-                <img src="/images/contact-image.png" alt="Contact" />
+            <motion.div 
+                className={styles.contactImage}
+                variants={imageVariants}
+                transition={{ duration: 0.8, delay: 0.4 }}
+            >
+                <motion.img
+                    src="/photo/me.jpg" 
+                    alt="Contact"
+                    className={styles.contactImage}
+                />
             </motion.div>
         </motion.div>
     )};
