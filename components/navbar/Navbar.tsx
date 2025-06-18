@@ -22,9 +22,8 @@ export default function Navbar() {
   }, [scrollY])
 
   const navWidth = useTransform(scrollY, [0, 100], ["80rem", "47.5rem"])
-  const navBlur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(20px)"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
-  const navBoxShadow = useTransform(scrollY, [0, 100], ["none", "0 4px 20px rgba(0, 0, 0, 0.1)"])
+
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
   const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
@@ -45,7 +44,7 @@ export default function Navbar() {
 
   return (
     <motion.div className={styles.nav_container} initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-      <TopCorners isBlurred={isBlurred} position="left" />
+      <TopCorners isBlurred={isBlurred} position="left" className=" z-50" />
 
       <motion.nav
         className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
@@ -76,7 +75,7 @@ export default function Navbar() {
         <NavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
       </motion.nav>
 
-      <TopCorners isBlurred={isBlurred} position="right" />
+      <TopCorners isBlurred={isBlurred} position="right" className=" z-50" />
     </motion.div>
   )
 }

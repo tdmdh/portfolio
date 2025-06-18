@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import styles from "@/app/styles/Contact.module.css"
 
 import { forwardRef } from "react"
+import ContactCard from "../components/ContactCard"
 
 
 const Contact = forwardRef<HTMLDivElement>((props, ref) => {
@@ -29,6 +30,7 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
         animate={{ backdropFilter: isBlurred ? "blur(10px)" : "blur(0px)", opacity: isBlurred ? 0.8 : 1 }}
         transition={{ backdropFilter: { duration: 0.3 }, opacity: { duration: 0.3 } }}
         >
+            <ContactCard />
         </motion.div>
     )
     }
