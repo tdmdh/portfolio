@@ -20,9 +20,6 @@ export default function AboutIntro({ isBlurred }: { isBlurred: boolean }) {
     >
       <motion.header
         className={styles.title}
-        variants={itemVariants}
-        animate={{ scale: [0.9, 1], opacity: [0, 1] }}
-        transition={{ duration: 0.1 }}
       >
         <HeroTitle
           animationDelay={0.1}

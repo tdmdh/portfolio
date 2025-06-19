@@ -2,10 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from 'next/font/google'
 import "@/app/styles/globals.css"
 import styles from "@/app/styles/Layout.module.css"
-import Navbar from "@/components/navbar/Navbar"
-import { SectionProvider } from "@/context/section-context";
 import LayoutSwitchButton from "../components/ui/LayoutSwitchButton"
-import SchoolNavbar from "@/components/navbar/SchoolNavbar"
 import NavbarSwitcher from "@/components/layout/NavbarSwitcher"
 import { SectionProviderSwitcher } from "@/context/section-provider-switcher"
 import Logo from "@/components/layout/Logo"
@@ -22,19 +19,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SectionProviderSwitcher>
-          <NavbarSwitcher />
-          <LayoutSwitchButton />
-          <main className={styles.main}>
-            <div className={styles.pageContent}>{children}</div>
-          </main>
-          <Logo/>
-        </SectionProviderSwitcher>
+        <div className={styles.glassContainer}>
+          <SectionProviderSwitcher>
+            <NavbarSwitcher />
+            <LayoutSwitchButton />
+            <main className={styles.main}>
+              <div className={styles.pageContent}>{children}</div>
+            </main>
+            <Logo />
+          </SectionProviderSwitcher>
+        </div>
       </body>
     </html>
   )
