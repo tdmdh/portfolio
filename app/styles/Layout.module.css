@@ -1,6 +1,31 @@
-
 .pageContent{
     width: 100%;
     height: 100%;
 }
 
+/* Elegant shadow-based fade effects */
+.topFade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    box-shadow: 0 8px 24px rgba(5, 10, 48, 0.2);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.7;
+}
+
+.bottomFade {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    box-shadow: 0 -8px 24px rgba(5, 10, 48, 0.2);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.7;
+}

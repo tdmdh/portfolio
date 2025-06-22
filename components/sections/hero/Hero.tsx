@@ -6,6 +6,7 @@ import styles from "@/app/styles/Hero.module.css"
 import Slogan from "@/components/sections/components/Slogan"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 import Cta from "../../ui/Cta"
+import Silk from "@/components/ui/silk"
 
 
 const Home = forwardRef<HTMLDivElement> ((props, ref) => {
@@ -19,6 +20,14 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
     <div
       ref={ref}
       className={styles.main}>
+        <Silk
+          speed={4}
+          scale={1}
+          color="#4a4e69"
+          noiseIntensity={1.5}
+          rotation={0}
+          className={styles.silk}
+        />
       <motion.div
         className={styles.hero}
       >

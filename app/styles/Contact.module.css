@@ -6,10 +6,4 @@
     min-height: 100vh;
     box-sizing: border-box;
     overflow: hidden;
-    background: linear-gradient(
-        45deg,
-        var(--quinary-color) 1%,
-        var(--quinary-color) 50%,
-        var(--secondary-color) 100%
-    );
 }
