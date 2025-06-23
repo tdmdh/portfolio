@@ -5,6 +5,7 @@
     justify-content: center;
   }
 
+
   .nav_link {
     position: relative;
     padding: 0.5rem 2rem;
@@ -187,7 +188,7 @@
   }
 
   .navbarBlur {
-    background-color:rgba(201, 173, 167, 0.8);
+    background-color: rgba(154, 140, 152, 0.8);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;

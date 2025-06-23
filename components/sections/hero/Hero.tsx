@@ -25,7 +25,7 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
           scale={1}
           color="#9a8c98"
           noiseIntensity={1.5}
-          rotation={0}
+          rotation={45}
           className={styles.silk}
         />
       <motion.div
@@ -42,9 +42,9 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
           trigger="inView"
           animationDuration={5} />
             <div className={styles.heroSubtitle} >
-              <HeroTitle subtitle="Student at Grafish Lyceum Rotterdam"  />
+              {/* <HeroTitle subtitle="Student at Grafish Lyceum Rotterdam"  /> */}
             </div>
-            <Slogan />
+            {/* <Slogan /> */}
           </div>
           <Cta title="Explore the Galaxy" />
         </div>

@@ -15,7 +15,7 @@ export default function AboutDescription({ isBlurred }: { isBlurred: boolean }) 
         animationDelay={0.1}
         animationType="word"
         trigger="onMount"
-        text="I'm Joyboy — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust. My approach combines frontend innovation with thoughtful UX, leveraging tools like TypeScript, React, Next.js, and Framer Motion to deliver performant and future-focused solutions."
+        text="I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust. My approach combines frontend innovation with thoughtful UX, leveraging tools like TypeScript, React, Next.js, and Framer Motion to deliver performant and future-focused solutions."
       />
     </motion.article>
   )
