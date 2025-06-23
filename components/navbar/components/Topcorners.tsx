@@ -20,7 +20,7 @@ export const TopCorners = ({
   scale = 1,
   translateX = 0,
   translateY = 0,
-  fill = "#f2e9e4",
+  fill = "#9a8c98",
 }: TopCornersProps) => {
   const fallbackRotation = position === "left" ? 180 : 0
 

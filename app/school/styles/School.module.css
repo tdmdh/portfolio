@@ -22,7 +22,6 @@
     background-color: rgba(74, 78, 105, 0.8);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 

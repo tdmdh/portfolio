@@ -23,7 +23,7 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
         <Silk
           speed={4}
           scale={1}
-          color="#4a4e69"
+          color="#9a8c98"
           noiseIntensity={1.5}
           rotation={0}
           className={styles.silk}

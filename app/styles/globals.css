@@ -23,12 +23,9 @@
 
 body{
   scroll-behavior: smooth; 
-  
-  background: 
-  
-  linear-gradient(135deg, var(--quinary-color) 0%, var(--secondary-color) 50%, var(--quinary-color) 100%);
+  background-color: var(--quinary-color);
   background-attachment: fixed;
-  background-size: 200% 200%;
+  background-size: 400% 400%;
   margin: 0;
   padding: 0; 
 }
