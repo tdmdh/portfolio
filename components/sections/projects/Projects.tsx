@@ -26,7 +26,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
           className={styles.subTitle}
           />
           <motion.div>
-            <ProjectCard />
           </motion.div>
         </motion.div>
     )

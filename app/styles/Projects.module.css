@@ -6,7 +6,7 @@
     min-height: 100vh;
     box-sizing: border-box;
     overflow: hidden;
-    color: var(--quinary-color);
+    color: var(--primary-color);
 }
 
 .main h2{
@@ -16,11 +16,11 @@
 }  
 
 .title{
-    color: var(--quinary-color);
+    color: var(--primary-color);
 }
 
 .subTitle{
-    color: var(--quinary-color);
+    color: var(--secondary-color);
     width: 70%;
     text-align: center;
     font-size:2rem;
@@ -28,21 +28,9 @@
  
 /* projectcard */
 
-.card{
-
-}
-
 .cardTitle{
-    font-family: var(--quinary-color);
-    color: var(--quinary-color);
-}
-
-.discription{
-
-}
-
-.cardImg{
-
+    font-family: var(--primary-font);
+    color: var(--primary-color);
 }
 
 

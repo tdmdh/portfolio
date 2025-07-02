@@ -7,3 +7,21 @@
     box-sizing: border-box;
     overflow: hidden;
 }
+
+/* Responsive styles for Contact main section */
+@media (max-width: 768px) {
+    .main {
+        padding: 2rem 1rem;
+        min-height: 90vh;
+        justify-content: flex-start;
+        padding-top: 10vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 1rem 0.5rem;
+        padding-top: 8vh;
+        min-height: 85vh;
+    }
+}

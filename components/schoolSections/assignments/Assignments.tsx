@@ -32,7 +32,7 @@ const Assignments = forwardRef<HTMLDivElement> ((props, ref) => {
           trigger="inView"
           animationDuration={5}
           />
-     <div className=" flex gap-10 flex-wrap" >
+     <div className={styles.assignmentsContainer}>
         <AssignmentOne />
         <AssignmentTwo />
         <AssignmentThree />

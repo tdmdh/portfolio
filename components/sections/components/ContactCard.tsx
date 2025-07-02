@@ -41,7 +41,7 @@ export default function ContactCard() {
                     animationType="letter"
                     trigger="inView"
                     animationDuration={5}
-                    className=' text-3xl pb-12'
+                    className='text-xl sm:text-2xl md:text-3xl pb-6 sm:pb-8 md:pb-12'
                     />
                         <a href="mailto:haftarou.dev@gmail.com" title='email' className={styles.contactButton}>
                             Email Me

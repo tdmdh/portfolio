@@ -11,36 +11,69 @@ import { GraduationCap, Target, Rocket, Flame, Lightbulb, Heart, Leaf, Smile } f
 export function AssignmentFour(){
     return(
       <Dialog>
-      <DialogTrigger className={styles.dialogbtn}>View Assignment 1</DialogTrigger>
+      <DialogTrigger className={styles.dialogbtn}>View Assignment 4</DialogTrigger>
       <DialogContent>
         <DialogTitle className={styles.title} >
-              Assignment 1
+              Assignment 4
         </DialogTitle>
-        <DialogDescription className={styles.descriptionC} >
-        <span className={styles.subtitle}>
-            <Smile size={20} style={{ marginRight: 8 }} />
-            More about me
+        <div className={styles.descriptionC}>
+          <span className={styles.subTitle}>
+            <GraduationCap size={20} style={{ marginRight: 8 }} />
+            Assignment 4: Project Reflection
+          </span>
+          
+          <span className={styles.subtitle}>
+            <Smile size={18} style={{ marginRight: 6 }} />
+            What Went Well?
           </span>
           <span className={styles.description}>
-            I'm Mohammed Haftarou, I'm 17 years old and I'm a creative software developer student. I'm currently studying software development at Grafish Lyceum. I have experience in developing software applications using various programming languages and tools. I'm always looking for new opportunities to learn and grow as a software developer. I'm excited to see what the future holds for me in the world of software development.
+            <strong>Which parts of the startup assignment went smoothly?</strong><br />
+            All parts went smoothly in the beginning.
+          </span>
+          <span className={styles.description}>
+            <strong>What are you proud of?</strong><br />
+            Everything I have created.
           </span>
 
           <span className={styles.subtitle}>
-            <Flame size={20} style={{ marginRight: 8 }} />
-            Motivation
+            <Target size={18} style={{ marginRight: 6 }} />
+            What Did You Find Challenging?
           </span>
           <span className={styles.description}>
-            My motivation comes from my passion for technology and my desire to create innovative solutions to real-world problems. I love the challenge of solving complex problems and the satisfaction of seeing my work come to life. I'm always looking for new ways to improve my skills and expand my knowledge in the field of software development. I'm excited to see where my journey as a software developer will take me.
+            <strong>Where did you need help or what would you approach differently?</strong><br />
+            In the beginning it was quite difficult because I'm new to JS, but after a while everything went well.
+          </span>
+          <span className={styles.description}>
+            <strong>What do you want to learn to get better at this?</strong><br />
+            I'm learning TypeScript, and I plan to use only TS for everything I create.
           </span>
 
           <span className={styles.subtitle}>
-            <Target size={20} style={{ marginRight: 8 }} />
-            My Goals
+            <Lightbulb size={18} style={{ marginRight: 6 }} />
+            What Have You Learned?
           </span>
           <span className={styles.description}>
-            My goal is to become a professional software developer and work on exciting projects that challenge me to grow and learn new skills. After improving my skills, I'll start my own company to be financially free.
+            <strong>What did you discover about yourself and your skills?</strong><br />
+            That I understand things quite quickly.
           </span>
-        </DialogDescription>
+          <span className={styles.description}>
+            <strong>What will you take to future projects?</strong><br />
+            <strong>Communication</strong> - especially when working in a team.
+          </span>
+
+          <span className={styles.subtitle}>
+            <Heart size={18} style={{ marginRight: 6 }} />
+            Feedback Received
+          </span>
+          <span className={styles.description}>
+            <strong>What did they consider your strongest point?</strong><br />
+            A serious attitude towards education, knowing what I'm doing.
+          </span>
+          <span className={styles.description}>
+            <strong>Where do they see opportunities for improvement?</strong><br />
+            Taking more opportunities.
+          </span>
+        </div>
         <div className="mt-4">
         </div>
       </DialogContent>
