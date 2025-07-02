@@ -10,8 +10,8 @@ import Logo from "@/components/layout/Logo"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Your Site",
-  description: "Your site description",
+  title: "Mohammed Haftarou - Portfolio",
+  description: "Mohammed Haftarou's portfolio showcasing web development projects and skills.",
 }
 
 export default function RootLayout({
