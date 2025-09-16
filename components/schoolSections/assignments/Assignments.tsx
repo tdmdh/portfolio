@@ -33,10 +33,7 @@ const Assignments = forwardRef<HTMLDivElement> ((props, ref) => {
           animationDuration={5}
           />
      <div className={styles.assignmentsContainer}>
-        <AssignmentOne />
-        <AssignmentTwo />
-        <AssignmentThree />
-        <AssignmentFour />  
+        
       </div>
     </div>
   )
