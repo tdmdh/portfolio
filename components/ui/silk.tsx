@@ -161,13 +161,13 @@ const Silk: React.FC<SilkProps> = ({
       frameloop="always"
       style={{
         position: "absolute",
-        top: "48%",
+        top: "50%",
         left: "50%",
-        width: "85%",
-        height: "75%",
+        transform: "translate(-50%, -50%)",
+        width: "95%",
+        height: "95%",
         zIndex: -1,
         borderRadius: "2rem",
-        transform: "translate(-50%, -50%)",
       }}
     >
       <SilkPlane ref={meshRef} uniforms={uniforms} />

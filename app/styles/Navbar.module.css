@@ -46,7 +46,7 @@
     position: fixed;
     top: 0rem;
     z-index: 9;
-    pointer-events: auto; 
+    pointer-events: auto;
   }
   
   .navbar {
@@ -56,39 +56,9 @@
     width: 100%;
     background-color: var(--tertiary-color);
     position: relative;
-    overflow: hidden;
   }
   
-  .progressBorder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      90deg,
-      var(--secondary-color) 0%,
-      var(--quinary-color) 50%,
-      var(--secondary-color) 100%
-    );
-    background-size: 200% 100%;
-    z-index: -1;
-    animation: gradientMove 2s linear infinite;
-    transform-origin: left center;
-    border-radius: inherit;
-    padding: 3px;
-  }
-  
-  .progressBorder::after {
-    content: '';
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    right: 3px;
-    bottom: 3px;
-    background-color: var(--tertiary-color);
-    border-radius: inherit;
-  }
+
     
     /* .topright .topLeft{
       position: absolute;

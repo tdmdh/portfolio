@@ -28,7 +28,7 @@ export default function Navbar() {
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
   const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
   const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 100
-  const progressScaleX = useTransform(scrollY, [0, scrollMax], [0, 1])
+  const scrollProgress = useTransform(scrollY, [0, scrollMax], [0, 100])
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev)
@@ -49,14 +49,21 @@ export default function Navbar() {
       <motion.nav
         className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
         aria-label="Main navigation"
-        style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition }}
+        style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition, position: 'relative' }}
       >
         <motion.div
-          className={styles.progressBorder}
-          style={{ scaleX: progressScaleX }}
-          initial={{ scaleX: 0 }}
-        />
-
+          className="pointer-events-none absolute inset-0 rounded-[inherit] border-[3px] border-transparent [mask-image:linear-gradient(transparent,transparent),linear-gradient(#000,#000)] [mask-composite:intersect] [mask-clip:padding-box,border-box]"
+        >
+          <motion.div
+            className="absolute aspect-square bg-gradient-to-l opacity-80"
+            style={{
+              width: 60,
+              offsetPath: `rect(0 auto auto 0 round 60px)`,
+              background: `linear-gradient(to left, var(--secondary-color), var(--primary-color), transparent)`,
+              offsetDistance: useTransform(scrollProgress, [0, 100], ["375%", "100%"])
+            }}
+          />
+        </motion.div>
       <div
         className={styles.mobileMenuToggle}
         onClick={toggleMenu}

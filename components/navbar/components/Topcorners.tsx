@@ -38,6 +38,7 @@ export const TopCorners = ({
         y: isBlurred ? -20 : 0,
         opacity: isBlurred ? 0 : 1,
         rotate: rotate ?? (position === "left" ? 90 : 0),
+        scale: isBlurred ? 0 : 1,
       }}
       transition={{ duration: 0.4 }}
     >

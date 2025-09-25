@@ -7,6 +7,7 @@ import Slogan from "@/components/sections/components/Slogan"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 import Cta from "../../ui/Cta"
 import Silk from "@/components/ui/silk"
+import { BorderBeam } from "@/components/ui/Border"
 
 
 const Home = forwardRef<HTMLDivElement> ((props, ref) => {
@@ -20,14 +21,32 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
     <div
       ref={ref}
       className={styles.main}>
-        <Silk
-          speed={4}
-          scale={1}
-          color="#9a8c98"
-          noiseIntensity={1.5}
-          rotation={45}
-          className={styles.silk}
-        />
+        <div className="relative overflow-hidden" style={{
+          position: "absolute",
+          top: "48%",
+          left: "50%",
+          width: "85%",
+          height: "75%",
+          transform: "translate(-50%, -50%)",
+          borderRadius: "2rem",
+        }}>
+          <Silk
+            speed={4}
+            scale={1}
+            color="#9a8c98"
+            noiseIntensity={1.5}
+            rotation={45}
+          />
+          <BorderBeam 
+           size={80}
+            duration={6}
+            delay={0}
+            colorFrom="var(--primary-color)"
+            colorTo="var(--quinary-color)"
+            borderWidth={4}
+            
+          />
+        </div>
       <motion.div
         className={styles.hero}
       >
