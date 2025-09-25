@@ -52,12 +52,10 @@ export default function Navbar() {
         style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition }}
       >
         <motion.div
-         className={styles.progressBar} 
-         style={{ scaleX: progressScaleX, transformOrigin: "left"  }} 
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 0.5 }}
-         />
+          className={styles.progressBorder}
+          style={{ scaleX: progressScaleX }}
+          initial={{ scaleX: 0 }}
+        />
 
       <div
         className={styles.mobileMenuToggle}
