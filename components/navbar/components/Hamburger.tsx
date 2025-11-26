@@ -18,3 +18,6 @@
 //     <span></span>
 //   </button>
 // )
+
+
+// The Hamburger component is currently commented out. Uncomment and use it in the Navbar when needed.
