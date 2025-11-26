@@ -1,6 +1,7 @@
 "use client"
 import React from "react"
 import { motion } from "framer-motion"
+import type { Variant } from "framer-motion"
 import styles from "@/app/styles/Hero.module.css"
 import { Carattere } from "next/font/google"
 
@@ -14,7 +15,7 @@ const Slogan: React.FC = () => {
   const sloganText = "Turning ideas into beautiful, interactive realities."
   const sloganLetters = sloganText.split("")
 
-  const letterVariants = {
+  const letterVariants: Record<string, Variant> = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
