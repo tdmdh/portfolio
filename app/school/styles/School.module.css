@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 15;
 }
 
 .btncontainer{
@@ -16,6 +16,7 @@
     font-family: var(--primary-font);
     font-weight: 600;
     transition: all 0.3s ease;
+
 }
 
 .schoolbtnBlur {
