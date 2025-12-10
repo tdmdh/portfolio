@@ -24,12 +24,12 @@ const skillCategories = [
         title: "Backend",
         icon: "",
         skills: [
-            { name: "Go", level: 80 },
+            { name: "Go", level: 30 },
             { name: "Node.js", level: 75 },
             { name: "PHP", level: 60 },
             { name: "REST API", level: 90 },
             { name: "gRPC", level: 10 },
-            { name: "PostgreSQL", level: 60 },
+            { name: "PostgreSQL", level: 50 },
             { name: "Redis", level: 20 },
         ]
     },
