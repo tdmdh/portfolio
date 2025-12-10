@@ -37,6 +37,7 @@
     top: 0;
     left: 50%;
     transform: translate(-50%);
+    z-index: 11;
   }
 
   .nav_container {
@@ -45,7 +46,7 @@
     justify-content: center;
     position: fixed;
     top: 0rem;
-    z-index: 9;
+    z-index: 12;
     pointer-events: auto;
   }
   

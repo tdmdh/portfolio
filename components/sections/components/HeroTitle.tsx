@@ -49,25 +49,6 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
     }),
   }
 
-  const getMotionProps = (i: number) => {
-    const props: any = {
-      variants: letterVariants,
-      initial: "hidden",
-      custom: i,
-    }
-
-    if (trigger === "inView") {
-      props.whileInView = "visible"
-      props.viewport = { once: true, amount: 0.2 }
-    } else if (trigger === "onMount") {
-      props.animate = "visible"
-    } else if (trigger === "hover") {
-      props.whileHover = "visible"
-    }
-
-    return props
-  }
-
   return (
     <div className={`${styles.heroContainer} ${className || ""}`}>
       {title && (
@@ -76,8 +57,11 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
             <motion.span
               key={`title-${i}`}
               className={styles.letter}
+              variants={letterVariants}
+              initial="hidden"
+              animate="visible"
+              custom={i}
               onAnimationComplete={onAnimationComplete}
-              {...getMotionProps(i)}
             >
               {(unit === "m" || unit === "M") ? (
                 <span className={styles.mLetter}>{unit}</span>
@@ -98,7 +82,10 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
             <motion.span
               key={`subtitle-${i}`}
               className={styles.subtitleLetter}
-              {...getMotionProps(i + titleUnits.length)}
+              variants={letterVariants}
+              initial="hidden"
+              animate="visible"
+              custom={i + titleUnits.length}
             >
               {unit}
               {animationType === "word" && " "}
@@ -113,7 +100,10 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
             <motion.span
               key={`text-${i}`}
               className={styles.textLetters}
-              {...getMotionProps(i + titleUnits.length + subtitleUnits.length)}
+              variants={letterVariants}
+              initial="hidden"
+              animate="visible"
+              custom={i + titleUnits.length + subtitleUnits.length}
             >
               {unit}
               {animationType === "word" && " "}

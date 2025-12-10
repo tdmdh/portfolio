@@ -6,6 +6,7 @@ import LayoutSwitchButton from "../components/ui/LayoutSwitchButton"
 import NavbarSwitcher from "@/components/layout/NavbarSwitcher"
 import { SectionProviderSwitcher } from "@/context/section-provider-switcher"
 import Logo from "@/components/layout/Logo"
+import LoadingScreen from "@/components/ui/LoadingScreen"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {/* <LoadingScreen /> */}
         <div className={styles.glassContainer}>
           <SectionProviderSwitcher>
             <NavbarSwitcher />

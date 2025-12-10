@@ -6,7 +6,7 @@
     min-height: 100vh;
     box-sizing: border-box;
     width: 100%;
-    overflow: hidden
+    position: relative;
 }
 
 .title{
@@ -31,7 +31,6 @@
 
 .aboutContent {
     margin: 0 auto;
-    width: 50%;
     color: var(--secondary-color);
     font: 400 clamp(1rem, 5vw, 2rem) var(--secondary-font);
     text-align: center;

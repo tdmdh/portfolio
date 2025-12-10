@@ -21,15 +21,7 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
     <div
       ref={ref}
       className={styles.main}>
-        <div className="relative overflow-hidden" style={{
-          position: "absolute",
-          top: "48%",
-          left: "50%",
-          width: "85%",
-          height: "75%",
-          transform: "translate(-50%, -50%)",
-          borderRadius: "2rem",
-        }}>
+        <div className={styles.silkContainer}>
           <Silk
             speed={4}
             scale={1}
@@ -37,35 +29,34 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
             noiseIntensity={1.5}
             rotation={45}
           />
-          <BorderBeam 
-           size={80}
-            duration={6}
-            delay={0}
-            colorFrom="var(--primary-color)"
-            colorTo="var(--quinary-color)"
-            borderWidth={4}
-            
-          />
+         
         </div>
       <motion.div
         className={styles.hero}
+        style={{ position: "relative", zIndex: 10 }}
       >
         <div className={styles.heroText}>
           <div className={styles.heroTitle}>
-            <HeroTitle title="Hi, I'm" animationDelay={0.1}
-          animationType="letter"
-          trigger="inView"
-          animationDuration={5} />
-            <HeroTitle title="Mohammed" animationDelay={0.1}
-          animationType="letter"
-          trigger="inView"
-          animationDuration={5} />
+            <HeroTitle 
+              title="Hi, I'm" 
+              animationDelay={0.05}
+              animationType="letter"
+              trigger="onMount"
+              animationDuration={0.5}
+            />
+            <HeroTitle 
+              title="Mohammed" 
+              animationDelay={0.05}
+              animationType="letter"
+              trigger="onMount"
+              animationDuration={0.5}
+            />
             <div className={styles.heroSubtitle} >
               {/* <HeroTitle subtitle="Student at Grafish Lyceum Rotterdam"  /> */}
             </div>
             {/* <Slogan /> */}
           </div>
-          <Cta title="Explore the Galaxy" />
+          {/* <Cta title="Explore the Galaxy" /> */}
         </div>
       </motion.div>
     </div>
