@@ -1,67 +1,68 @@
 .nav_item {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
-  .nav_link {
-    position: relative;
-    padding: 0.5rem 2rem;
-    color: var(--primary-color);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 9; 
-  }
+.nav_link {
+  position: relative;
+  padding: 0.5rem 2rem;
+  color: var(--primary-color);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 9;
+}
 
-  .linkText {
-    position: relative;
-    z-index: 2;
-  }
+.linkText {
+  position: relative;
+  z-index: 2;
+}
 
-  .hoverBackground {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--quinary-color);
-    border-radius: 2rem;
-    z-index: 1; 
-  }
+.hoverBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--quinary-color);
+  border-radius: 2rem;
+  z-index: 1;
+}
 
-  .main{
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%);
-    z-index: 11;
-  }
+.main {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 11;
+}
 
-  .nav_container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0rem;
-    z-index: 12;
-    pointer-events: auto;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    background-color: var(--tertiary-color);
-    position: relative;
-  }
-  
+.nav_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0rem;
+  z-index: 12;
+  pointer-events: auto;
+}
 
-    
-    /* .topright .topLeft{
+.navbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  background-color: var(--tertiary-color);
+  position: relative;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+
+
+/* .topright .topLeft{
       position: absolute;
       top: 0;
       left: 0;
@@ -71,183 +72,269 @@
       height: 100%;
       z-index: -1; 
     } */
-    
-    .navbar ul {
-      display: flex;
-      align-items: center;
-      list-style: none;
-      padding: 0; 
-      margin: 0;
-    }
-      
 
-  
-  .navbar li {
-    flex: 1;
-    text-align: center;
-    padding: 0.7rem 1rem;
+.navbar ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.navbar li {
+  flex: 1;
+  text-align: center;
+  padding: 0.7rem 1rem;
+  position: relative;
+}
+
+.navbar li button {
+  border-radius: 0.8rem;
+  text-decoration: none;
+  color: var(--quinary-color);
+  font: bold 1.2rem var(--primary-font);
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  display: inline-block;
+  text-transform: uppercase;
+  z-index: 2;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.navbar li button:hover {
+  color: var(--quaternary-color);
+}
+
+
+.mobileMenuToggle {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 10px;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.navbar li a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+
+
+
+
+.topright {
+  transform: rotate(90deg);
+}
+
+.navbarBlur {
+  background-color: rgba(154, 140, 152, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.navbarBlur:hover .navbar li a {
+  color: var(--quinary-color);
+}
+
+.navbarBlur:hover .navbar li a:hover {
+  color: var(--quinary-color);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    max-width: 5rem;
+    min-height: 4.4rem;
+    padding: 0;
     position: relative;
   }
-  
-  .navbar li button {
-    border-radius: 0.8rem;
-    text-decoration: none;
-    color: var(--quinary-color);
-    font: bold 1.2rem var(--primary-font);
-    font-size: 1.2rem;
-    transition: color 0.3s ease; 
-    display: inline-block;
-    text-transform: uppercase;
-    z-index: 2;
-    border: none;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar li button:hover {
-    color: var(--quaternary-color);
+
+  .navbar ul {
+    display: none;
+    flex-direction: column;
+    width: auto;
+    background: var(--quinary-color);
+    position: absolute;
+    top: 120%;
+    right: -60%;
+    z-index: 20;
+    border-radius: 2rem;
+    padding-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
   }
 
- 
-  .mobileMenuToggle{
-    display: none;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 10; 
+  .navbar ul.menu_open {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    animation: dropdownIn 0.3s;
   }
-  
+
+  @keyframes dropdownIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .navbar li {
+    width: auto;
+    text-align: left;
+    padding: 1rem;
+  }
+
+  .navbar li button {
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .mobileMenuToggle {
+    display: block;
+  }
+
   .hamburger {
-    display: none;
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -60%;
+    right: 0;
+    transform: translate(-110%);
+    transform-origin: center;
+    left: 50%;
     cursor: pointer;
-    background: transparent;
     border: none;
     padding: 10px;
-  }
-  
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: var(--primary-color);
-    transition: all 0.3s ease;
-    border-radius: 1px;
-  }
-  
-  .hamburger.open span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-  
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .hamburger.open span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-  }
-  
-  .navbar li a:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+    border-radius: 2rem;
+    z-index: 30;
+    background-color: var(--secondary-color);
   }
 
+}
 
-  
+/* Navbar Color Modes - with smooth transitions */
 
-    
-  .topright{
-    transform: rotate(90deg);
-  }
+/* Light navbar (on dark sections) */
+.navbarLight {
+  background-color: var(--quinary-color);
+  transition: background-color 0.4s ease;
+}
 
-  .navbarBlur {
-    background-color: rgba(154, 140, 152, 0.8);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-  }
+.navbarLight.navbarBlur {
+  background-color: rgba(242, 233, 228, 0.85);
+}
 
-  .navbarBlur:hover .navbar li a {
-    color: var(--quinary-color);
-  }
-  .navbarBlur:hover .navbar li a:hover {
-    color: var(--quinary-color);
-  }
+.navbarLight li button {
+  color: var(--primary-color);
+  transition: color 0.4s ease;
+}
 
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: center;
-      max-width: 5rem;
-      min-height: 4.4rem;
-      padding: 0;
-      position: relative;
-    }
-  
-    .navbar ul {
-      display: none;
-      flex-direction: column;
-      width: auto;
-      background: var(--quinary-color);
-      position: absolute;
-      top: 120%;
-      right: -60%;
-      z-index: 20;
-      border-radius: 2rem;
-      padding-bottom: 0;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-  
-    .navbar ul.menu_open {
-      display: flex;
-      opacity: 1;
-      pointer-events: auto;
-      animation: dropdownIn 0.3s;
-    }
-  
-    @keyframes dropdownIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  
-    .navbar li {
-      width: auto;
-      text-align: left;
-      padding: 1rem;
-    }
-  
-    .navbar li button {
-      width: 100%;
-      text-align: left;
-      font-size: 1.1rem;
-      padding: 1rem;
-      border-radius: 1.5rem;
-      transition: all 0.3s ease;
-    }
-  
-    .mobileMenuToggle {
-      display: block;
-    }
-  
-    .hamburger {
-      display: block;
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      top: -60%;
-      right: 0;
-      transform: translate(-110%);
-      transform-origin: center;
-      left: 50%;
-      cursor: pointer;
-      border: none;
-      padding: 10px;  
-      border-radius: 2rem;
-      z-index: 30;
-      background-color: var(--secondary-color);
-    }
+.navbarLight li button:hover {
+  color: var(--secondary-color);
+}
 
-  }
+.navbarLight .hoverBackground {
+  background: var(--quaternary-color);
+  transition: background 0.4s ease;
+}
 
+/* Dark navbar (on light sections) */
+.navbarDark {
+  background-color: var(--secondary-color);
+  transition: background-color 0.4s ease;
+}
 
+.navbarDark.navbarBlur {
+  background-color: rgba(74, 78, 105, 0.85);
+}
+
+.navbarDark li button {
+  color: var(--quinary-color);
+  transition: color 0.4s ease;
+}
+
+.navbarDark li button:hover {
+  color: var(--quaternary-color);
+}
+
+.navbarDark .hoverBackground {
+  background: var(--primary-color);
+  transition: background 0.4s ease;
+}
+
+/* NavLinks color modes */
+.linksLight button {
+  color: var(--primary-color) !important;
+  transition: color 0.4s ease !important;
+}
+
+.linksLight button:hover {
+  color: var(--secondary-color) !important;
+}
+
+.linksDark button {
+  color: var(--quinary-color) !important;
+  transition: color 0.4s ease !important;
+}
+
+.linksDark button:hover {
+  color: var(--quaternary-color) !important;
+}
+
+/* Hamburger color modes */
+.navbarLight .hamburger span {
+  background-color: var(--primary-color);
+  transition: background-color 0.4s ease;
+}
+
+.navbarDark .hamburger span {
+  background-color: var(--quinary-color);
+  transition: background-color 0.4s ease;
+}

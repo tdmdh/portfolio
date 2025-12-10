@@ -10,6 +10,7 @@ interface TopCornersProps {
   translateX?: number
   translateY?: number
   fill?: string
+  isDarkSection?: boolean
 }
 
 export const TopCorners = ({
@@ -20,9 +21,11 @@ export const TopCorners = ({
   scale = 1,
   translateX = 0,
   translateY = 0,
-  fill = "#9a8c98",
+  isDarkSection = true,
 }: TopCornersProps) => {
   const fallbackRotation = position === "left" ? 180 : 0
+
+  const dynamicFill = isDarkSection ? "var(--quinary-color)" : "var(--secondary-color)"
 
   return (
     <motion.svg
@@ -43,11 +46,15 @@ export const TopCorners = ({
       transition={{ duration: 0.4 }}
     >
       <g transform="scale(2)" clipPath="url(#clip0_310_2)">
-        <path d="M30 0H0V30C0 16.431 16.431 0 30 0Z" fill={fill} />
+        <motion.path
+          d="M30 0H0V30C0 16.431 16.431 0 30 0Z"
+          animate={{ fill: dynamicFill }}
+          transition={{ duration: 0.4 }}
+        />
       </g>
       <defs>
         <clipPath id="clip0_310_2">
-          <rect width="30" height="30" fill={fill} />
+          <rect width="30" height="30" fill="white" />
         </clipPath>
       </defs>
     </motion.svg>

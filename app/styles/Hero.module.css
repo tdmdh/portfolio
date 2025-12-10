@@ -1,4 +1,3 @@
-
 .main {
   position: relative;
   width: 100%;
@@ -9,8 +8,9 @@
   align-items: center;
   flex-direction: column;
   overflow: hidden;
+  background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
-  
+
 .silkContainer {
   position: absolute;
   top: 50%;
@@ -22,7 +22,7 @@
   z-index: 0;
   overflow: hidden;
 }
-  
+
 .hero {
   display: flex;
   justify-content: center;
@@ -31,163 +31,164 @@
   width: 100%;
   height: 100vh;
 }
-  
-  .heroText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font: 100% var(--primary-font);
-    color: var(--quinary-color);
-  }
-  
-  .heroTitle {
-    font-size: clamp(4rem, 10vw, 15rem);
-    font-weight: 700;
-    margin: 0;
-    line-height: 1.2;
-    letter-spacing: 0.1rem;
-    cursor: pointer;
-    font-family: var(--primary-font);
-  }
 
-  .mLetter{
-    color: var(--tertiary-color);
-    font-family: var(--tertiary-font);
-    font-size: clamp(4rem, 10vw, 15rem);
-    font-weight: 700;
-  }
-
-  
-  
-  .heroSubtitle {
-    font-size: clamp(1rem, 5vw, 1rem);
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: 1rem;
-    margin: 0.5rem 0;
-    color: var(--quinary-color);
-  }
-
- 
-
-  .ctaWarp {
-    position: relative;
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    font-size: 1.2rem;
-    font-family: var(--primary-font);
-    color: var(--quinary-color);
-    background: transparent;
-    border: 2px solid var(--secondary-color);
-    border-radius: 2rem;
-    cursor: pointer;
-    overflow: hidden;
-    z-index: 0;
-    transition: border-color 0.3s ease, color 0.3s ease;
-    isolation: isolate;
-  }
-  
-  .ctaWarp::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0;
-    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--secondary-color) 0%, transparent 80%);
-    opacity: 0;
-    transform: scale(1.5);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: -1;
-    pointer-events: none;
-  }
-  
-  .ctaWarp:hover::before {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  
-  .ctaWarp:hover {
-    border-color: var(--quaternary-color);
-    box-shadow: 0 0 15px var(--secondary-color);
-  }
-
-
-  
-  
-  .scrollIndicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 50px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-  }
-  
-  .scrollDot {
-    width: 6px;
-    height: 6px;
-    background-color: #4a4e69;
-    border-radius: 50%;
-  }
-
-  .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(32%, 1fr));
-    gap: 1rem;
-
-  }
-  
-  .sloganContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font: 100% var(--primary-font);
-    color: var(--quinary-color);
-  }
-
-.slogan {
-    margin-top: 1rem;
-    font-size: clamp(1rem, 5vw, 2rem);
-    width: 60%;
-    color: var(--tertiary-color);
-    text-shadow: 0 0 0.75rem rgba(124, 124, 124, 0.5);
-    margin-bottom: 1rem;
+.heroText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font: 100% var(--primary-font);
+  color: var(--quinary-color);
 }
 
- 
-@media (max-width: 768px) {
-    .main{
-      padding-top: 30vh;
-    }
-    .heroTitle {
-      font-size: 3rem;
-    }
-  
-    .heroSubtitle {
-      font-size: 1.2rem;
-      letter-spacing: 1;
-      flex-wrap: wrap;
-    }
-    .ctaWarp{
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .heroTitle {
-      font-size: 2.5rem;
-    }
-  
-    .heroSubtitle {
-      font-size: 1rem;
-    }
-  }
-  
+.heroTitle {
+  font-size: clamp(4rem, 10vw, 15rem);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  font-family: var(--primary-font);
+}
 
+.mLetter {
+  color: var(--tertiary-color);
+  font-family: var(--tertiary-font);
+  font-size: clamp(4rem, 10vw, 15rem);
+  font-weight: 700;
+}
+
+
+
+.heroSubtitle {
+  font-size: clamp(1rem, 5vw, 1rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 1rem;
+  margin: 0.5rem 0;
+  color: var(--quinary-color);
+}
+
+
+
+.ctaWarp {
+  position: relative;
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  font-family: var(--primary-font);
+  color: var(--quinary-color);
+  background: transparent;
+  border: 2px solid var(--secondary-color);
+  border-radius: 2rem;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 0;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  isolation: isolate;
+}
+
+.ctaWarp::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--secondary-color) 0%, transparent 80%);
+  opacity: 0;
+  transform: scale(1.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ctaWarp:hover::before {
+  opacity: 0.2;
+  transform: scale(1);
+}
+
+.ctaWarp:hover {
+  border-color: var(--quaternary-color);
+  box-shadow: 0 0 15px var(--secondary-color);
+}
+
+
+
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 50px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.scrollDot {
+  width: 6px;
+  height: 6px;
+  background-color: #4a4e69;
+  border-radius: 50%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(32%, 1fr));
+  gap: 1rem;
+
+}
+
+.sloganContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font: 100% var(--primary-font);
+  color: var(--quinary-color);
+}
+
+.slogan {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 5vw, 2rem);
+  width: 60%;
+  color: var(--tertiary-color);
+  text-shadow: 0 0 0.75rem rgba(124, 124, 124, 0.5);
+  margin-bottom: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  .main {
+    padding-top: 30vh;
+  }
+
+  .heroTitle {
+    font-size: 3rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.2rem;
+    letter-spacing: 1;
+    flex-wrap: wrap;
+  }
+
+  .ctaWarp {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+}

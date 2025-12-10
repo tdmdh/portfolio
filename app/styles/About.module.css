@@ -1,4 +1,4 @@
-.main{
+.main {
     display: flex;
     flex-direction: column;
     justify-content: first baseline;
@@ -7,21 +7,22 @@
     box-sizing: border-box;
     width: 100%;
     position: relative;
+    background: linear-gradient(180deg, var(--quinary-color) 0%, var(--quaternary-color) 100%);
 }
 
-.title{
+.title {
     font-family: var(--primary-font);
     color: var(--primary-color);
 }
 
-.subtitle{
+.subtitle {
     font-family: var(--secondary-font);
     color: var(--tertiary-color);
     font: 700 clamp(1rem, 5vw, 3rem) var(--secondary-font);
     padding: 0 1rem;
 }
 
-.aboutContainer{
+.aboutContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;

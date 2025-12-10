@@ -8,9 +8,11 @@ import { useSectionRefs } from "@/context/section-context"
 export default function NavLinks({
   isMenuOpen,
   closeMenu,
+  isDarkSection = true,
 }: {
   isMenuOpen: boolean
   closeMenu: () => void
+  isDarkSection?: boolean
 }) {
   const { sections } = useSectionRefs()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -18,7 +20,6 @@ export default function NavLinks({
   const [activeId, setActiveId] = useState<string>("hero")
 
   const { scrollY } = useScroll()
-
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
@@ -32,19 +33,17 @@ export default function NavLinks({
     zIndex: isScrolled ? 10 : 0,
   }
 
-
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 70);
       const currentPosition = window.scrollY;
-  
+
       for (const section of sections) {
         const el = section.ref.current;
         if (el) {
           const offsetTop = el.offsetTop;
           const sectionHeight = window.innerHeight;
-          
+
           if (currentPosition >= offsetTop && currentPosition < offsetTop + sectionHeight) {
             setActiveId(section.id);
             break;
@@ -52,12 +51,12 @@ export default function NavLinks({
         }
       }
     };
-  
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [sections]);
-  
-  
+
+
   const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (ref.current) {
       const y = ref.current.getBoundingClientRect().top + window.scrollY;
@@ -65,14 +64,13 @@ export default function NavLinks({
     }
     closeMenu();
   };
-  
-  
-  
 
+  // Color mode class for nav links
+  const colorModeClass = isDarkSection ? styles.linksLight : styles.linksDark
 
   return (
     <motion.ul
-      className={`${styles.nav_links} ${isScrolled ? styles.scrolled : ""}${isMenuOpen ? styles.menu_open : ""}`}
+      className={`${styles.nav_links} ${isScrolled ? styles.scrolled : ""}${isMenuOpen ? styles.menu_open : ""} ${colorModeClass}`}
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -103,11 +101,11 @@ export default function NavLinks({
                   type: "spring",
                   stiffness: 300,
                   damping: 30,
-                  
+
                 }}
               />
             )}
-            <span className={styles.linkText}>{section.id}</span>
+            <span className={styles.linkText}>{section.name}</span>
           </button>
         </motion.li>
       ))}

@@ -6,6 +6,7 @@ import Image from "next/image"
 export type ProjectStatus = "done" | "in-progress" | "todo"
 
 interface ProjectCardProps {
+    index?: number
     title: string
     description: string
     status: ProjectStatus
@@ -16,12 +17,13 @@ interface ProjectCardProps {
 }
 
 const statusConfig = {
-    done: { label: "Done", className: styles.statusDone },
+    done: { label: "Completed", className: styles.statusDone },
     "in-progress": { label: "In Progress", className: styles.statusInProgress },
-    todo: { label: "Todo", className: styles.statusTodo },
+    todo: { label: "Upcoming", className: styles.statusTodo },
 }
 
 export const ProjectCard = ({
+    index,
     title,
     description,
     status,
@@ -34,6 +36,12 @@ export const ProjectCard = ({
 
     return (
         <div className={styles.card}>
+            {index !== undefined && (
+                <span className={styles.cardNumber}>
+                    {String(index).padStart(2, "0")}
+                </span>
+            )}
+
             <div className={styles.cardMedia}>
                 {video ? (
                     <video
@@ -74,6 +82,19 @@ export const ProjectCard = ({
                         className={styles.cardButton}
                     >
                         {linkText}
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <path d="M7 17L17 7" />
+                            <path d="M7 7h10v10" />
+                        </svg>
                     </a>
                 )}
             </div>

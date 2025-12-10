@@ -23,15 +23,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <LoadingScreen />
+        {/* <LoadingScreen /> */}
         <div className={styles.glassContainer}>
           <SectionProviderSwitcher>
             <NavbarSwitcher />
-            <LayoutSwitchButton />
+            {/* <LayoutSwitchButton /> */}
             <main className={styles.main}>
               <div className={styles.pageContent}>{children}</div>
             </main>
-            <Logo />
+            {/* <Logo /> */}
           </SectionProviderSwitcher>
         </div>
       </body>

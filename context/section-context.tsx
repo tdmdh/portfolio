@@ -1,48 +1,87 @@
 "use client"
 
 import type React from "react"
-import { createContext, useContext, useRef } from "react"
+import { createContext, useContext, useRef, useState, useEffect, useCallback } from "react"
 
 type SectionRefs = {
     heroRef: React.RefObject<HTMLDivElement | null>
     aboutRef: React.RefObject<HTMLDivElement | null>
+    skillsRef: React.RefObject<HTMLDivElement | null>
     projectsRef: React.RefObject<HTMLDivElement | null>
     contactRef: React.RefObject<HTMLDivElement | null>
 };
 
+type SectionInfo = {
+    name: string
+    id: string
+    ref: React.RefObject<HTMLDivElement | null>
+    isDark: boolean
+}
+
 type SectionContextType = {
-    refs: SectionRefs;
-    sections: {
-        id: string;
-        ref: React.RefObject<HTMLDivElement | null>;
-    }[];
+    refs: SectionRefs
+    sections: SectionInfo[]
+    currentSection: string
+    isDarkSection: boolean
 };
 
 const SectionContext = createContext<SectionContextType | undefined>(undefined)
 
-export function SectionProvider({ children }: { children: React.ReactNode}){
+export function SectionProvider({ children }: { children: React.ReactNode }) {
     const heroRef = useRef<HTMLDivElement>(null)
     const aboutRef = useRef<HTMLDivElement>(null)
+    const skillsRef = useRef<HTMLDivElement>(null)
     const projectsRef = useRef<HTMLDivElement>(null)
     const contactRef = useRef<HTMLDivElement>(null)
 
-    const refs ={
+    const [currentSection, setCurrentSection] = useState("hero")
+    const [isDarkSection, setIsDarkSection] = useState(true)
+
+    const refs = {
         heroRef,
         aboutRef,
+        skillsRef,
         projectsRef,
         contactRef
     }
 
-    const sections = [
-        { name : "Projects", id: "projects", ref: projectsRef },
-        { name : "About", id: "about", ref: aboutRef },
-        { name : "Home", id: "hero", ref: heroRef },
-        { name : "Contact", id: "contact", ref: contactRef }
+    const sections: SectionInfo[] = [
+        { name: "Home", id: "hero", ref: heroRef, isDark: true },
+        { name: "About", id: "about", ref: aboutRef, isDark: false },
+        { name: "Skills", id: "skills", ref: skillsRef, isDark: true },
+        { name: "Projects", id: "projects", ref: projectsRef, isDark: false },
+        { name: "Contact", id: "contact", ref: contactRef, isDark: true }
     ]
 
+    const handleScroll = useCallback(() => {
+        const scrollPosition = window.scrollY + window.innerHeight / 3
 
-    return <SectionContext.Provider value={{ refs, sections }}>
-        {children}</SectionContext.Provider>
+        for (const section of sections) {
+            const element = section.ref.current
+            if (element) {
+                const { offsetTop, offsetHeight } = element
+                if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                    if (currentSection !== section.id) {
+                        setCurrentSection(section.id)
+                        setIsDarkSection(section.isDark)
+                    }
+                    break
+                }
+            }
+        }
+    }, [currentSection, sections])
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        handleScroll()
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [handleScroll])
+
+    return (
+        <SectionContext.Provider value={{ refs, sections, currentSection, isDarkSection }}>
+            {children}
+        </SectionContext.Provider>
+    )
 }
 
 export function useSectionRefs() {
