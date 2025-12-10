@@ -1,5 +1,5 @@
 .main {
-    padding-top: 10vh;
+    padding: 5rem 2rem;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -12,21 +12,50 @@
     background: linear-gradient(180deg, var(--quaternary-color) 0%, var(--quinary-color) 100%);
 }
 
-.main h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+/* Header */
+.header {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 2rem;
+}
+
+.label {
+    display: inline-block;
+    font-family: var(--primary-font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--secondary-color);
+    background: rgba(74, 78, 105, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
 }
 
 .title {
+    font-family: var(--primary-font);
+    font-size: 2.75rem;
+    font-weight: 700;
     color: var(--primary-color);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem 0;
 }
 
-.subTitle {
+.highlight {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-family: var(--secondary-font);
+    font-size: 1.1rem;
+    line-height: 1.7;
     color: var(--secondary-color);
-    width: 70%;
-    text-align: center;
-    font-size: 2rem;
+    margin: 0;
 }
 
 /* Horizontal Scroll Section */

@@ -1,38 +1,207 @@
 .main {
     display: flex;
     flex-direction: column;
-    justify-content: first baseline;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
     width: 100%;
     position: relative;
+    padding: 5rem 2rem;
     background: linear-gradient(180deg, var(--quinary-color) 0%, var(--quaternary-color) 100%);
+}
+
+.content {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: inline-block;
+    font-family: var(--primary-font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--secondary-color);
+    background: rgba(74, 78, 105, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1rem;
 }
 
 .title {
     font-family: var(--primary-font);
+    font-size: 2.75rem;
+    font-weight: 700;
     color: var(--primary-color);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0;
 }
 
-.subtitle {
-    font-family: var(--secondary-font);
-    color: var(--tertiary-color);
-    font: 700 clamp(1rem, 5vw, 3rem) var(--secondary-font);
-    padding: 0 1rem;
+.highlight {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-.aboutContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* Text Reveal Container */
+.textRevealContainer {
     width: 100%;
+    max-width: 900px;
+    margin: 1rem 0 2rem 0;
 }
 
-.aboutContent {
-    margin: 0 auto;
-    color: var(--secondary-color);
-    font: 400 clamp(1rem, 5vw, 2rem) var(--secondary-font);
+.descriptionHighlight {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Info Cards */
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.infoCard {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    padding: 1.75rem;
     text-align: center;
+    transition: all 0.3s ease;
+}
+
+.infoCard:hover {
+    background: rgba(255, 255, 255, 0.85);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(5, 10, 48, 0.1);
+}
+
+.infoIcon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.infoTitle {
+    font-family: var(--primary-font);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+}
+
+.infoText {
+    font-family: var(--secondary-font);
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* CTA Section */
+.ctaSection {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.75rem;
+    font-family: var(--primary-font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--quinary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    border-radius: 2rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(5, 10, 48, 0.2);
+}
+
+.ctaButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(5, 10, 48, 0.3);
+}
+
+.ctaButtonSecondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    box-shadow: none;
+}
+
+.ctaButtonSecondary:hover {
+    background: var(--primary-color);
+    color: var(--quinary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main {
+        padding: 4rem 1.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .aboutCard {
+        padding: 2rem;
+    }
+
+    .description {
+        font-size: 1.1rem;
+    }
+
+    .infoGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .ctaSection {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .ctaButton {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .label {
+        font-size: 0.75rem;
+    }
 }

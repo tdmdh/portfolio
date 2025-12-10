@@ -1,63 +1,83 @@
 "use client"
 
+import { motion, useInView } from "framer-motion"
 import styles from "@/app/styles/Projects.module.css"
 import { forwardRef, useRef } from "react"
-import HeroTitle from "../components/HeroTitle"
 import { ProjectCard } from "./components/project-card"
 import { useProjectsAnimation } from "./hooks/useProjectsAnimation"
 
 const projects = [
   {
-    title: "Leornian",
-    description: "A comprehensive learning platform designed to make education more enjoyable and productive. Features include interactive courses, progress tracking, and gamification elements.",
-    status: "in-progress" as const,
-    link: "https://github.com",
+    title: "LLM Controller",
+    description: "A controller for LLMs. Built with Go. A part of an bigger project called Sora",
+    status: "done" as const,
+    link: "https://github.com/tdmdh/ai-controller",
     linkText: "View Repo",
   },
   {
-    title: "Portfolio",
-    description: "My personal portfolio website showcasing my projects and skills. Built with Next.js, TypeScript, and GSAP for smooth animations.",
+    title: "FitUpp",
+    description: "A comprehensive fitness training platform with a React Native mobile app and an intelligent backend written in Go. It offers personalized workout plans, real-time tracking, and adaptive algorithms for user progress.",
     status: "done" as const,
-    link: "https://github.com",
+    link: "https://github.com/Mohammed-glr/fit-up",
     linkText: "View Repo",
   },
   {
     title: "Smart CMS",
     description: "A headless CMS with microservices architecture. Built with Go, gRPC, and PostgreSQL for scalable content management.",
     status: "in-progress" as const,
-    link: "https://github.com",
+    link: "https://github.com/tdmdh/smart-cms-server",
     linkText: "View Repo",
   },
   {
-    title: "Messaging Service",
-    description: "Real-time messaging service with WebSocket support. Features include conversations, read receipts, and typing indicators.",
+    title: "Lornian",
+    description: "A comprehensive learning platform designed to make education more enjoyable and productive. Features include interactive courses, progress tracking, and gamification elements.",
     status: "in-progress" as const,
-    link: "https://github.com",
+    link: "https://github.com/tdmdh/lornian",
     linkText: "View Repo",
   },
   {
-    title: "Auth System",
-    description: "Secure authentication system with OAuth, JWT tokens, and session management. Supports Google, GitHub, and email providers.",
-    status: "done" as const,
-    link: "https://github.com",
+    title: "Sora",
+  description: "An AI assistant built with Go and Ollama Models. ",
+    status: "todo" as const,
+    link: "https://github.com/tdmdh/ai-controller",
+    linkText: "View Repo",
+  },
+   {
+    title: "SoraOS",
+    description: "An intelligent Operating System.",
+    status: "todo" as const,
+    link: "https://github.com/tdmdh/ai-controller",
     linkText: "View Repo",
   },
 ]
 
 const Projects = forwardRef<HTMLDivElement>((props, ref) => {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLDivElement>(null)
-  const subtitleRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef(null)
   const scrollSectionRef = useRef<HTMLDivElement>(null)
   const cardsContainerRef = useRef<HTMLDivElement>(null)
 
+  const isInView = useInView(headerRef, { once: true, margin: "-100px" })
+
   useProjectsAnimation({
     sectionRef,
-    titleRef,
-    subtitleRef,
+    titleRef: headerRef,
+    subtitleRef: headerRef,
     scrollSectionRef,
     cardsContainerRef,
   })
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
+  }
 
   return (
     <div
@@ -71,22 +91,29 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       }}
       className={styles.main}
     >
-      <div ref={titleRef}>
-        <HeroTitle
-          title="My Projects"
-          className={styles.title}
-          animationDelay={0.1}
-          animationType="letter"
-          trigger="inView"
-          animationDuration={5}
-        />
-      </div>
-      <div ref={subtitleRef}>
-        <HeroTitle
-          text="Explore my journey through code — from learning platforms to backend systems, each project represents a step forward in my development career."
-          className={styles.subTitle}
-        />
-      </div>
+      <motion.div
+        ref={headerRef}
+        className={styles.header}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.15 },
+          },
+        }}
+      >
+        <motion.span className={styles.label} variants={itemVariants}>
+          My Work
+        </motion.span>
+        <motion.h2 className={styles.title} variants={itemVariants}>
+          Featured <span className={styles.highlight}>Projects</span>
+        </motion.h2>
+        <motion.p className={styles.subtitle} variants={itemVariants}>
+          Explore my journey through code — from learning platforms to backend systems, each project represents a step forward in my development career.
+        </motion.p>
+      </motion.div>
 
       <div ref={scrollSectionRef} className={styles.scrollSection}>
         <div ref={cardsContainerRef} className={styles.cardsContainer}>

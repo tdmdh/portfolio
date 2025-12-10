@@ -53,8 +53,9 @@ export function SectionProvider({ children }: { children: React.ReactNode }) {
         { name: "Contact", id: "contact", ref: contactRef, isDark: true }
     ]
 
+    // Track which section is in view - using 2/3 of viewport for later trigger
     const handleScroll = useCallback(() => {
-        const scrollPosition = window.scrollY + window.innerHeight / 3
+        const scrollPosition = window.scrollY + window.innerHeight * 0.1
 
         for (const section of sections) {
             const element = section.ref.current

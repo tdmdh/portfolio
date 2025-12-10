@@ -10,12 +10,14 @@ const skillCategories = [
         title: "Frontend",
         icon: "",
         skills: [
+
             { name: "React", level: 90 },
             { name: "Next.js", level: 85 },
             { name: "TypeScript", level: 85 },
             { name: "GSAP", level: 80 },
             { name: "Tailwind CSS", level: 85 },
             { name: "Framer Motion", level: 80 },
+            { name: "Sass", level: 100 },
         ]
     },
     {
@@ -24,22 +26,24 @@ const skillCategories = [
         skills: [
             { name: "Go", level: 80 },
             { name: "Node.js", level: 75 },
-            { name: "gRPC", level: 75 },
+            { name: "PHP", level: 60 },
             { name: "REST API", level: 90 },
-            { name: "PostgreSQL", level: 80 },
-            { name: "Redis", level: 70 },
+            { name: "gRPC", level: 10 },
+            { name: "PostgreSQL", level: 60 },
+            { name: "Redis", level: 20 },
         ]
     },
     {
         title: "Tools & Services",
         icon: "",
         skills: [
-            { name: "Git", level: 90 },
-            { name: "Docker", level: 75 },
-            { name: "Google Cloud", level: 70 },
-            { name: "WebSocket", level: 80 },
+            { name: "Git", level: 50 },
+            { name: "Docker", level: 45 },
+            { name: "Google Cloud", level: 60 },
+            { name: "WebSocket", level: 60 },
             { name: "OAuth/JWT", level: 85 },
-            { name: "CI/CD", level: 70 },
+            { name: "Virtual Machines", level: 30 },
+            { name: "LLM", level: 15 },
         ]
     }
 ]
