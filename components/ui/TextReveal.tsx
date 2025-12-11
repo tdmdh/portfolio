@@ -25,7 +25,7 @@ export const TextReveal: FC<TextRevealProps> = ({ children, className }) => {
 
   return (
     <div ref={targetRef} className={cn("relative z-0 w-full", className)} style={{ height: '400vh' }}>
-      <div className="sticky top-0 left-0 w-full h-[60vh] flex items-center justify-center px-4 overflow-hidden">
+      <div className="sticky top-[20vh] left-0 w-full h-[60vh] flex items-center justify-center px-4 overflow-hidden">
         <p className="w-full max-w-6xl text-center text-xl font-semibold leading-relaxed md:text-2xl lg:text-3xl xl:text-4xl">
           {words.map((word, i) => {
             const start = i / words.length
