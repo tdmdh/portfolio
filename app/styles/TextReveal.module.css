@@ -1,9 +1,11 @@
 .background {
   color: rgba(255, 255, 255, 0.2);
+    font-family: var(--secondary-font);
 }
 
 .foreground {
   position: absolute;
   inset: 0;
+  font-family: var(--secondary-font);
   color: var(--primary-color);
 }

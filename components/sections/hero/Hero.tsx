@@ -22,13 +22,13 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
       ref={ref}
       className={styles.main}>
         <div className={styles.silkContainer}>
-          <Silk
+          {/* <Silk
             speed={4}
             scale={1}
-            color="#4a4e69"
-            noiseIntensity={0.5}
-            rotation={45}
-          />
+            color="#9a8c98"
+            noiseIntensity={5}
+            rotation={180}
+          /> */}
          
         </div>
       <motion.div
