@@ -2,6 +2,7 @@
 
 import { ComponentPropsWithoutRef, FC, ReactNode, useRef } from "react"
 import { motion, MotionValue, useScroll, useTransform } from "motion/react"
+import styles from "@/app/styles/TextReveal.module.css"
 
 import { cn } from "@/app/utils/lib/utils"
 
@@ -51,10 +52,10 @@ const Word: FC<WordProps> = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1])
   return (
     <span className="relative inline-block mx-1">
-      <span className="absolute inset-0 opacity-20">{children}</span>
+      <span className={styles.background}>{children}</span>
       <motion.span
         style={{ opacity: opacity }}
-        className="relative dark:text-[var(--primary-color)] text-[var(--primary-color)] font-semibold"
+        className={styles.foreground}
       >
         {children}
       </motion.span>

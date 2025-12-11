@@ -26,12 +26,11 @@ export default function Navbar() {
 
   const navWidth = useTransform(scrollY, [0, 100], ["70vw", "58.5rem"])
   const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
-
   const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
   const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
   const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
-  const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 100
-  const scrollProgress = useTransform(scrollY, [0, 100], [0, 100])
+  // const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 100
+  // const scrollProgress = useTransform(scrollY, [0, 100], [0, 100])
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev)

@@ -11,13 +11,14 @@ const skillCategories = [
         icon: "",
         skills: [
 
-            { name: "React", level: 90 },
-            { name: "Next.js", level: 85 },
-            { name: "TypeScript", level: 85 },
-            { name: "GSAP", level: 80 },
-            { name: "Tailwind CSS", level: 85 },
-            { name: "Framer Motion", level: 80 },
-            { name: "Sass", level: 100 },
+            { name: "React", level: 70 },
+            { name: "React Native", level: 55 },
+            
+            { name: "Next.js", level: 80 },
+            { name: "TypeScript", level: 80 },
+            { name: "Tailwind CSS/SCSS", level: 85 },
+            { name: "GSAP/Framer Motion", level: 95 },
+
         ]
     },
     {
@@ -37,8 +38,8 @@ const skillCategories = [
         title: "Tools & Services",
         icon: "",
         skills: [
-            { name: "Git", level: 50 },
-            { name: "Docker", level: 45 },
+            { name: "Git", level: 40 },
+            { name: "Docker", level: 30 },
             { name: "Google Cloud", level: 60 },
             { name: "WebSocket", level: 60 },
             { name: "OAuth/JWT", level: 85 },
@@ -149,7 +150,6 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
                     ))}
                 </div>
 
-                {/* Tech Stack Icons */}
                 <motion.div
                     className={styles.techStack}
                     initial={{ opacity: 0, y: 30 }}
