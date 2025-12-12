@@ -12,6 +12,7 @@ interface UseProjectsAnimationProps {
     subtitleRef: RefObject<HTMLDivElement | null>
     scrollSectionRef: RefObject<HTMLDivElement | null>
     cardsContainerRef: RefObject<HTMLDivElement | null>
+    isExpanded?: boolean
 }
 
 export const useProjectsAnimation = ({
@@ -20,8 +21,11 @@ export const useProjectsAnimation = ({
     subtitleRef,
     scrollSectionRef,
     cardsContainerRef,
+    isExpanded = false,
 }: UseProjectsAnimationProps) => {
     useEffect(() => {
+        if (isExpanded) return
+
         const ctx = gsap.context(() => {
             gsap.fromTo(
                 titleRef.current,
@@ -106,43 +110,9 @@ export const useProjectsAnimation = ({
                         invalidateOnRefresh: true,
                     },
                 })
-
-                Array.from(cards).forEach((card) => {
-                    const cardEl = card as HTMLElement
-
-                    const handleMouseMove = (e: MouseEvent) => {
-                        const rect = cardEl.getBoundingClientRect()
-                        const x = e.clientX - rect.left
-                        const y = e.clientY - rect.top
-                        const centerX = rect.width / 2
-                        const centerY = rect.height / 2
-                        const rotateX = (y - centerY) / 30
-                        const rotateY = (centerX - x) / 30
-
-                        gsap.to(cardEl, {
-                            rotateX: -rotateX,
-                            rotateY: rotateY,
-                            transformPerspective: 1000,
-                            duration: 0.4,
-                            ease: "power2.out",
-                        })
-                    }
-
-                    const handleMouseLeave = () => {
-                        gsap.to(cardEl, {
-                            rotateX: 0,
-                            rotateY: 0,
-                            duration: 0.6,
-                            ease: "elastic.out(1, 0.5)",
-                        })
-                    }
-
-                    cardEl.addEventListener("mousemove", handleMouseMove)
-                    cardEl.addEventListener("mouseleave", handleMouseLeave)
-                })
             }
         }, sectionRef)
 
         return () => ctx.revert()
-    }, [sectionRef, titleRef, subtitleRef, scrollSectionRef, cardsContainerRef])
+    }, [sectionRef, titleRef, subtitleRef, scrollSectionRef, cardsContainerRef, isExpanded])
 }
