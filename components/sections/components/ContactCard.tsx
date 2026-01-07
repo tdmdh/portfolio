@@ -53,7 +53,7 @@ export default function ContactCard() {
                 transition={{ duration: 0.8, delay: 0.4 }}
             >
                 <motion.img
-                    src="/photo/me.jpg" 
+                    src="/photo/me.CR3" 
                     alt="Contact"
                     className={styles.contactImage}
                 />

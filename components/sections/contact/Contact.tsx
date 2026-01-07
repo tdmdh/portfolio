@@ -175,7 +175,7 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                         <div className={styles.imageWrapper}>
                             <div className={styles.imageGlow} />
                             <motion.img
-                                src="/photo/me.jpg"
+                                src="/photo/me2.jpeg"
                                 alt="Profile"
                                 className={styles.profileImage}
                                 whileHover={{ scale: 1.02 }}

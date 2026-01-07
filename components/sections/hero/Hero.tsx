@@ -54,7 +54,7 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
             <div className={styles.heroSubtitle} >
               {/* <HeroTitle subtitle="Student at Grafish Lyceum Rotterdam"  /> */}
             </div>
-            <Slogan />
+            {/* <Slogan /> */}
           </div>
           {/* <Cta title="Explore the Galaxy" /> */}
         </div>
