@@ -1,26 +1,29 @@
+
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 5rem 2rem;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
     background: linear-gradient(180deg, var(--secondary-color) 0%, var(--primary-color) 100%);
 }
 
 .content {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    gap: 4rem;
 }
 
 /* Header */
 .header {
     text-align: center;
-    max-width: 600px;
+    margin-bottom: 1rem;
 }
 
 .label {
@@ -31,10 +34,10 @@
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--quaternary-color);
-    background: rgba(201, 173, 167, 0.15);
-    padding: 0.5rem 1rem;
+    background: rgba(201, 173, 167, 0.1);
+    padding: 0.6rem 1.2rem;
     border-radius: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .title {
@@ -44,7 +47,7 @@
     color: var(--quinary-color);
     line-height: 1.2;
     letter-spacing: -0.02em;
-    margin: 0 0 1rem 0;
+    margin: 0;
 }
 
 .highlight {
@@ -52,178 +55,142 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    padding-right: 0.1em;
 }
 
 .subtitle {
     font-family: var(--secondary-font);
-    font-size: 1.1rem;
-    line-height: 1.7;
+    font-size: 1.2rem;
+    line-height: 1.6;
     color: var(--tertiary-color);
-    margin: 0;
+    margin: 0 auto;
+    max-width: 600px;
 }
 
-/* Categories Grid */
-.categoriesGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+/* Categories Container */
+.categoriesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
     width: 100%;
 }
 
-/* Category Card */
-.categoryCard {
-    background: rgba(242, 233, 228, 0.08);
-    backdrop-filter: blur(10px);
-    border-radius: 1.5rem;
-    padding: 2rem;
-    border: 1px solid rgba(242, 233, 228, 0.1);
-    transition: all 0.3s ease;
-}
-
-.categoryCard:hover {
-    background: rgba(242, 233, 228, 0.12);
-    border-color: rgba(242, 233, 228, 0.2);
-    transform: translateY(-5px);
+/* Category Section */
+.categorySection {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .categoryHeader {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(242, 233, 228, 0.1);
 }
 
-.categoryIcon {
+.categoryIconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(242, 233, 228, 0.05);
+    border-radius: 12px;
+    color: var(--quaternary-color);
     font-size: 1.5rem;
 }
 
 .categoryTitle {
     font-family: var(--primary-font);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--quinary-color);
     margin: 0;
 }
 
-/* Skills List */
-.skillsList {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+/* Skills Grid */
+.skillsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
 }
 
-.skillItem {
+/* Skill Card */
+.skillCard {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    /* border: 1px solid rgba(255, 255, 255, 0.05); */
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-}
-
-.skillHeader {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-}
-
-.skillName {
-    font-family: var(--primary-font);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--quinary-color);
-}
-
-.skillLevel {
-    font-family: var(--primary-font);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--quaternary-color);
-}
-
-/* Skill Bar */
-.skillBarBg {
-    width: 100%;
-    height: 6px;
-    background: rgba(242, 233, 228, 0.15);
-    border-radius: 3px;
+    justify-content: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+    cursor: default;
+    height: 180px;
+    position: relative;
     overflow: hidden;
 }
 
-.skillBarFill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--quaternary-color) 0%, var(--quinary-color) 100%);
-    border-radius: 3px;
-    position: relative;
-}
-
-.skillBarFill::after {
+.skillCard::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
-    animation: shimmer 2s infinite;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--quaternary-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-@keyframes shimmer {
-    0% {
-        transform: translateX(-100%);
-    }
-
-    100% {
-        transform: translateX(100%);
-    }
+.skillCard:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Tech Stack */
-.techStack {
+.skillCard:hover::before {
+    opacity: 0.5;
+}
+
+.iconWrapper {
+    width: 64px;
+    height: 64px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(242, 233, 228, 0.1);
-    width: 100%;
-}
-
-.techLabel {
-    font-family: var(--primary-font);
-    font-size: 0.85rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--tertiary-color);
-}
-
-.techIcons {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    font-size: 2.5rem;
+    transition: transform 0.3s ease;
+    color: var(--quinary-color);
 }
 
-.techBadge {
+.skillCard:hover .iconWrapper {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.skillName {
     font-family: var(--primary-font);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    background: var(--quinary-color);
-    padding: 0.6rem 1.25rem;
-    border-radius: 2rem;
-    cursor: default;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.techBadge:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--quinary-color);
+    text-align: center;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .categoriesGrid {
-        grid-template-columns: repeat(2, 1fr);
+    .title {
+        font-size: 3rem;
+    }
+
+    .skillsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 }
 
@@ -233,38 +200,54 @@
     }
 
     .title {
+        font-size: 2.5rem;
+    }
+
+    .categoriesContainer {
+        gap: 3rem;
+    }
+
+    .skillsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 1rem;
+    }
+
+    .skillCard {
+        padding: 1.5rem;
+        height: 150px;
+    }
+
+    .iconWrapper {
+        width: 48px;
+        height: 48px;
         font-size: 2rem;
     }
 
-    .categoriesGrid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .categoryCard {
-        padding: 1.5rem;
-    }
-
-    .techIcons {
-        gap: 0.5rem;
-    }
-
-    .techBadge {
-        font-size: 0.8rem;
-        padding: 0.5rem 1rem;
+    .skillName {
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     .title {
-        font-size: 1.75rem;
+        font-size: 2rem;
     }
 
-    .subtitle {
-        font-size: 1rem;
+    .categoryHeader {
+        gap: 0.75rem;
     }
 
-    .label {
-        font-size: 0.75rem;
+    .categoryIconWrapper {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .categoryTitle {
+        font-size: 1.25rem;
+    }
+
+    .skillsGrid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

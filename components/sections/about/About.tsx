@@ -72,7 +72,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           </TextReveal>
         </div>
 
-        <div className={styles.infoGrid}>
+        {/* <div className={styles.infoGrid}>
           {infoCards.map((card, index) => (
             <motion.div
               key={card.title}
@@ -85,7 +85,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
               <p className={styles.infoText}>{card.text}</p>
             </motion.div>
           ))}
-        </div>
+        </div> */}
 {/* 
         <motion.div className={styles.ctaSection} variants={itemVariants}>
           <a href="#contact" className={styles.ctaButton}>

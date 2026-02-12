@@ -4,99 +4,83 @@ import { motion } from "framer-motion"
 import styles from "@/app/styles/Skills.module.css"
 import { forwardRef, useRef } from "react"
 import { useInView } from "framer-motion"
+import { Icon } from "@iconify/react"
 
 const skillCategories = [
     {
         title: "Frontend",
-        icon: "",
+        icon: "solar:code-bold-duotone",
         skills: [
-
-            { name: "React", level: 70 },
-            { name: "React Native", level: 55 },
-            { name: "Next.js", level: 80 },
-            { name: "TypeScript", level: 60 },
-            { name: "Tailwind CSS/SCSS", level: 85 },
-            { name: "GSAP/Framer Motion", level: 50 },
-
+            { name: "React Native", icon: "tabler:device-mobile-code" },
+            { name: "Next.js", icon: "logos:nextjs-icon" },
+            { name: "TypeScript", icon: "logos:typescript-icon" },
+            { name: "Tailwind CSS", icon: "logos:tailwindcss-icon" },
+            { name: "SCSS", icon: "logos:sass" },
         ]
     },
     {
         title: "Backend",
-        icon: "",
+        icon: "solar:server-bold-duotone",
         skills: [
-            { name: "Go", level: 30 },
-            { name: "Node.js", level: 75 },
-            { name: "PHP", level: 60 },
-            { name: "REST API", level: 70 },
-            { name: "gRPC", level: 10 },
-            { name: "PostgreSQL", level: 50 },
+            { name: "Go", icon: "logos:go" },
+            { name: "Node.js", icon: "logos:nodejs-icon" },
+            { name: "PHP", icon: "logos:php" },
+            { name: "PostgreSQL", icon: "logos:postgresql" },
         ]
     },
     {
-        title: "Tools & Services",
-        icon: "",
+        title: "Tools & Cloud",
+        icon: "solar:cloud-bold-duotone",
         skills: [
-            { name: "Git", level: 40 },
-            { name: "Docker", level: 20 },
-            { name: "Google Cloud", level: 30 },
-            { name: "WebSocket", level: 30 },
-            { name: "OAuth/JWT", level: 70 },
-            { name: "Virtual Machines", level: 30 },
-            { name: "LLM", level: 15 },
+            { name: "Git", icon: "logos:git-icon" },
+            { name: "Docker", icon: "logos:docker-icon" },
+            { name: "Google Cloud", icon: "logos:google-cloud" },
+            { name: "OAuth/JWT", icon: "logos:jwt-icon" },
+            { name: "WebSocket", icon: "carbon:ibm-cloud-websockets" },
+            { name: "LLM Integration", icon: "fluent:brain-circuit-24-regular" },
         ]
     }
 ]
 
-const SkillBar = ({ name, level, index }: { name: string; level: number; index: number }) => {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: "-50px" })
-
+const SkillCard = ({ name, icon, index }: { name: string; icon: string; index: number }) => {
     return (
         <motion.div
-            ref={ref}
-            className={styles.skillItem}
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className={styles.skillCard}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.05 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)" }}
         >
-            <div className={styles.skillHeader}>
-                <span className={styles.skillName}>{name}</span>
-                <span className={styles.skillLevel}>{level}%</span>
+            <div className={styles.iconWrapper}>
+                <Icon icon={icon} className={styles.skillIcon} />
             </div>
-            <div className={styles.skillBarBg}>
-                <motion.div
-                    className={styles.skillBarFill}
-                    initial={{ width: 0 }}
-                    animate={isInView ? { width: `${level}%` } : {}}
-                    transition={{ duration: 1, delay: 0.2 + index * 0.1, ease: "easeOut" }}
-                />
-            </div>
+            <span className={styles.skillName}>{name}</span>
         </motion.div>
     )
 }
 
 const SkillCategory = ({ category, categoryIndex }: { category: typeof skillCategories[0]; categoryIndex: number }) => {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: "-100px" })
-
     return (
         <motion.div
-            ref={ref}
-            className={styles.categoryCard}
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
+            className={styles.categorySection}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: categoryIndex * 0.2 }}
+            viewport={{ once: true }}
         >
             <div className={styles.categoryHeader}>
-                <span className={styles.categoryIcon}>{category.icon}</span>
-                <h3 className={styles.categoryTitle}>{category.title}</h3>
+                <div className={styles.categoryIconWrapper}>
+                    <Icon icon={category.icon} width={24} height={24} />
+                </div>
+                {/* <h3 className={styles.categoryTitle}>{category.title}</h3> */}
             </div>
-            <div className={styles.skillsList}>
+            <div className={styles.skillsGrid}>
                 {category.skills.map((skill, index) => (
-                    <SkillBar
+                    <SkillCard
                         key={skill.name}
                         name={skill.name}
-                        level={skill.level}
+                        icon={skill.icon}
                         index={index}
                     />
                 ))}
@@ -107,38 +91,28 @@ const SkillCategory = ({ category, categoryIndex }: { category: typeof skillCate
 
 const Skills = forwardRef<HTMLDivElement>((props, ref) => {
     const containerRef = useRef(null)
-    const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
     return (
-        <motion.div
-            ref={ref}
-            className={styles.main}
-        >
+        <section ref={ref} className={styles.main}>
             <div className={styles.content}>
                 <motion.div
                     ref={containerRef}
                     className={styles.header}
                     initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
+                    viewport={{ once: true }}
                 >
-                    <motion.span
-                        className={styles.label}
-                        initial={{ opacity: 0 }}
-                        animate={isInView ? { opacity: 1 } : {}}
-                        transition={{ delay: 0.2 }}
-                    >
-                        What I Work With
-                    </motion.span>
+                    <span className={styles.label}>Expertise</span>
                     <h2 className={styles.title}>
-                        My <span className={styles.highlight}>Skills</span> & Expertise
+                        Technical <span className={styles.highlight}>Skills</span>
                     </h2>
                     <p className={styles.subtitle}>
-                        From frontend animations to backend microservices, here are the technologies I use to bring ideas to life.
+                        A comprehensive toolkit enabling scalable, performant, and user-centric solutions.
                     </p>
                 </motion.div>
 
-                <div className={styles.categoriesGrid}>
+                <div className={styles.categoriesContainer}>
                     {skillCategories.map((category, index) => (
                         <SkillCategory
                             key={category.title}
@@ -147,31 +121,8 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
                         />
                     ))}
                 </div>
-
-                <motion.div
-                    className={styles.techStack}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                    <span className={styles.techLabel}>Currently building with</span>
-                    <div className={styles.techIcons}>
-                        {["Next.js", "TypeScript", "Go", "PostgreSQL", "gRPC", "Redis"].map((tech, index) => (
-                            <motion.div
-                                key={tech}
-                                className={styles.techBadge}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                                transition={{ delay: 0.8 + index * 0.1 }}
-                                whileHover={{ scale: 1.1, y: -5 }}
-                            >
-                                {tech}
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
             </div>
-        </motion.div>
+        </section>
     )
 })
 

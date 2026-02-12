@@ -44,6 +44,7 @@ const Home = forwardRef<HTMLDivElement> ((props, ref) => {
               trigger="onMount"
               animationDuration={0.5}
             />
+            
             <HeroTitle 
               title="Mohammed" 
               animationDelay={0.05}
