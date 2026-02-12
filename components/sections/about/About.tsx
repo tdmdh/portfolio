@@ -3,25 +3,41 @@
 import { forwardRef, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import styles from "@/app/styles/About.module.css"
-import { TextReveal } from "@/components/ui/TextReveal"
+import { AboutScrollSection } from "@/components/ui/AboutScrollSection"
 
-const infoCards = [
+const skillCategories = [
   {
-    icon: "",
-    title: "Focus",
-    text: "Full-stack development with emphasis on clean architecture"
+    title: "Frontend",
+    icon: "solar:code-bold-duotone",
+    skills: [
+      { name: "React Native", icon: "tabler:device-mobile-code" },
+      { name: "Next.js", icon: "logos:nextjs-icon" },
+      { name: "TypeScript", icon: "logos:typescript-icon" },
+      { name: "Tailwind CSS", icon: "logos:tailwindcss-icon" },
+      { name: "SCSS", icon: "logos:sass" },
+    ]
   },
   {
-    icon: "",
-    title: "Passion",
-    text: "Building scalable and performant web and mobile applications"
+    title: "Backend",
+    icon: "solar:server-bold-duotone",
+    skills: [
+      { name: "Go", icon: "logos:go" },
+      { name: "Node.js", icon: "logos:nodejs-icon" },
+      { name: "PHP", icon: "logos:php" },
+    ]
   },
   {
-    icon: "",
-    title: "Learning",
-    text: "Always exploring new technologies and best practices"
+    title: "Tools & Cloud",
+    icon: "solar:cloud-bold-duotone",
+    skills: [
+      { name: "Git", icon: "logos:git-icon" },
+      { name: "Docker", icon: "logos:docker-icon" },
+      { name: "Google Cloud", icon: "logos:google-cloud" },
+    ]
   }
 ]
+
+const aboutText = "I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust."
 
 const About = forwardRef<HTMLDivElement>((props, ref) => {
   const containerRef = useRef(null)
@@ -66,35 +82,8 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           </h2>
         </motion.div>
 
-        <div className={styles.textRevealContainer}>
-          <TextReveal>
-            I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust.
-          </TextReveal>
-        </div>
+        <AboutScrollSection text={aboutText} skills={skillCategories} />
 
-        {/* <div className={styles.infoGrid}>
-          {infoCards.map((card, index) => (
-            <motion.div
-              key={card.title}
-              className={styles.infoCard}
-              variants={itemVariants}
-              custom={index}
-            >
-              <span className={styles.infoIcon}>{card.icon}</span>
-              <h3 className={styles.infoTitle}>{card.title}</h3>
-              <p className={styles.infoText}>{card.text}</p>
-            </motion.div>
-          ))}
-        </div> */}
-{/* 
-        <motion.div className={styles.ctaSection} variants={itemVariants}>
-          <a href="#contact" className={styles.ctaButton}>
-            Let's Connect
-          </a>
-          <a href="#projects" className={`${styles.ctaButton} ${styles.ctaButtonSecondary}`}>
-            View Projects
-          </a>
-        </motion.div> */}
       </motion.div>
     </div>
   )

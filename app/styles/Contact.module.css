@@ -1,149 +1,40 @@
-.main {
+/* Contact Section Styles */
+.contactSection {
+    min-height: 100vh;
+    width: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    box-sizing: border-box;
-    overflow: hidden;
-    padding: 4rem 2rem;
+    padding: 6rem 1rem;
     position: relative;
-    background: linear-gradient(180deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    /* Clean background or gradient if preferred */
+    background: transparent;
 }
 
-.contactWrapper {
-    position: relative;
+.container {
     width: 100%;
     max-width: 1200px;
-    z-index: 1;
-}
-
-/* Background Decoration */
-/* .bgDecoration {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.gradientOrb1 {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    top: -200px;
-    right: -200px;
-    background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(60px);
-    animation: float1 8s ease-in-out infinite;
-}
-
-.gradientOrb2 {
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    bottom: -150px;
-    left: -150px;
-    background: radial-gradient(circle, rgba(118, 75, 162, 0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(60px);
-    animation: float2 10s ease-in-out infinite;
-} */
-
-@keyframes float1 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(-30px, 30px) scale(1.1);
-    }
-}
-
-@keyframes float2 {
-
-    0%,
-    100% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(20px, -20px) scale(1.05);
-    }
-}
-
-.contactContainer {
-    display: flex;
-    align-items: center;
-    gap: 4rem;
-    background: linear-gradient(145deg,
-            rgba(255, 255, 255, 0.534) 0%,
-            rgba(250, 250, 255, 0.9) 100%);
-    border-radius: 3rem;
-    padding: 3.5rem;
-    box-shadow:
-        0 30px 60px rgba(5, 10, 48, 0.1),
-        0 10px 20px rgba(5, 10, 48, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(5, 10, 48, 0.06);
-    position: relative;
-    overflow: hidden;
-}
-
-.contactContainer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 3rem;
-    padding: 1px;
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.6) 0%,
-            transparent 50%,
-            rgba(255, 255, 255, 0.3) 100%);
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-}
-
-/* Content Side */
-.contentSide {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 4rem;
+    z-index: 10;
 }
 
-.label {
-    display: inline-block;
-    font-family: var(--primary-font);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--secondary-color);
-    background: linear-gradient(135deg, rgba(74, 78, 105, 0.1) 0%, rgba(154, 140, 152, 0.15) 100%);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    width: fit-content;
+/* Header */
+.header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .title {
     font-family: var(--primary-font);
-    font-size: 2.75rem;
+    font-size: 4rem;
+    /* Massive */
     font-weight: 700;
+    line-height: 1.1;
     color: var(--primary-color);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin: 0;
+    margin-bottom: 1.5rem;
 }
 
 .highlight {
@@ -151,334 +42,236 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-style: italic;
 }
 
-.description {
+.subtitle {
     font-family: var(--secondary-font);
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 1.25rem;
     color: var(--secondary-color);
-    margin: 0;
-    max-width: 500px;
+    opacity: 0.9;
+    font-weight: 300;
 }
 
-/* Contact Info */
-.contactInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 0.5rem;
+/* Bento Grid Layout */
+.bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, minmax(250px, auto));
+    gap: 1.5rem;
+    width: 100%;
 }
 
-.infoItem {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.infoIcon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(74, 78, 105, 0.1) 0%, rgba(154, 140, 152, 0.15) 100%);
+/* Card Common Styles */
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    /* Deep glass */
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 2rem;
-    flex-shrink: 0;
-}
-
-.infoIcon svg {
-    width: 22px;
-    height: 22px;
-    color: var(--secondary-color);
-}
-
-.infoText {
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    text-decoration: none;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    justify-content: space-between;
 }
 
-.infoLabel {
+.card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.cardLabel {
     font-family: var(--primary-font);
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--secondary-color);
     opacity: 0.7;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-.infoValue {
-    font-family: var(--primary-font);
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
+/* Specific Cards */
+
+/* Email Card: Span 2 cols, 1 row (Top Left) */
+.emailCard {
+    grid-column: span 2;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
 }
 
-.infoValue:hover {
-    color: var(--tertiary-color);
+.cardContent {
+    position: relative;
+    z-index: 2;
 }
 
-/* Actions */
-.actions {
+.cardHeader {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 2rem;
 }
 
-.primaryButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
+.emailText {
     font-family: var(--primary-font);
-    font-size: 1rem;
+    font-size: 1.5rem;
+    /* Large */
     font-weight: 600;
-    color: var(--quinary-color);
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    border: none;
-    border-radius: 2rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 20px rgba(5, 10, 48, 0.25);
+    color: var(--primary-color);
+    word-break: break-all;
 }
 
-.primaryButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(5, 10, 48, 0.35);
-}
-
-.primaryButton svg {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-}
-
-.primaryButton:hover svg {
-    transform: translateX(4px);
-}
-
-/* Social Links */
-.socialLinks {
-    display: flex;
-    gap: 0.75rem;
-}
-
-.socialLink {
-    width: 48px;
-    height: 48px;
+.actionIcon {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    width: 50px;
+    height: 50px;
+    background: var(--tertiary-color);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(5, 10, 48, 0.05);
-    border-radius: 1.5rem;
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: all 0.3s ease;
+    color: #fff;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
 }
 
-.socialLink:hover {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: var(--quinary-color);
-    box-shadow: 0 8px 20px rgba(5, 10, 48, 0.25);
+.emailCard:hover .actionIcon {
+    transform: scale(1.1) rotate(45deg);
 }
 
-.socialIcon {
-    width: 22px;
-    height: 22px;
+/* Status Card: Span 2 cols (Top Right) */
+.statusCard {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
 }
 
-/* Image Side */
-.imageSide {
+.statusIndicator {
+    position: relative;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
-    position: relative;
 }
 
-.imageWrapper {
-    position: relative;
-    width: 350px;
-    height: 420px;
-}
-
-.imageGlow {
+.dot {
     position: absolute;
-    inset: -20px;
-    background: linear-gradient(135deg, rgba(74, 78, 105, 0.35) 0%, rgba(154, 140, 152, 0.35) 100%);
-    border-radius: 2rem;
-    filter: blur(30px);
-    opacity: 0.6;
+    inset: 0;
+    background: #10b981;
+    /* Green */
+    border-radius: 50%;
 }
 
-.profileImage {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2rem;
-    z-index: 1;
-}
-
-.imageBorder {
+.ping {
     position: absolute;
     inset: -4px;
-    border-radius: 2rem;
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--tertiary-color) 100%);
-    z-index: 0;
+    background: #10b981;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* Floating Badge */
-.floatingBadge {
-    position: absolute;
-    bottom: -15px;
-    left: -30px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    background: #fff;
-    border-radius: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
 }
 
-.badgeIcon {
-    font-size: 1.25rem;
-}
-
-.badgeText {
+.statusText {
     font-family: var(--primary-font);
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 500;
     color: var(--primary-color);
-    white-space: nowrap;
+}
+
+/* Location Card: Span 1 (Bottom Left) -> actually make it span 1 */
+.locationCard {
+    grid-column: span 1;
+}
+
+.locationText {
+    font-family: var(--primary-font);
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.largeIcon {
+    font-size: 3rem;
+    color: var(--secondary-color);
+    margin-bottom: auto;
+    opacity: 0.5;
+}
+
+/* Social Cards */
+.socialCard {
+    grid-column: span 1;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.socialCard.github:hover {
+    background: rgba(36, 41, 46, 0.2);
+}
+
+.socialCard.twitter:hover {
+    background: rgba(29, 161, 242, 0.1);
+}
+
+.socialCard.linkedin:hover {
+    background: rgba(10, 102, 194, 0.2);
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .contactContainer {
-        flex-direction: column-reverse;
-        gap: 3rem;
-        padding: 2.5rem;
-    }
-
-    .contentSide {
-        align-items: center;
-        text-align: center;
+    .bentoGrid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 
+           Email: span 2 
+           Status: span 2
+           Location: span 1 
+           Social: span 1
+           Wait, 3 socials.
+           Row 3: Location, Github
+           Row 4: Twitter, LinkedIn
+        */
     }
 
     .title {
-        font-size: 2.25rem;
-    }
-
-    .description {
-        max-width: 100%;
-    }
-
-    .contactInfo {
-        align-items: center;
-    }
-
-    .actions {
-        justify-content: center;
-    }
-
-    .imageWrapper {
-        width: 280px;
-        height: 340px;
-    }
-
-    .floatingBadge {
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
+        font-size: 3rem;
     }
 }
 
 @media (max-width: 768px) {
-    .main {
-        padding: 2rem 1rem;
-        min-height: auto;
+    .bentoGrid {
+        grid-template-columns: 1fr;
     }
 
-    .contactContainer {
-        padding: 2rem;
-        border-radius: 1.5rem;
+    .emailCard,
+    .statusCard,
+    .locationCard,
+    .socialCard {
+        grid-column: span 1;
     }
 
-    .title {
-        font-size: 1.75rem;
-    }
-
-    .description {
-        font-size: 1rem;
-    }
-
-    .imageWrapper {
-        width: 240px;
-        height: 300px;
-    }
-
-    .primaryButton {
-        padding: 0.85rem 1.75rem;
-        font-size: 0.95rem;
-    }
-
-    .socialLink {
-        width: 44px;
-        height: 44px;
-    }
-
-    .infoIcon {
-        width: 44px;
-        height: 44px;
-    }
-}
-
-@media (max-width: 480px) {
-    .contactContainer {
-        padding: 1.5rem;
-        gap: 2rem;
-    }
-
-    .label {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
-    }
-
-    .title {
-        font-size: 1.5rem;
-    }
-
-    .imageWrapper {
-        width: 200px;
-        height: 260px;
-    }
-
-    .actions {
+    .statusCard {
         flex-direction: column;
-        width: 100%;
+        align-items: flex-start;
+        gap: 1rem;
     }
 
-    .primaryButton {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .socialLinks {
-        justify-content: center;
-    }
-
-    .floatingBadge {
-        padding: 0.5rem 1rem;
-    }
-
-    .badgeText {
-        font-size: 0.8rem;
+    .title {
+        font-size: 2.5rem;
     }
 }

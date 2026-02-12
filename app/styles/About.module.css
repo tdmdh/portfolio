@@ -13,7 +13,6 @@
 
 .content {
     width: 100%;
-    max-width: 900px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -57,108 +56,269 @@
     background-clip: text;
 }
 
-/* Text Reveal Container */
-.textRevealContainer {
+/* Rotating Skills Styles */
+.wrapper {
+    position: relative;
     width: 100%;
-    max-width: 1200px;
-    margin: 1rem 0 2rem 0;
 }
 
-.descriptionHighlight {
+.textRevealOverride {
+    /* Ensure text is below or adjustable if needed */
+}
+
+.skillsOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.stickyContainer {
+    position: sticky;
+    top: 20vh;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.rotatingFrame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* border: 1px dashed rgba(255,255,255,0.1); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orbitingSkillCard {
+    position: absolute;
+    /* transform is handled by JS x/y */
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    /* Lighter glass */
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* transition: background 0.3s ease;  <-- removing this because motion handles pos, but hover can have transition */
+    transition: background 0.3s ease, border-color 0.3s ease;
+    z-index: 15;
+}
+
+.orbitingSkillCard:hover {
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 20;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.orbitIconWrapper {
+    font-size: 1.5rem;
     color: var(--primary-color);
-    font-weight: 600;
+    display: flex;
 }
 
-/* Info Cards */
-.infoGrid {
+.orbitSkillName {
+    font-size: 0.7rem;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+    text-align: center;
+    line-height: 1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    /* Handle smaller desktops by scaling down if needed, 
+       but for now let's just let them be off-screen or scroll? 
+       Actually, `1200x700` fits in 1400. */
+}
+
+@media (max-width: 1024px) {
+
+    /* Tablets */
+    .orbitingSkillCard {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Mobile - The 1200px rect will be too big. 
+       Use JS responsive logic or media query?
+       JS logic uses hardcoded 1200. I should actually make `SkillCard` responsive.
+       But for now, I'll notify user about desktop focus or let it be.
+       Actually, I can use CSS transform scale on the frame! */
+    .rotatingFrame {
+        transform: scale(0.6);
+    }
+
+    .orbitingSkillCard {
+        width: 60px;
+        height: 60px;
+    }
+
+    .orbitIconWrapper {
+        font-size: 1.25rem;
+    }
+
+    .orbitSkillName {
+        display: none;
+    }
+}
+
+/* Combined Scroll Section */
+.scrollSectionContainer {
+    width: 100%;
+    position: relative;
+    margin-top: 2rem;
+}
+
+.stickyWrapper {
+    position: sticky;
+    top: 10vh;
+    /* Adjust to center vertically */
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.textContainer {
+    position: absolute;
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    z-index: 10;
+    transition: all 0.5s ease;
+}
+
+.revealText {
+    font-family: var(--primary-font);
+    font-size: 2rem;
+    line-height: 1.6;
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.wordWrapper {
+    display: inline-block;
+    margin-right: 0.3em;
+    position: relative;
+}
+
+.wordVisible {
+    color: var(--primary-color);
+}
+
+.skillsContainerOverlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    /* Let text be selectable if needed, but mainly for layering */
+}
+
+.skillGroup {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 2rem;
+}
+
+.skillsGridCombined {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1.5rem;
     width: 100%;
-    margin-top: 1rem;
+    max-width: 1000px;
+    justify-items: center;
 }
 
-.infoCard {
+.skillCardCompact {
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 1.5rem;
-    padding: 1.75rem;
-    text-align: center;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    height: 120px;
     transition: all 0.3s ease;
+    cursor: default;
+    pointer-events: auto;
 }
 
-.infoCard:hover {
-    background: rgba(255, 255, 255, 0.85);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(5, 10, 48, 0.1);
+.skillCardCompact:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.infoIcon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
+.iconWrapperCompact {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.skillCardCompact:hover .iconWrapperCompact {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.skillIconCompact {
     display: block;
 }
 
-.infoTitle {
+.skillNameCompact {
     font-family: var(--primary-font);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    margin: 0 0 0.5rem 0;
-}
-
-.infoText {
-    font-family: var(--secondary-font);
     font-size: 0.9rem;
-    color: var(--secondary-color);
-    margin: 0;
-    line-height: 1.5;
-}
-
-/* CTA Section */
-.ctaSection {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.ctaButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.9rem 1.75rem;
-    font-family: var(--primary-font);
-    font-size: 0.95rem;
     font-weight: 600;
-    color: var(--quinary-color);
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    border: none;
-    border-radius: 2rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 20px rgba(5, 10, 48, 0.2);
-}
-
-.ctaButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(5, 10, 48, 0.3);
-}
-
-.ctaButtonSecondary {
-    background: transparent;
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    box-shadow: none;
-}
-
-.ctaButtonSecondary:hover {
-    background: var(--primary-color);
-    color: var(--quinary-color);
+    text-align: center;
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .revealText {
+        font-size: 1.75rem;
+    }
+}
+
 @media (max-width: 768px) {
     .main {
         padding: 4rem 1.5rem;
@@ -168,27 +328,28 @@
         font-size: 2rem;
     }
 
-    .aboutCard {
-        padding: 2rem;
+    .revealText {
+        font-size: 1.4rem;
     }
 
-    .description {
-        font-size: 1.1rem;
-    }
-
-    .infoGrid {
-        grid-template-columns: 1fr;
+    .skillsGridCombined {
+        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
     }
 
-    .ctaSection {
-        flex-direction: column;
-        width: 100%;
+    .skillCardCompact {
+        height: 100px;
+        padding: 1rem;
     }
 
-    .ctaButton {
-        width: 100%;
-        justify-content: center;
+    .iconWrapperCompact {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+    }
+
+    .skillNameCompact {
+        font-size: 0.8rem;
     }
 }
 
@@ -197,11 +358,15 @@
         font-size: 1.75rem;
     }
 
-    .description {
-        font-size: 1rem;
+    .revealText {
+        font-size: 1.2rem;
     }
 
     .label {
         font-size: 0.75rem;
+    }
+
+    .skillsGridCombined {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
