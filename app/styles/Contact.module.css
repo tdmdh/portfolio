@@ -1,171 +1,264 @@
-/* Contact Section Styles */
+/* ═══════════════════════════════════════════════
+   Contact Section – Full-Viewport Dark Bento
+   ═══════════════════════════════════════════════ */
+
 .contactSection {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6rem 1rem;
+    width: 100vw;
+    height: 100vh;
     position: relative;
-    /* Clean background or gradient if preferred */
-    background: transparent;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
 
-.container {
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-    z-index: 10;
-}
+/* ═══════════════════════════════════════════════
+   Complex Bento Grid – 6 col × 4 row
+   ═══════════════════════════════════════════════
+   Layout:
+     "head  head  prof  prof  email email"
+     "head  head  prof  prof  stat  cta  "
+     "loc   clock soc1  soc2  soc3  cta  "
+   ═══════════════════════════════════════════════ */
 
-/* Header */
-.header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.title {
-    font-family: var(--primary-font);
-    font-size: 4rem;
-    /* Massive */
-    font-weight: 700;
-    line-height: 1.1;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-}
-
-.highlight {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--tertiary-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-style: italic;
-}
-
-.subtitle {
-    font-family: var(--secondary-font);
-    font-size: 1.25rem;
-    color: var(--secondary-color);
-    opacity: 0.9;
-    font-weight: 300;
-}
-
-/* Bento Grid Layout */
 .bentoGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, minmax(250px, auto));
-    gap: 1.5rem;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1.6fr 1fr 0.8fr;
+    grid-template-areas:
+        "head  head  prof  prof  email email"
+        "head  head  prof  prof  stat  cta"
+        "loc   clock soc1  soc2  soc3  cta";
+    gap: 0.75rem;
     width: 100%;
+    height: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
 }
 
-/* Card Common Styles */
+/* ── Card Base ── */
 .card {
-    background: rgba(255, 255, 255, 0.03);
-    /* Deep glass */
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 2rem;
-    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    padding: 2rem;
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
+    box-sizing: border-box;
 }
 
 .card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
 .cardLabel {
     font-family: var(--primary-font);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--secondary-color);
-    opacity: 0.7;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.15em;
+    color: var(--quaternary-color);
+    opacity: 0.55;
     display: block;
+    margin-bottom: 0.4rem;
 }
 
-/* Specific Cards */
-
-/* Email Card: Span 2 cols, 1 row (Top Left) */
-.emailCard {
-    grid-column: span 2;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+/* ═══════════════════════════════════════════════
+   A: Headline – 2×2 top-left
+   ═══════════════════════════════════════════════ */
+.headlineCard {
+    grid-area: head;
+    justify-content: center;
+    padding: 3rem;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
 }
 
-.cardContent {
+.label {
+    display: inline-block;
+    font-family: var(--primary-font);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--quaternary-color);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.45rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.headline {
+    font-family: var(--primary-font);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--quinary-color);
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.line { display: block; }
+
+.outlineLine {
+    -webkit-text-stroke: 2px var(--quinary-color);
+    color: transparent;
+}
+
+.headlineSubtext {
+    font-family: var(--secondary-font);
+    font-size: 1rem;
+    color: var(--quaternary-color);
+    opacity: 0.55;
+    margin-top: 1.25rem;
+    line-height: 1.6;
+    max-width: 340px;
+}
+
+/* ═══════════════════════════════════════════════
+   B: Profile Picture – 2×2 center
+   ═══════════════════════════════════════════════ */
+.profileCard {
+    grid-area: prof;
+    padding: 0;
+    justify-content: flex-end;
+}
+
+.profileImageWrapper {
+    position: absolute;
+    inset: 0;
+}
+
+.profileImage {
+    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    transition: transform 0.6s ease;
+}
+
+.profileCard:hover .profileImage {
+    transform: scale(1.05);
+}
+
+.profileOverlay {
     position: relative;
     z-index: 2;
+    padding: 2rem;
+    background: linear-gradient(0deg, rgba(5, 10, 48, 0.85) 0%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 }
 
-.cardHeader {
+.profileName {
+    font-family: var(--primary-font);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--quinary-color);
+}
+
+.profileRole {
+    font-family: var(--secondary-font);
+    font-size: 0.85rem;
+    color: var(--quaternary-color);
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════
+   C: Email CTA – 2 cols top-right
+   ═══════════════════════════════════════════════ */
+.emailCard {
+    grid-area: email;
+    background: linear-gradient(
+        135deg,
+        rgba(154, 140, 152, 0.15) 0%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.emailCard:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(154, 140, 152, 0.25) 0%,
+        rgba(255, 255, 255, 0.07) 100%
+    );
+}
+
+.emailCard:hover .emailArrow {
+    transform: rotate(-45deg) scale(1.1);
+    background: var(--tertiary-color);
+}
+
+.emailTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2rem;
 }
 
-.emailText {
+.emailIcon {
+    font-size: 2.25rem;
+    color: var(--tertiary-color);
+    opacity: 0.5;
+}
+
+.emailAddress {
     font-family: var(--primary-font);
-    font-size: 1.5rem;
-    /* Large */
-    font-weight: 600;
-    color: var(--primary-color);
+    font-size: clamp(1.1rem, 2.5vw, 1.65rem);
+    font-weight: 700;
+    color: var(--quinary-color);
     word-break: break-all;
 }
 
-.actionIcon {
+.emailArrow {
     position: absolute;
-    bottom: 2.5rem;
-    right: 2.5rem;
-    width: 50px;
-    height: 50px;
-    background: var(--tertiary-color);
+    bottom: 1.75rem;
+    right: 1.75rem;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
+    color: var(--quinary-color);
+    font-size: 1.3rem;
+    transition: all 0.35s ease;
 }
 
-.emailCard:hover .actionIcon {
-    transform: scale(1.1) rotate(45deg);
-}
-
-/* Status Card: Span 2 cols (Top Right) */
+/* ═══════════════════════════════════════════════
+   D: Status – 1 col
+   ═══════════════════════════════════════════════ */
 .statusCard {
-    grid-column: span 2;
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
+    grid-area: stat;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.75rem;
 }
 
-.statusIndicator {
+.statusDot {
     position: relative;
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
 }
 
 .dot {
     position: absolute;
     inset: 0;
     background: #10b981;
-    /* Green */
     border-radius: 50%;
 }
 
@@ -174,104 +267,289 @@
     inset: -4px;
     background: #10b981;
     border-radius: 50%;
-    opacity: 0.6;
-    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    opacity: 0.5;
+    animation: pingAnim 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-@keyframes ping {
-
-    75%,
-    100% {
-        transform: scale(2);
+@keyframes pingAnim {
+    75%, 100% {
+        transform: scale(2.5);
         opacity: 0;
     }
 }
 
-.statusText {
+.statusLabel {
     font-family: var(--primary-font);
-    font-size: 1.75rem;
-    font-weight: 500;
-    color: var(--primary-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--quaternary-color);
+    opacity: 0.5;
 }
 
-/* Location Card: Span 1 (Bottom Left) -> actually make it span 1 */
+.statusText {
+    font-family: var(--primary-font);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+/* ═══════════════════════════════════════════════
+   E: Magnetic CTA – 1 col × 2 rows (right)
+   ═══════════════════════════════════════════════ */
+.ctaCard {
+    grid-area: cta;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.ctaCard:hover .ctaRing {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.ctaCard:hover .ctaArrow {
+    transform: translate(3px, -3px);
+}
+
+.ctaCircle {
+    width: clamp(120px, 12vw, 200px);
+    height: clamp(120px, 12vw, 200px);
+    border-radius: 50%;
+    background: var(--quinary-color);
+    color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.ctaCard:hover .ctaCircle {
+    background: var(--quaternary-color);
+}
+
+.ctaText {
+    font-family: var(--primary-font);
+    font-size: clamp(0.85rem, 1.4vw, 1.15rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    position: relative;
+    z-index: 2;
+}
+
+.ctaArrow {
+    font-size: clamp(1rem, 1.6vw, 1.5rem);
+    margin-top: 0.4rem;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.ctaRing {
+    position: absolute;
+    inset: 5px;
+    border: 2px solid rgba(5, 10, 48, 0.15);
+    border-radius: 50%;
+    transform: scale(0.88);
+    opacity: 0;
+    transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   F: Location
+   ═══════════════════════════════════════════════ */
 .locationCard {
-    grid-column: span 1;
+    grid-area: loc;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.locationGlobe {
+    font-size: 2.5rem;
+    color: var(--tertiary-color);
+    opacity: 0.6;
+    flex-shrink: 0;
 }
 
 .locationText {
     font-family: var(--primary-font);
-    font-size: 1.25rem;
-    color: var(--primary-color);
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--quinary-color);
+    display: block;
 }
 
-.largeIcon {
-    font-size: 3rem;
-    color: var(--secondary-color);
-    margin-bottom: auto;
-    opacity: 0.5;
+/* ═══════════════════════════════════════════════
+   G: Clock
+   ═══════════════════════════════════════════════ */
+.clockCard {
+    grid-area: clock;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.25rem;
 }
 
-/* Social Cards */
+.clockIcon {
+    font-size: 2.5rem;
+    color: var(--tertiary-color);
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+
+.clockTime {
+    font-family: var(--primary-font);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--quinary-color);
+    display: block;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════════════════════════
+   H, I, J: Socials
+   ═══════════════════════════════════════════════ */
+.social1 { grid-area: soc1; }
+.social2 { grid-area: soc2; }
+.social3 { grid-area: soc3; }
+
 .socialCard {
-    grid-column: span 1;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.02);
+    gap: 0.6rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    text-align: center;
 }
 
-.socialCard.github:hover {
-    background: rgba(36, 41, 46, 0.2);
+.socialCard:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
 }
 
-.socialCard.twitter:hover {
-    background: rgba(29, 161, 242, 0.1);
+.socialCard:hover .socialArrow {
+    opacity: 1;
+    transform: translate(3px, -3px);
 }
 
-.socialCard.linkedin:hover {
-    background: rgba(10, 102, 194, 0.2);
+.socialIcon {
+    font-size: 2rem;
+    color: var(--quinary-color);
+    flex-shrink: 0;
 }
 
-/* Responsive */
+.socialName {
+    font-family: var(--primary-font);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--quinary-color);
+}
+
+.socialArrow {
+    font-size: 1rem;
+    color: var(--quaternary-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+/* ═══════════════════════════════════════════════
+   Responsive – Tablet (≤ 1024px)
+   ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-    .bentoGrid {
-        grid-template-columns: repeat(2, 1fr);
-        /* 
-           Email: span 2 
-           Status: span 2
-           Location: span 1 
-           Social: span 1
-           Wait, 3 socials.
-           Row 3: Location, Github
-           Row 4: Twitter, LinkedIn
-        */
+    .contactSection {
+        height: auto;
+        min-height: 100vh;
     }
 
-    .title {
-        font-size: 3rem;
+    .bentoGrid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto auto auto auto;
+        grid-template-areas:
+            "head  head  prof  prof"
+            "head  head  prof  prof"
+            "email email stat  cta"
+            "loc   clock soc1  soc2"
+            "soc3  soc3  soc3  soc3";
+        padding: 1rem;
+    }
+
+    .headline {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .ctaCircle {
+        width: 130px;
+        height: 130px;
     }
 }
 
-@media (max-width: 768px) {
+/* ═══════════════════════════════════════════════
+   Responsive – Mobile (≤ 640px)
+   ═══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+    .contactSection {
+        height: auto;
+        min-height: 100vh;
+    }
+
     .bentoGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "head   head"
+            "prof   prof"
+            "email  email"
+            "stat   cta"
+            "loc    clock"
+            "soc1   soc2"
+            "soc3   soc3";
+        gap: 0.5rem;
+        padding: 0.5rem;
     }
 
-    .emailCard,
-    .statusCard,
-    .locationCard,
+    .card {
+        padding: 1.5rem;
+        border-radius: 1.25rem;
+    }
+
+    .headlineCard {
+        padding: 2rem;
+    }
+
+    .headline {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    .profileCard {
+        min-height: 250px;
+    }
+
+    .ctaCircle {
+        width: 110px;
+        height: 110px;
+    }
+
+    .emailArrow {
+        width: 40px;
+        height: 40px;
+        bottom: 1.25rem;
+        right: 1.25rem;
+    }
+
     .socialCard {
-        grid-column: span 1;
-    }
-
-    .statusCard {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-
-    .title {
-        font-size: 2.5rem;
+        padding: 1.25rem;
     }
 }

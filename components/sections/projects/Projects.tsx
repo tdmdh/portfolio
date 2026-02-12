@@ -229,7 +229,7 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
                 status={project.status}
                 link={project.link}
                 linkText={project.linkText}
-                onClick={() => handleCardClick(index)}
+                // onClick={() => handleCardClick(index)}
               />
             </div>
           ))}

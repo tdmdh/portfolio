@@ -6,7 +6,6 @@ import { createContext, useContext, useRef, useState, useEffect, useCallback } f
 type SectionRefs = {
     heroRef: React.RefObject<HTMLDivElement | null>
     aboutRef: React.RefObject<HTMLDivElement | null>
-    skillsRef: React.RefObject<HTMLDivElement | null>
     projectsRef: React.RefObject<HTMLDivElement | null>
     contactRef: React.RefObject<HTMLDivElement | null>
 };
@@ -30,7 +29,6 @@ const SectionContext = createContext<SectionContextType | undefined>(undefined)
 export function SectionProvider({ children }: { children: React.ReactNode }) {
     const heroRef = useRef<HTMLDivElement>(null)
     const aboutRef = useRef<HTMLDivElement>(null)
-    const skillsRef = useRef<HTMLDivElement>(null)
     const projectsRef = useRef<HTMLDivElement>(null)
     const contactRef = useRef<HTMLDivElement>(null)
 
@@ -40,7 +38,6 @@ export function SectionProvider({ children }: { children: React.ReactNode }) {
     const refs = {
         heroRef,
         aboutRef,
-        skillsRef,
         projectsRef,
         contactRef
     }
@@ -48,7 +45,6 @@ export function SectionProvider({ children }: { children: React.ReactNode }) {
     const sections: SectionInfo[] = [
         { name: "Home", id: "hero", ref: heroRef, isDark: true },
         { name: "About", id: "about", ref: aboutRef, isDark: false },
-        { name: "Skills", id: "skills", ref: skillsRef, isDark: true },
         { name: "Projects", id: "projects", ref: projectsRef, isDark: false },
         { name: "Contact", id: "contact", ref: contactRef, isDark: true }
     ]
