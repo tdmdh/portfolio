@@ -90,11 +90,11 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                 <motion.div className={`${styles.card} ${styles.profileCard}`} variants={scaleIn}>
                     <div className={styles.profileImageWrapper}>
                         <Image
-                            src="/photo/me.jpeg"
+                            src="/photo/me2.jpeg"
                             alt="Mohammed"
                             fill
                             className={styles.profileImage}
-                            sizes="(max-width: 640px) 100vw, 25vw"
+                            
                         />
                     </div>
                     <div className={styles.profileOverlay}>
