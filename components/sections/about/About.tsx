@@ -58,21 +58,24 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, x: -120, filter: "blur(8px)" },
     visible: {
       opacity: 1,
-      y: 0,
+      x: 0,
+      filter: "blur(0px)",
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94] as const,
-      },
+        type: "spring" as const,
+        stiffness: 300,
+        damping: 24,
+        mass: 0.8,
+      } as const,
     },
   }
 

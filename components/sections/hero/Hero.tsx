@@ -28,25 +28,27 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.06, delayChildren: 0.05 },
     },
   }
 
   const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 120, filter: "blur(8px)" },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } as const,
+      filter: "blur(0px)",
+      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
     },
   }
 
   const scaleIn = {
-    hidden: { opacity: 0, scale: 0.88 },
+    hidden: { opacity: 0, scale: 0.6, filter: "blur(10px)" },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.6, ease: [0.34, 1.56, 0.64, 1] } as const,
+      filter: "blur(0px)",
+      transition: { type: "spring" as const, stiffness: 350, damping: 22, mass: 0.7 },
     },
   }
 

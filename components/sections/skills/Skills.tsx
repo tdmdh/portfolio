@@ -65,9 +65,9 @@ const SkillCard = ({ skill, index }: { skill: Skill; index: number }) => {
     return (
         <motion.div
             className={styles.skillCard}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.05 }}
+            initial={{ opacity: 0, scale: 0.5, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ type: "spring", stiffness: 400, damping: 20, mass: 0.6, delay: index * 0.03 }}
             viewport={{ once: true }}
             whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)" }}
         >
@@ -84,9 +84,9 @@ const SkillCategory = ({ category, categoryIndex }: { category: SkillCategoryDat
     return (
         <motion.div
             className={styles.categorySection}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: categoryIndex * 0.2 }}
+            initial={{ opacity: 0, y: 80, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ type: "spring", stiffness: 280, damping: 22, mass: 0.8, delay: categoryIndex * 0.1 }}
             viewport={{ once: true }}
         >
             <div className={styles.categoryHeader}>
@@ -117,9 +117,9 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
                 <motion.div
                     ref={containerRef}
                     className={styles.header}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    initial={{ opacity: 0, y: 100, filter: "blur(8px)" }}
+                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ type: "spring", stiffness: 300, damping: 24, mass: 0.8 }}
                     viewport={{ once: true }}
                 >
                     <span className={styles.label}>Expertise</span>
