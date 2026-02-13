@@ -4,45 +4,64 @@ import { motion } from "framer-motion"
 import styles from "@/app/styles/Skills.module.css"
 import { forwardRef, useRef } from "react"
 import { useInView } from "framer-motion"
-import { Icon } from "@iconify/react"
+import type { IconType } from "react-icons"
+import {
+    SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
+    SiGo, SiNodedotjs, SiPhp, SiPostgresql,
+    SiGit, SiDocker, SiGooglecloud, SiJsonwebtokens, SiSocketdotio, SiOpenai
+} from "react-icons/si"
+import { Code2, Server, Cloud } from "lucide-react"
 
-const skillCategories = [
+interface Skill {
+    name: string
+    icon: IconType
+    color: string
+}
+
+interface SkillCategoryData {
+    title: string
+    icon: React.ComponentType<{ size?: number; className?: string }>
+    skills: Skill[]
+}
+
+const skillCategories: SkillCategoryData[] = [
     {
         title: "Frontend",
-        icon: "solar:code-bold-duotone",
+        icon: Code2,
         skills: [
-            { name: "React Native", icon: "tabler:device-mobile-code" },
-            { name: "Next.js", icon: "logos:nextjs-icon" },
-            { name: "TypeScript", icon: "logos:typescript-icon" },
-            { name: "Tailwind CSS", icon: "logos:tailwindcss-icon" },
-            { name: "SCSS", icon: "logos:sass" },
+            { name: "React Native", icon: SiReact, color: "#61DAFB" },
+            { name: "Next.js", icon: SiNextdotjs, color: "#171717" },
+            { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+            { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+            { name: "SCSS", icon: SiSass, color: "#CC6699" },
         ]
     },
     {
         title: "Backend",
-        icon: "solar:server-bold-duotone",
+        icon: Server,
         skills: [
-            { name: "Go", icon: "logos:go" },
-            { name: "Node.js", icon: "logos:nodejs-icon" },
-            { name: "PHP", icon: "logos:php" },
-            { name: "PostgreSQL", icon: "logos:postgresql" },
+            { name: "Go", icon: SiGo, color: "#00ADD8" },
+            { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+            { name: "PHP", icon: SiPhp, color: "#777BB4" },
+            { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
         ]
     },
     {
         title: "Tools & Cloud",
-        icon: "solar:cloud-bold-duotone",
+        icon: Cloud,
         skills: [
-            { name: "Git", icon: "logos:git-icon" },
-            { name: "Docker", icon: "logos:docker-icon" },
-            { name: "Google Cloud", icon: "logos:google-cloud" },
-            { name: "OAuth/JWT", icon: "logos:jwt-icon" },
-            { name: "WebSocket", icon: "carbon:ibm-cloud-websockets" },
-            { name: "LLM Integration", icon: "fluent:brain-circuit-24-regular" },
+            { name: "Git", icon: SiGit, color: "#F05032" },
+            { name: "Docker", icon: SiDocker, color: "#2496ED" },
+            { name: "Google Cloud", icon: SiGooglecloud, color: "#4285F4" },
+            { name: "OAuth/JWT", icon: SiJsonwebtokens, color: "#000000" },
+            { name: "WebSocket", icon: SiSocketdotio, color: "#010101" },
+            { name: "LLM Integration", icon: SiOpenai, color: "#412991" },
         ]
     }
 ]
 
-const SkillCard = ({ name, icon, index }: { name: string; icon: string; index: number }) => {
+const SkillCard = ({ skill, index }: { skill: Skill; index: number }) => {
+    const IconComp = skill.icon
     return (
         <motion.div
             className={styles.skillCard}
@@ -53,14 +72,15 @@ const SkillCard = ({ name, icon, index }: { name: string; icon: string; index: n
             whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)" }}
         >
             <div className={styles.iconWrapper}>
-                <Icon icon={icon} className={styles.skillIcon} />
+                <IconComp size={28} color={skill.color} />
             </div>
-            <span className={styles.skillName}>{name}</span>
+            <span className={styles.skillName}>{skill.name}</span>
         </motion.div>
     )
 }
 
-const SkillCategory = ({ category, categoryIndex }: { category: typeof skillCategories[0]; categoryIndex: number }) => {
+const SkillCategory = ({ category, categoryIndex }: { category: SkillCategoryData; categoryIndex: number }) => {
+    const CategoryIcon = category.icon
     return (
         <motion.div
             className={styles.categorySection}
@@ -71,7 +91,7 @@ const SkillCategory = ({ category, categoryIndex }: { category: typeof skillCate
         >
             <div className={styles.categoryHeader}>
                 <div className={styles.categoryIconWrapper}>
-                    <Icon icon={category.icon} width={24} height={24} />
+                    <CategoryIcon size={24} />
                 </div>
                 {/* <h3 className={styles.categoryTitle}>{category.title}</h3> */}
             </div>
@@ -79,8 +99,7 @@ const SkillCategory = ({ category, categoryIndex }: { category: typeof skillCate
                 {category.skills.map((skill, index) => (
                     <SkillCard
                         key={skill.name}
-                        name={skill.name}
-                        icon={skill.icon}
+                        skill={skill}
                         index={index}
                     />
                 ))}

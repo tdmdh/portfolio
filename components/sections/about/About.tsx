@@ -4,37 +4,47 @@ import { forwardRef, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import styles from "@/app/styles/About.module.css"
 import { AboutScrollSection } from "@/components/ui/AboutScrollSection"
+import {
+    SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
+    SiGo, SiNodedotjs, SiPhp, SiPostgresql,
+    SiGit, SiDocker, SiGooglecloud
+} from "react-icons/si"
+import type { IconType } from "react-icons"
 
-const skillCategories = [
-  {
-    title: "Frontend",
-    icon: "solar:code-bold-duotone",
-    skills: [
-      { name: "React Native", icon: "tabler:device-mobile-code" },
-      { name: "Next.js", icon: "logos:nextjs-icon" },
-      { name: "TypeScript", icon: "logos:typescript-icon" },
-      { name: "Tailwind CSS", icon: "logos:tailwindcss-icon" },
-      { name: "SCSS", icon: "logos:sass" },
-    ]
-  },
-  {
-    title: "Backend",
-    icon: "solar:server-bold-duotone",
-    skills: [
-      { name: "Go", icon: "logos:go" },
-      { name: "Node.js", icon: "logos:nodejs-icon" },
-      { name: "PHP", icon: "logos:php" },
-    ]
-  },
-  {
-    title: "Tools & Cloud",
-    icon: "solar:cloud-bold-duotone",
-    skills: [
-      { name: "Git", icon: "logos:git-icon" },
-      { name: "Docker", icon: "logos:docker-icon" },
-      { name: "Google Cloud", icon: "logos:google-cloud" },
-    ]
-  }
+interface SkillItem {
+    name: string
+    icon: IconType
+    color: string
+}
+
+const skillCategories: { title: string; skills: SkillItem[] }[] = [
+    {
+        title: "Frontend",
+        skills: [
+            { name: "React Native", icon: SiReact, color: "#61DAFB" },
+            { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
+            { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+            { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+            { name: "SCSS", icon: SiSass, color: "#CC6699" },
+        ]
+    },
+    {
+        title: "Backend",
+        skills: [
+            { name: "Go", icon: SiGo, color: "#00ADD8" },
+            { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+            { name: "PHP", icon: SiPhp, color: "#777BB4" },
+            { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+        ]
+    },
+    {
+        title: "Tools & Cloud",
+        skills: [
+            { name: "Git", icon: SiGit, color: "#F05032" },
+            { name: "Docker", icon: SiDocker, color: "#2496ED" },
+            { name: "Google Cloud", icon: SiGooglecloud, color: "#4285F4" },
+        ]
+    }
 ]
 
 const aboutText = "I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust."

@@ -2,16 +2,21 @@
 
 import { ComponentPropsWithoutRef, FC, useRef } from "react"
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
-import { Icon } from "@iconify/react"
 import styles from "@/app/styles/About.module.css"
 import { TextReveal } from "@/components/ui/TextReveal"
+import type { IconType } from "react-icons"
+
+export interface SkillData {
+    name: string
+    icon: IconType
+    color: string
+}
 
 export interface AboutScrollSectionProps extends ComponentPropsWithoutRef<"div"> {
     text: string
     skills: {
         title: string
-        icon: string
-        skills: { name: string; icon: string }[]
+        skills: SkillData[]
     }[]
 }
 
@@ -51,13 +56,14 @@ export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }
 }
 
 interface SkillCardProps {
-    skill: { name: string, icon: string }
+    skill: SkillData
     index: number
     total: number
     progress: MotionValue<number>
 }
 
 const SkillCard: FC<SkillCardProps> = ({ skill, index, total, progress }) => {
+    const IconComp = skill.icon
 
     const width = 1600
     const height = 700
@@ -83,7 +89,7 @@ const SkillCard: FC<SkillCardProps> = ({ skill, index, total, progress }) => {
             }}
         >
             <div className={styles.orbitIconWrapper}>
-                <Icon icon={skill.icon} width={50} height={50} />
+                <IconComp size={50} color={skill.color} />
             </div>
             {/* <span className={styles.orbitSkillName}>{skill.name}</span> */}
         </motion.div>
