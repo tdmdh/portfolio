@@ -19,7 +19,7 @@ export const TextReveal = forwardRef<HTMLDivElement, TextRevealProps>(({ childre
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   })
 
   // To support both internal useScroll and parent using the ref, 

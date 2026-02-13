@@ -39,7 +39,7 @@
 .card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.5rem;
+    border-radius: 5px;
     padding: 2rem;
     position: relative;
     overflow: hidden;
@@ -370,6 +370,7 @@
 .locationCard {
     grid-area: loc;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 1.25rem;
 }
@@ -383,7 +384,7 @@
 
 .locationText {
     font-family: var(--primary-font);
-    font-size: 1.1rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--quinary-color);
     display: block;
@@ -395,6 +396,7 @@
 .clockCard {
     grid-area: clock;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 1.25rem;
 }
@@ -408,7 +410,7 @@
 
 .clockTime {
     font-family: var(--primary-font);
-    font-size: 1.35rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--quinary-color);
     display: block;

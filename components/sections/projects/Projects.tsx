@@ -81,12 +81,10 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
 
   const handleCardClick = useCallback((index: number) => {
     if (expandedIndex === index) {
-      // Close expanded view
       setExpandedIndex(null)
       setExpandedPosition(null)
       document.body.style.overflow = ''
     } else {
-      // Get card position for animation origin
       const card = cardRefs.current[index]
       if (card) {
         const rect = card.getBoundingClientRect()
@@ -102,7 +100,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     }
   }, [expandedIndex])
 
-  // Handle scroll navigation in expanded mode
   useEffect(() => {
     if (expandedIndex === null) return
 
@@ -118,14 +115,12 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       clearTimeout(scrollTimeout)
       scrollTimeout = setTimeout(() => {
         isScrolling = false
-      }, 600) // Debounce scroll - slightly longer for animation
+      }, 600)
 
       if (e.deltaY > 0 && expandedIndex < projects.length - 1) {
-        // Scroll down - next project
         setScrollDirection('down')
         setExpandedIndex(expandedIndex + 1)
       } else if (e.deltaY < 0 && expandedIndex > 0) {
-        // Scroll up - previous project
         setScrollDirection('up')
         setExpandedIndex(expandedIndex - 1)
       }
@@ -159,7 +154,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     }
   }, [expandedIndex])
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       document.body.style.overflow = ''
@@ -173,7 +167,7 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        ease: [0.25, 0.46, 0.45, 0.94] as const,
       },
     },
   }
@@ -236,7 +230,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
         </div>
       </div>
 
-      {/* Expanded Overlay */}
       <AnimatePresence>
         {expandedIndex !== null && (
           <motion.div
@@ -251,9 +244,7 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
               document.body.style.overflow = ''
             }}
           >
-            {/* Card container - stays in place */}
             <div className={styles.expandedCardContainer} onClick={(e) => e.stopPropagation()}>
-              {/* AnimatePresence for card switching */}
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={expandedIndex}
@@ -281,17 +272,14 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
                   }}
                 >
                   <div className={styles.expandedCardInner}>
-                    {/* Card Number */}
                     <span className={styles.expandedCardNumber}>
                       {String(expandedIndex + 1).padStart(2, "0")}
                     </span>
 
-                    {/* Media */}
                     <div className={styles.expandedCardMedia}>
                       <div className={styles.cardPlaceholder} />
                     </div>
 
-                    {/* Content */}
                     <div className={styles.expandedCardContent}>
                       <div className={styles.cardHeader}>
                         <h3 className={styles.expandedCardTitle}>
@@ -338,7 +326,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Navigation - stays in place, outside the animating card */}
               <div className={styles.expandedNavigation}>
                 <div className={styles.expandedNavigationDots}>
                   {projects.map((_, idx) => (

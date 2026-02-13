@@ -1,9 +1,3 @@
-/* ═══════════════════════════════════════════════
-   Hero Section – Full-Viewport Dark Bento
-   Grid:
-     "greeting  gradient"
-     "name      name    "
-   ═══════════════════════════════════════════════ */
 
 .main {
     position: relative;
@@ -17,11 +11,12 @@
 /* ── Bento Grid ── */
 .bentoGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1.4fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1.6fr 0.7fr;
     grid-template-areas:
-        "greeting gradient"
-        "name     name";
+        "hi      hi      accent  accent"
+        "name    name    name    name"
+        "tag     tag     role    scroll";
     gap: 0.75rem;
     width: 100%;
     height: 100%;
@@ -33,8 +28,8 @@
 .card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.5rem;
-    padding: 2.5rem;
+    border-radius: 5px;
+    padding: 2rem;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -49,19 +44,20 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
-/* ═══════════════════════════════════════════════
-   Greeting Card – Top-Left
-   ═══════════════════════════════════════════════ */
+
 .greetingCard {
-    grid-area: greeting;
-    display: flex;
-    flex-direction: column;
+    grid-area: hi;
     justify-content: flex-end;
     padding: 3rem;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
 }
 
 .greetingContent {
-    font-size: clamp(4rem, 10vw, 25rem);
+    font-size: clamp(3.5rem, 8vw, 10rem);
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.05rem;
@@ -69,123 +65,87 @@
     color: var(--quinary-color);
 }
 
-/* Override HeroTitle container to remove extra spacing */
 .greetingContent h1 {
     margin: 0;
     font-size: inherit;
     line-height: inherit;
 }
 
-.greetingSubtext {
-    font-family: var(--secondary-font);
-    font-size: clamp(0.85rem, 1.5vw, 1.15rem);
-    color: var(--quaternary-color);
-    opacity: 0.5;
-    margin-top: 1.5rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+
+.accentCard {
+    grid-area: accent;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 2.5rem;
+    background: transparent;
 }
 
-/* ═══════════════════════════════════════════════
-   Gradient Card – Top-Right
-   ═══════════════════════════════════════════════ */
-.gradientCard {
-    grid-area: gradient;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.02);
-    cursor: default;
-}
-
-.gradientOrb {
+.accentGradient {
     position: absolute;
-    width: 70%;
-    height: 70%;
-    top: 10%;
-    left: 10%;
-    background: radial-gradient(
-        circle,
-        rgba(154, 140, 152, 0.35) 0%,
-        rgba(201, 173, 167, 0.2) 40%,
-        transparent 70%
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color) 0%,
+        var(--tertiary-color) 25%,
+        var(--secondary-color) 50%,
+        var(--quaternary-color) 75%,
+        var(--primary-color) 100%
     );
-    border-radius: 50%;
-    filter: blur(60px);
-    animation: orbFloat 8s ease-in-out infinite;
+    background-size: 300% 300%;
+    animation: gradientShift 8s ease infinite;
     pointer-events: none;
 }
 
-.gradientOrbSecondary {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    bottom: 5%;
-    right: 5%;
-    background: radial-gradient(
-        circle,
-        rgba(74, 78, 105, 0.4) 0%,
-        rgba(5, 10, 48, 0.2) 50%,
-        transparent 70%
-    );
-    border-radius: 50%;
-    filter: blur(50px);
-    animation: orbFloat 10s ease-in-out infinite reverse;
-    pointer-events: none;
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 0%; }
+    50% { background-position: 100% 100%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
 }
 
-@keyframes orbFloat {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(10%, -8%) scale(1.05); }
-    66% { transform: translate(-6%, 10%) scale(0.95); }
-}
-
-.gradientContent {
+.accentContent {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
+    align-items: flex-end;
+    gap: 0.3rem;
 }
 
-.gradientLabel {
+.accentTime {
     font-family: var(--primary-font);
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: var(--quinary-color);
-    opacity: 0.7;
-}
-
-.gradientYear {
-    font-family: var(--primary-font);
-    font-size: clamp(4rem, 10vw, 10rem);
+    font-size: clamp(2rem, 4vw, 4rem);
     font-weight: 800;
+    color: var(--quinary-color);
+    font-variant-numeric: tabular-nums;
     line-height: 1;
-    background: linear-gradient(
-        135deg,
-        var(--quaternary-color) 0%,
-        var(--tertiary-color) 50%,
-        var(--quinary-color) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
-/* ═══════════════════════════════════════════════
-   Name Card – Bottom Full Width
-   ═══════════════════════════════════════════════ */
+.accentLocation {
+    font-family: var(--secondary-font);
+    font-size: clamp(0.75rem, 1.2vw, 1rem);
+    color: var(--quaternary-color);
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+
 .nameCard {
     grid-area: name;
     justify-content: center;
     align-items: flex-start;
-    padding: 3rem;
+    padding: 2rem 3rem;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
 }
 
 .nameContent {
-    font-size: clamp(5rem, 18vw, 22rem);
+    font-size: clamp(5rem, 17vw, 20rem);
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.05rem;
@@ -193,17 +153,133 @@
     color: var(--quinary-color);
 }
 
-/* Override HeroTitle container to remove extra spacing */
 .nameContent h1 {
     margin: 0;
     font-size: inherit;
     line-height: inherit;
 }
 
-/* ═══════════════════════════════════════════════
-   HeroTitle Overrides (inherited from component)
-   ═══════════════════════════════════════════════ */
 
+.tagCard {
+    grid-area: tag;
+    justify-content: center;
+    padding: 2rem 2.5rem;
+}
+
+.tagText {
+    font-family: var(--secondary-font);
+    font-size: clamp(0.9rem, 1.4vw, 1.2rem);
+    color: var(--quaternary-color);
+    opacity: 0.6;
+    line-height: 1.7;
+    margin: 0;
+    max-width: 380px;
+}
+
+
+.roleCard {
+    grid-area: role;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 2rem;
+}
+
+.statusDot {
+    position: relative;
+    width: 16px;
+    height: 16px;
+}
+
+.dot {
+    position: absolute;
+    inset: 0;
+    background: #10b981;
+    border-radius: 50%;
+}
+
+.ping {
+    position: absolute;
+    inset: -4px;
+    background: #10b981;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: pingAnim 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pingAnim {
+    75%, 100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+.roleLabel {
+    font-family: var(--primary-font);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--quaternary-color);
+    opacity: 0.5;
+}
+
+.roleText {
+    font-family: var(--primary-font);
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    font-weight: 700;
+    color: var(--quinary-color);
+}
+
+/* ═══════════════════════════════════════════════
+   F: Scroll Indicator
+   ═══════════════════════════════════════════════ */
+.scrollCard {
+    grid-area: scroll;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: default;
+}
+
+.scrollInner {
+    width: 24px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    overflow: hidden;
+}
+
+.scrollLine {
+    width: 3px;
+    height: 10px;
+    background: var(--quaternary-color);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+.scrollText {
+    font-family: var(--primary-font);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--quaternary-color);
+    opacity: 0.4;
+}
+
+.scrollArrow {
+    font-size: 1rem;
+    color: var(--quaternary-color);
+    opacity: 0.35;
+}
+
+/* ═══════════════════════════════════════════════
+   HeroTitle Overrides
+   ═══════════════════════════════════════════════ */
 .heroTitle {
     font-size: inherit;
     font-weight: 700;
@@ -232,16 +308,16 @@
     }
 
     .bentoGrid {
-        grid-template-rows: 1fr 1.2fr;
+        grid-template-rows: 0.8fr 1.4fr 0.6fr;
         padding: 1rem;
     }
 
     .greetingContent {
-        font-size: clamp(3rem, 8vw, 7rem);
+        font-size: clamp(3rem, 8vw, 6rem);
     }
 
     .nameContent {
-        font-size: clamp(4rem, 14vw, 12rem);
+        font-size: clamp(4rem, 14vw, 11rem);
     }
 }
 
@@ -255,38 +331,42 @@
     }
 
     .bentoGrid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto auto;
         grid-template-areas:
-            "greeting"
-            "gradient"
-            "name";
+            "hi       hi"
+            "name     name"
+            "accent   accent"
+            "tag      role";
         gap: 0.5rem;
         padding: 0.5rem;
     }
 
     .card {
-        padding: 2rem;
-        border-radius: 1.25rem;
+        padding: 1.5rem;
     }
 
     .greetingCard {
-        padding: 2.5rem 2rem;
+        padding: 2rem;
     }
 
     .greetingContent {
         font-size: clamp(3rem, 15vw, 5rem);
     }
 
+    .nameCard {
+        padding: 2rem;
+    }
+
     .nameContent {
         font-size: clamp(3.5rem, 18vw, 6rem);
     }
 
-    .gradientCard {
-        min-height: 200px;
+    .accentCard {
+        min-height: 120px;
     }
 
-    .gradientYear {
-        font-size: clamp(3rem, 15vw, 5rem);
+    .scrollCard {
+        display: none;
     }
 }

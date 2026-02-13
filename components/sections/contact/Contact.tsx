@@ -14,7 +14,6 @@ const socials = [
     { name: "LinkedIn", href: "https://linkedin.com", icon: "mdi:linkedin" },
 ]
 
-/* Magnetic hook */
 function useMagnetic(strength = 0.35) {
     const x = useMotionValue(0)
     const y = useMotionValue(0)
@@ -57,11 +56,11 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
     }
     const fadeUp = {
         hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } as const },
     }
     const scaleIn = {
         hidden: { opacity: 0, scale: 0.85 },
-        visible: { opacity: 1, scale: 1, transition: { duration: 0.55, ease: [0.34, 1.56, 0.64, 1] } },
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.55, ease: [0.34, 1.56, 0.64, 1] } as const },
     }
 
     return (
@@ -73,7 +72,6 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
             >
-                {/* ─── A: Headline ─── */}
                 <motion.div className={`${styles.card} ${styles.headlineCard}`} variants={fadeUp}>
                     <span className={styles.label}>Get In Touch</span>
                     <h2 className={styles.headline}>
@@ -86,7 +84,6 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     </p>
                 </motion.div>
 
-                {/* ─── B: Profile Picture ─── */}
                 <motion.div className={`${styles.card} ${styles.profileCard}`} variants={scaleIn}>
                     <div className={styles.profileImageWrapper}>
                         <Image
@@ -103,7 +100,6 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     </div>
                 </motion.div>
 
-                {/* ─── C: Email CTA ─── */}
                 <motion.a
                     href={`mailto:${EMAIL}`}
                     className={`${styles.card} ${styles.emailCard}`}
@@ -121,7 +117,6 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     </div>
                 </motion.a>
 
-                {/* ─── D: Status ─── */}
                 <motion.div className={`${styles.card} ${styles.statusCard}`} variants={fadeUp}>
                     <div className={styles.statusDot}>
                         <span className={styles.ping} />
@@ -131,7 +126,6 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     <span className={styles.statusText}>Available for work</span>
                 </motion.div>
 
-                {/* ─── E: Magnetic CTA ─── */}
                 <motion.a
                     href={`mailto:${EMAIL}`}
                     className={`${styles.card} ${styles.ctaCard}`}
@@ -150,25 +144,20 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     </motion.div>
                 </motion.a>
 
-                {/* ─── F: Location ─── */}
                 <motion.div className={`${styles.card} ${styles.locationCard}`} variants={fadeUp}>
-                    <Icon icon="ph:globe-hemisphere-west-fill" className={styles.locationGlobe} />
                     <div>
                         <span className={styles.cardLabel}>Based in</span>
                         <span className={styles.locationText}>Remote / Rotterdam</span>
                     </div>
                 </motion.div>
 
-                {/* ─── G: Clock ─── */}
                 <motion.div className={`${styles.card} ${styles.clockCard}`} variants={fadeUp}>
-                    <Icon icon="ph:clock-fill" className={styles.clockIcon} />
                     <div>
                         <span className={styles.cardLabel}>Local Time (UTC)</span>
                         <span className={styles.clockTime}>{time}</span>
                     </div>
                 </motion.div>
 
-                {/* ─── H, I, J: Socials ─── */}
                 {socials.map((s, i) => (
                     <motion.a
                         key={s.name}

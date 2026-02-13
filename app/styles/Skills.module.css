@@ -120,9 +120,10 @@
 /* Skill Card */
 .skillCard {
     background: rgba(255, 255, 255, 0.03);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     /* border: 1px solid rgba(255, 255, 255, 0.05); */
-    border-radius: 1.5rem;
+    border-radius: 5px;
     padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
