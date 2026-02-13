@@ -9,3 +9,11 @@
   font-family: var(--secondary-font);
   color: var(--primary-color);
 }
+
+/* Mobile: ensure text doesn't overflow */
+@media (max-width: 640px) {
+  .background,
+  .foreground {
+    font-size: inherit;
+  }
+}

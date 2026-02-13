@@ -93,7 +93,8 @@ export default function Navbar() {
           tabIndex={0}
           onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') toggleMenu(); }}
         >
-          <div className={`${styles.hamburger} ${isMenuOpen ? 'open' : ''}`}>
+          <div className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`}>
+            <span></span>
           </div>
         </div>
 

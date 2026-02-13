@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════ */
 
 .contactSection {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     position: relative;
     overflow: hidden;
@@ -505,6 +505,7 @@
     .contactSection {
         height: auto;
         min-height: 100vh;
+        min-height: 100dvh;
     }
 
     .bentoGrid {
@@ -513,7 +514,6 @@
         grid-template-areas:
             "head   head"
             "prof   prof"
-            "email  email"
             "stat   cta"
             "loc    clock"
             "soc1   soc2"
@@ -523,35 +523,103 @@
     }
 
     .card {
-        padding: 1.5rem;
-        border-radius: 1.25rem;
+        padding: 1.25rem;
+        border-radius: 5px;
     }
 
     .headlineCard {
-        padding: 2rem;
+        padding: 1.5rem;
     }
 
     .headline {
-        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+    }
+
+    .headlineSubtext {
+        font-size: 0.85rem;
+        margin-top: 0.75rem;
     }
 
     .profileCard {
-        min-height: 250px;
+        min-height: 220px;
+        width: 100%;
+    }
+
+    .profileName {
+        font-size: 1.15rem;
+    }
+
+    .profileRole {
+        font-size: 0.75rem;
+    }
+    .profileOverlay {
+        display: none;
+    }
+
+    .emailAddress {
+        font-size: 0.95rem;
+    }
+
+    .emailIcon {
+        font-size: 1.5rem;
+    }
+    .emailCard {
+        padding: 1rem;
+        gap: 0.75rem;
+        display: none;
+    }
+    .emailArrow {
+        width: 36px;
+        height: 36px;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .statusText {
+        font-size: 1rem;
     }
 
     .ctaCircle {
-        width: 110px;
-        height: 110px;
+        width: 90px;
+        height: 90px;
     }
 
-    .emailArrow {
-        width: 40px;
-        height: 40px;
-        bottom: 1.25rem;
-        right: 1.25rem;
+    .ctaText {
+        font-size: 0.75rem;
+    }
+
+    .locationGlobe,
+    .clockIcon {
+        font-size: 1.5rem;
+    }
+
+    .locationText {
+        font-size: 1rem;
+    }
+
+    .clockTime {
+        font-size: 1rem;
+    }
+
+    .locationCard,
+    .clockCard {
+        gap: 0.75rem;
+    }
+
+    .cardLabel {
+        font-size: 0.65rem;
     }
 
     .socialCard {
-        padding: 1.25rem;
+        padding: 1rem;
+        gap: 0.4rem;
+    }
+
+    .socialIcon {
+        font-size: 1.5rem;
+    }
+
+    .socialName {
+        font-size: 0.7rem;
     }
 }

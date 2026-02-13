@@ -502,20 +502,48 @@
     opacity: 0.5;
 }
 
-/* Responsive */
+/* Responsive – Tablet */
+@media (max-width: 1024px) {
+    .card {
+        width: 380px;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .cardsContainer {
+        gap: 1.5rem;
+        padding: 2rem 2rem;
+    }
+}
+
+/* Responsive – Mobile */
 @media (max-width: 768px) {
+    .main {
+        padding: 4rem 1rem;
+    }
+
     .subTitle {
         width: 90%;
         font-size: 1.25rem;
     }
 
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
     .cardsContainer {
-        gap: 1.5rem;
-        padding: 2rem;
+        gap: 1.25rem;
+        padding: 1.5rem;
     }
 
     .card {
-        width: 320px;
+        width: min(320px, 85vw);
     }
 
     .cardHeader {
@@ -559,13 +587,25 @@
 }
 
 @media (max-width: 480px) {
+    .main {
+        padding: 3rem 0.75rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .label {
+        font-size: 0.75rem;
+    }
+
     .cardsContainer {
-        padding: 1.5rem;
+        padding: 1rem;
         gap: 1rem;
     }
 
     .card {
-        width: 280px;
+        width: min(280px, 90vw);
     }
 
     .cardContent {
@@ -578,6 +618,16 @@
 
     .cardDescription {
         font-size: 0.9rem;
+    }
+
+    .cardMedia {
+        height: 150px;
+    }
+
+    .cardNumber {
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 0.75rem;
     }
 
     .expandedOverlay {

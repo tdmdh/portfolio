@@ -160,26 +160,35 @@
 
 @media (max-width: 768px) {
 
-    /* Mobile - The 1200px rect will be too big. 
-       Use JS responsive logic or media query?
-       JS logic uses hardcoded 1200. I should actually make `SkillCard` responsive.
-       But for now, I'll notify user about desktop focus or let it be.
-       Actually, I can use CSS transform scale on the frame! */
+    /* Mobile - Scale orbiting frame for smaller screens */
+    .main {
+        padding: 3rem 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
     .rotatingFrame {
-        transform: scale(0.6);
+        transform: scale(0.45);
     }
 
     .orbitingSkillCard {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
     }
 
     .orbitIconWrapper {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
 
     .orbitSkillName {
         display: none;
+    }
+
+    .stickyContainer {
+        top: 15vh;
+        height: 70vh;
     }
 }
 
@@ -356,16 +365,29 @@
 }
 
 @media (max-width: 480px) {
+    .main {
+        padding: 2.5rem 0.75rem;
+    }
+
     .title {
         font-size: 1.75rem;
+    }
+
+    .label {
+        font-size: 0.75rem;
     }
 
     .revealText {
         font-size: 1.2rem;
     }
 
-    .label {
-        font-size: 0.75rem;
+    .rotatingFrame {
+        transform: scale(0.6);
+    }
+
+    .orbitingSkillCard {
+        width: 50px;
+        height: 50px;
     }
 
     .skillsGridCombined {

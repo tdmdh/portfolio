@@ -1,7 +1,7 @@
 
 .main {
     position: relative;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     box-sizing: border-box;
     overflow: hidden;
@@ -326,13 +326,13 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
     .main {
-        height: auto;
-        min-height: 100vh;
+        height: 100vh;
+        height: 100dvh;
     }
 
     .bentoGrid {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto;
+        grid-template-rows: 1fr 1.4fr 0.8fr 1fr;
         grid-template-areas:
             "hi       hi"
             "name     name"
@@ -340,30 +340,47 @@
             "tag      role";
         gap: 0.5rem;
         padding: 0.5rem;
+        height: 100%;
     }
 
     .card {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     .greetingCard {
-        padding: 2rem;
+        padding: 1.5rem;
     }
 
     .greetingContent {
-        font-size: clamp(3rem, 15vw, 5rem);
+        font-size: clamp(2.5rem, 12vw, 4rem);
     }
 
     .nameCard {
-        padding: 2rem;
+        padding: 1.5rem;
     }
 
     .nameContent {
-        font-size: clamp(3.5rem, 18vw, 6rem);
+        font-size: clamp(3rem, 16vw, 5rem);
     }
 
     .accentCard {
-        min-height: 120px;
+        padding: 1.5rem;
+    }
+
+    .accentTime {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .tagText {
+        font-size: 0.85rem;
+    }
+
+    .roleText {
+        font-size: 0.9rem;
+    }
+
+    .roleLabel {
+        font-size: 0.65rem;
     }
 
     .scrollCard {
