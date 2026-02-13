@@ -1,0 +1,239 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* ── Bento Grid ── */
+.bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1.2fr 1.4fr 0.8fr;
+    grid-template-areas:
+        "code  code  accent accent"
+        "msg   msg   msg    msg"
+        "decor decor cta    cta";
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 900px;
+    height: 70vh;
+    max-height: 600px;
+}
+
+/* ── Cards base ── */
+.card {
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── 404 Code Card ── */
+.codeCard {
+    grid-area: code;
+    padding: 2rem;
+}
+
+.code {
+    font-family: var(--primary-font);
+    font-size: clamp(5rem, 10vw, 9rem);
+    font-weight: 900;
+    color: var(--quinary-color);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    opacity: 0.95;
+}
+
+/* ── Accent Card (gradient) ── */
+.accentCard {
+    grid-area: accent;
+    padding: 0;
+}
+
+.accentGradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        var(--quaternary-color),
+        var(--tertiary-color),
+        var(--secondary-color),
+        var(--primary-color)
+    );
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+    opacity: 0.9;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ── Message Card ── */
+.messageCard {
+    grid-area: msg;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem 2.5rem;
+}
+
+.title {
+    font-family: var(--primary-font);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--quinary-color);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.description {
+    font-family: var(--secondary-font);
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--tertiary-color);
+    margin: 0;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+/* ── CTA Card ── */
+.ctaCard {
+    grid-area: cta;
+    padding: 1.5rem;
+}
+
+.ctaLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.ctaButton {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 2rem;
+    background: var(--quinary-color);
+    color: var(--primary-color);
+    border-radius: 3rem;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.ctaButton:hover {
+    box-shadow: 0 8px 30px rgba(242, 233, 228, 0.15);
+}
+
+.ctaText {
+    font-family: var(--primary-font);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ctaArrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.ctaButton:hover .ctaArrow {
+    transform: translateX(4px);
+}
+
+/* ── Decor Card ── */
+.decorCard {
+    grid-area: decor;
+    padding: 1.5rem;
+}
+
+.decorContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.decorSymbol {
+    font-family: var(--primary-font);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--quaternary-color);
+    opacity: 0.7;
+}
+
+.decorLabel {
+    font-family: var(--secondary-font);
+    font-size: 0.8rem;
+    color: var(--tertiary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .main {
+        padding: 1.5rem;
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .bentoGrid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 0.6fr 1.2fr 0.8fr;
+        grid-template-areas:
+            "code   accent"
+            "decor  decor"
+            "msg    msg"
+            "cta    cta";
+        height: 80vh;
+        height: 80dvh;
+        max-height: none;
+    }
+
+    .code {
+        font-size: clamp(3.5rem, 15vw, 6rem);
+    }
+
+    .messageCard {
+        padding: 1.5rem;
+    }
+
+    .ctaButton {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 1rem;
+    }
+
+    .bentoGrid {
+        gap: 0.5rem;
+        height: 85vh;
+        height: 85dvh;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .ctaText {
+        font-size: 0.85rem;
+    }
+}
