@@ -22,9 +22,25 @@ export interface AboutScrollSectionProps extends ComponentPropsWithoutRef<"div">
 
 export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }) => {
     const containerRef = useRef<HTMLDivElement | null>(null)
+
+    // Orbit animation — full visibility range
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
+    })
+
+    // Pinning — same range that TextReveal uses
+    const { scrollYProgress: pinProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    })
+
+    // JS-driven pinning for the skill overlay (avoids broken position:sticky)
+    const skillPinY = useTransform(pinProgress, (progress) => {
+        if (!containerRef.current) return 0
+        const containerH = containerRef.current.offsetHeight
+        const windowH = window.innerHeight
+        return progress * (containerH - windowH)
     })
 
     const allSkills = skills.flatMap(cat => cat.skills)
@@ -37,7 +53,7 @@ export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }
             </TextReveal>
 
             <div className={styles.skillsOverlay}>
-                <div className={styles.stickyContainer}>
+                <motion.div className={styles.pinnedContainer} style={{ y: skillPinY }}>
                      <div className={styles.rotatingFrame}> 
                         {allSkills.map((skill, i) => (
                             <SkillCard 
@@ -49,7 +65,7 @@ export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }
                             />
                         ))}
                      </div>
-                </div>
+                </motion.div>
             </div>
         </div>
     )

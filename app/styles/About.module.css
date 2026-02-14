@@ -76,15 +76,17 @@
     z-index: 10;
 }
 
-.stickyContainer {
-    position: sticky;
-    top: 10vh;
-    height: 80vh;
+.pinnedContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    will-change: transform;
 }
 
 .rotatingFrame {

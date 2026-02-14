@@ -1,32 +1,43 @@
 "use client"
 
-"use client"
-
 import { ComponentPropsWithoutRef, FC, ReactNode, forwardRef, useRef } from "react"
 import { motion, MotionValue, useScroll, useTransform } from "motion/react"
 import styles from "@/app/styles/TextReveal.module.css"
-
 import { cn } from "@/app/utils/lib/utils"
 
 export interface TextRevealProps extends ComponentPropsWithoutRef<"div"> {
   children: string
 }
 
+/**
+ * Scroll-driven text reveal.
+ *
+ * Instead of `position: sticky` (which breaks when ANY ancestor has a CSS
+ * `transform`, `filter`, or `will-change` — common with Framer Motion), we
+ * use `position: absolute` + a scroll-linked translateY to keep the text
+ * visually pinned in the viewport. This is immune to ancestor stacking
+ * context issues.
+ */
 export const TextReveal = forwardRef<HTMLDivElement, TextRevealProps>(({ children, className }, ref) => {
   const internalRef = useRef<HTMLDivElement | null>(null)
-  // Use the passed ref if available, otherwise use internal
   const targetRef = (ref as React.MutableRefObject<HTMLDivElement | null>) || internalRef
 
   const { scrollYProgress } = useScroll({
     target: targetRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   })
 
-  // To support both internal useScroll and parent using the ref, 
-  // we need to ensure the ref is attached. 
-  // If 'ref' is a function-style ref, this simple assignment might fail.
-  // safer to just use one ref and expose it? 
-  // If parent passes ref, they own it. I use it for useScroll.
+  // Simulate sticky: translate the absolutely-positioned inner element
+  // downward at exactly the scroll rate so it appears pinned in the viewport.
+  //
+  // scrollYProgress 0 → element at top of container (viewport-top aligned)
+  // scrollYProgress 1 → element translated by (containerHeight - windowHeight)
+  const y = useTransform(scrollYProgress, (progress) => {
+    if (!targetRef.current) return 0
+    const containerH = targetRef.current.offsetHeight
+    const windowH = window.innerHeight
+    return progress * (containerH - windowH)
+  })
 
   if (typeof children !== "string") {
     throw new Error("TextReveal: children must be a string")
@@ -35,8 +46,8 @@ export const TextReveal = forwardRef<HTMLDivElement, TextRevealProps>(({ childre
   const words = children.split(" ")
 
   return (
-    <div ref={targetRef} className={cn("relative z-0 w-full", className)} style={{ height: '400vh' }}>
-      <div className="sticky top-[20vh] left-0 w-full h-[60vh] flex items-center justify-center px-4 overflow-hidden">
+    <div ref={targetRef} className={cn(styles.revealContainer, className)}>
+      <motion.div className={styles.revealPinned} style={{ y }}>
         <p className="w-full max-w-5xl text-center text-xl font-semibold leading-relaxed md:text-2xl lg:text-3xl xl:text-4xl">
           {words.map((word, i) => {
             const start = i / words.length
@@ -48,7 +59,7 @@ export const TextReveal = forwardRef<HTMLDivElement, TextRevealProps>(({ childre
             )
           })}
         </p>
-      </div>
+      </motion.div>
     </div>
   )
 })
