@@ -1,15 +1,18 @@
 "use client"
 
-import { forwardRef, useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
-import { AboutScrollSection } from "@/components/ui/AboutScrollSection"
 import {
     SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
     SiGo, SiNodedotjs, SiPhp, SiPostgresql,
     SiGit, SiDocker, SiGooglecloud
 } from "react-icons/si"
 import type { IconType } from "react-icons"
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface SkillItem {
     name: string
@@ -21,10 +24,10 @@ const skillCategories: { title: string; skills: SkillItem[] }[] = [
     {
         title: "Frontend",
         skills: [
-            { name: "React Native", icon: SiReact, color: "#61DAFB" },
-            { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
+            { name: "React", icon: SiReact, color: "#61DAFB" },
+            { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
             { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-            { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+            { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
             { name: "SCSS", icon: SiSass, color: "#CC6699" },
         ]
     },
@@ -42,62 +45,207 @@ const skillCategories: { title: string; skills: SkillItem[] }[] = [
         skills: [
             { name: "Git", icon: SiGit, color: "#F05032" },
             { name: "Docker", icon: SiDocker, color: "#2496ED" },
-            { name: "Google Cloud", icon: SiGooglecloud, color: "#4285F4" },
+            { name: "GCP", icon: SiGooglecloud, color: "#4285F4" },
         ]
     }
 ]
 
 const aboutText = "I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust."
 
+/* ── Animation variants ── */
+const fadeUp = {
+  hidden: { opacity: 0, y: 80, filter: "blur(8px)" },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring" as const,
+      stiffness: 300,
+      damping: 24,
+      mass: 0.8,
+      delay,
+    },
+  }),
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.6, filter: "blur(10px)" },
+  visible: (delay: number) => ({
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring" as const,
+      stiffness: 350,
+      damping: 22,
+      mass: 0.7,
+      delay,
+    },
+  }),
+}
+
 const About = forwardRef<HTMLDivElement>((props, ref) => {
-  const containerRef = useRef(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
+  const containerRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [progress, setProgress] = useState(0)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.05,
-      },
+  const setRefs = useCallback(
+    (el: HTMLDivElement | null) => {
+      containerRef.current = el
+      if (typeof ref === "function") ref(el)
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = el
     },
-  }
+    [ref]
+  )
 
-  const itemVariants = {
-    hidden: { opacity: 0, x: -120, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-      transition: {
-        type: "spring" as const,
-        stiffness: 300,
-        damping: 24,
-        mass: 0.8,
-      } as const,
-    },
-  }
+  useEffect(() => {
+    const container = containerRef.current
+    const grid = gridRef.current
+    if (!container || !grid) return
+
+    const trigger = ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      end: "bottom bottom",
+      pin: grid,
+      pinSpacing: false,
+      onUpdate: (self) => setProgress(self.progress),
+    })
+
+    return () => trigger.kill()
+  }, [])
+
+  const words = aboutText.split(" ")
 
   return (
-    <div ref={ref} className={styles.main}>
-      <motion.div
-        ref={containerRef}
-        className={styles.content}
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        <motion.div className={styles.header} variants={itemVariants}>
+    <div ref={setRefs} className={styles.main}>
+      <div ref={gridRef} className={styles.bentoGrid}>
+        <motion.div
+          className={`${styles.card} ${styles.headerCard}`}
+          custom={0}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <span className={styles.label}>Get To Know Me</span>
           <h2 className={styles.title}>
             About <span className={styles.highlight}>Me</span>
           </h2>
         </motion.div>
 
-        <AboutScrollSection text={aboutText} skills={skillCategories} />
+        <motion.div
+          className={`${styles.card} ${styles.accentCard}`}
+          custom={0.06}
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <div className={styles.accentGradient} />
+        </motion.div>
 
-      </motion.div>
+        <motion.div
+          className={`${styles.card} ${styles.textCard}`}
+          custom={0.12}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <p className={styles.revealText}>
+            {words.map((word, i) => {
+              const start = i / words.length
+              const end = start + 1 / words.length
+              const wordOpacity =
+                progress <= start
+                  ? 0
+                  : progress >= end
+                    ? 1
+                    : (progress - start) / (end - start)
+              return (
+                <span key={i} className={styles.wordWrapper}>
+                  <span className={styles.wordBg}>{word}</span>
+                  <span
+                    className={styles.wordFg}
+                    style={{ opacity: wordOpacity }}
+                  >
+                    {word}
+                  </span>
+                </span>
+              )
+            })}
+          </p>
+        </motion.div>
+
+        <motion.div
+          className={`${styles.card} ${styles.frontendCard}`}
+          custom={0.08}
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <span className={styles.cardLabel}>Frontend</span>
+          <div className={styles.skillIcons}>
+            {skillCategories[0].skills.map((skill) => (
+              <div
+                key={skill.name}
+                className={styles.skillIcon}
+                title={skill.name}
+              >
+                <skill.icon size={24} color={skill.color} />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className={`${styles.card} ${styles.backendCard}`}
+          custom={0.2}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <span className={styles.cardLabel}>Backend</span>
+          <div className={styles.skillIcons}>
+            {skillCategories[1].skills.map((skill) => (
+              <div
+                key={skill.name}
+                className={styles.skillIcon}
+                title={skill.name}
+              >
+                <skill.icon size={24} color={skill.color} />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className={`${styles.card} ${styles.toolsCard}`}
+          custom={0.26}
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <span className={styles.cardLabel}>Tools & Cloud</span>
+          <div className={styles.skillIcons}>
+            {skillCategories[2].skills.map((skill) => (
+              <div
+                key={skill.name}
+                className={styles.skillIcon}
+                title={skill.name}
+              >
+                <skill.icon size={24} color={skill.color} />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </div>
   )
 })
