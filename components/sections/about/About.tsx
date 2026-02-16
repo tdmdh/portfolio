@@ -123,7 +123,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     <div ref={setRefs} className={styles.main}>
       <div ref={gridRef} className={styles.bentoGrid}>
         <motion.div
-          className={`${styles.card} ${styles.headerCard}`}
+          className={`${styles.card} ${styles.miniCard} ${styles.headerCard}`}
           custom={0}
           variants={fadeUp}
           initial="hidden"
@@ -137,7 +137,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
         </motion.div>
 
         <motion.div
-          className={`${styles.card} ${styles.accentCard}`}
+          className={`${styles.card} ${styles.miniCard} ${styles.accentCard}`}
           custom={0.06}
           variants={scaleIn}
           initial="hidden"
@@ -148,8 +148,26 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
         </motion.div>
 
         <motion.div
+          className={`${styles.card} ${styles.miniCard} ${styles.frontendCard}`}
+          custom={0.1}
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <span className={styles.cardLabel}>Frontend</span>
+          <div className={styles.skillIcons}>
+            {skillCategories[0].skills.map((skill) => (
+              <div key={skill.name} className={styles.skillIcon} title={skill.name}>
+                <skill.icon size={22} color={skill.color} />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
           className={`${styles.card} ${styles.textCard}`}
-          custom={0.12}
+          custom={0.14}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -181,30 +199,8 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
         </motion.div>
 
         <motion.div
-          className={`${styles.card} ${styles.frontendCard}`}
-          custom={0.08}
-          variants={scaleIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <span className={styles.cardLabel}>Frontend</span>
-          <div className={styles.skillIcons}>
-            {skillCategories[0].skills.map((skill) => (
-              <div
-                key={skill.name}
-                className={styles.skillIcon}
-                title={skill.name}
-              >
-                <skill.icon size={24} color={skill.color} />
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          className={`${styles.card} ${styles.backendCard}`}
-          custom={0.2}
+          className={`${styles.card} ${styles.miniCard} ${styles.backendCard}`}
+          custom={0.18}
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
@@ -213,20 +209,16 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           <span className={styles.cardLabel}>Backend</span>
           <div className={styles.skillIcons}>
             {skillCategories[1].skills.map((skill) => (
-              <div
-                key={skill.name}
-                className={styles.skillIcon}
-                title={skill.name}
-              >
-                <skill.icon size={24} color={skill.color} />
+              <div key={skill.name} className={styles.skillIcon} title={skill.name}>
+                <skill.icon size={22} color={skill.color} />
               </div>
             ))}
           </div>
         </motion.div>
 
         <motion.div
-          className={`${styles.card} ${styles.toolsCard}`}
-          custom={0.26}
+          className={`${styles.card} ${styles.miniCard} ${styles.toolsCard}`}
+          custom={0.22}
           variants={scaleIn}
           initial="hidden"
           whileInView="visible"
@@ -235,15 +227,22 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           <span className={styles.cardLabel}>Tools & Cloud</span>
           <div className={styles.skillIcons}>
             {skillCategories[2].skills.map((skill) => (
-              <div
-                key={skill.name}
-                className={styles.skillIcon}
-                title={skill.name}
-              >
-                <skill.icon size={24} color={skill.color} />
+              <div key={skill.name} className={styles.skillIcon} title={skill.name}>
+                <skill.icon size={22} color={skill.color} />
               </div>
             ))}
           </div>
+        </motion.div>
+
+        <motion.div
+          className={`${styles.card} ${styles.miniCard} ${styles.decorCard}`}
+          custom={0.26}
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <div className={styles.accentGradient} />
         </motion.div>
       </div>
     </div>

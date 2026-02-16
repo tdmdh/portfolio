@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   About Section – Bento Grid Layout
+   About Section – Center Text + Floating Minicards
    ═══════════════════════════════════════════════ */
 
 .main {
@@ -9,16 +9,20 @@
     background: linear-gradient(180deg, var(--quinary-color) 0%, var(--quaternary-color) 100%);
 }
 
-/* ── Bento Grid ── */
+/* ── Bento Grid ──
+   5 columns × 5 rows. Spacer tracks (0.4fr cols, 0.35fr rows)
+   create visual separation between minicards and the center text. */
 .bentoGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 0.7fr 1fr 1fr;
+    grid-template-columns: 1.1fr 1.1fr 0.4fr 2.8fr 0.4fr 1.1fr 1.1fr;
+    grid-template-rows: 1fr 0.35fr 2.4fr 0.35fr 1fr;
     grid-template-areas:
-        "header  header  accent  frontend"
-        "text    text    text    backend"
-        "text    text    text    tools";
-    gap: 0.75rem;
+        "header  header  .  accent   .  frontend  frontend"
+        ".       .       .  .        .  .         ."
+        ".       .       .  text     .  .         ."
+        ".       .       .  .        .  .         ."
+        "backend backend .  tools    .  decor     decor";
+    gap: 0.6rem;
     width: 100%;
     height: 100vh;
     padding: 0.75rem;
@@ -30,7 +34,7 @@
     background: rgba(5, 10, 48, 0.04);
     border: 1px solid rgba(5, 10, 48, 0.06);
     border-radius: 5px;
-    padding: 2rem;
+    padding: 1.25rem;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -45,12 +49,16 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
+/* ── Mini Card (shared) ── */
+.miniCard {
+    padding: 1rem 1.1rem;
+}
+
 /* ── Header Card ── */
 .headerCard {
     grid-area: header;
     justify-content: center;
     align-items: flex-start;
-    padding: 2rem 3rem;
     background: linear-gradient(
         145deg,
         rgba(5, 10, 48, 0.06) 0%,
@@ -61,20 +69,20 @@
 .label {
     display: inline-block;
     font-family: var(--primary-font);
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--secondary-color);
     background: rgba(74, 78, 105, 0.1);
-    padding: 0.4rem 0.8rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 2rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .title {
     font-family: var(--primary-font);
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
     font-weight: 700;
     color: var(--primary-color);
     line-height: 1.2;
@@ -89,17 +97,27 @@
     background-clip: text;
 }
 
-/* ── Accent Card ── */
-.accentCard {
-    grid-area: accent;
+/* ── Accent / Decor Cards ── */
+.accentCard,
+.decorCard {
     padding: 0;
     background: transparent;
     border: none;
 }
 
-.accentCard:hover {
+.accentCard:hover,
+.decorCard:hover {
     background: transparent;
     border-color: transparent;
+    box-shadow: none;
+}
+
+.accentCard {
+    grid-area: accent;
+}
+
+.decorCard {
+    grid-area: decor;
 }
 
 .accentGradient {
@@ -118,11 +136,16 @@
     animation: gradientShift 8s ease infinite;
 }
 
+.decorCard .accentGradient {
+    animation-direction: reverse;
+    animation-delay: -4s;
+}
+
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 100% 0%; }
-    50% { background-position: 100% 100%; }
-    75% { background-position: 0% 100%; }
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 100% 0%; }
+    50%  { background-position: 100% 100%; }
+    75%  { background-position: 0% 100%; }
     100% { background-position: 0% 50%; }
 }
 
@@ -131,7 +154,7 @@
     grid-area: text;
     justify-content: center;
     align-items: center;
-    padding: 3rem;
+    padding: 2.5rem;
     background: rgba(255, 255, 255, 0.35);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
@@ -139,18 +162,18 @@
 
 .revealText {
     font-family: var(--secondary-font);
-    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    font-size: clamp(1rem, 1.6vw, 1.45rem);
     font-weight: 500;
     line-height: 1.9;
     text-align: center;
-    max-width: 720px;
+    max-width: 680px;
     margin: 0;
 }
 
 .wordWrapper {
     position: relative;
     display: inline-block;
-    margin: 0 0.15em;
+    margin: 0 0.12em;
 }
 
 .wordBg {
@@ -181,13 +204,12 @@
 .toolsCard {
     justify-content: center;
     align-items: flex-start;
-    gap: 0.75rem;
-    padding: 1.25rem;
+    gap: 0.5rem;
 }
 
 .cardLabel {
     font-family: var(--primary-font);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -198,12 +220,12 @@
 .skillIcons {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .skillIcon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -224,25 +246,20 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
     .bentoGrid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: auto 1fr 1fr auto;
-        grid-template-areas:
-            "header   header   accent"
-            "text     text     text"
-            "text     text     text"
-            "frontend backend  tools";
+        grid-template-columns: 1fr 1fr 0.3fr 2.4fr 0.3fr 1fr 1fr;
+        grid-template-rows: 1fr 0.25fr 2fr 0.25fr 1fr;
     }
 
     .title {
-        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    }
-
-    .headerCard {
-        padding: 1.5rem 2rem;
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
     }
 
     .textCard {
         padding: 2rem;
+    }
+
+    .revealText {
+        font-size: clamp(0.95rem, 1.5vw, 1.25rem);
     }
 }
 
@@ -252,51 +269,48 @@
 @media (max-width: 640px) {
     .bentoGrid {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto 0.3fr 1fr 1fr auto auto;
+        grid-template-rows: auto auto 0.2fr 1fr 0.2fr auto auto;
         grid-template-areas:
-            "header   header"
-            "accent   accent"
+            "header   accent"
+            "frontend frontend"
+            ".        ."
             "text     text"
-            "text     text"
-            "frontend backend"
-            "tools    tools";
+            ".        ."
+            "backend  tools"
+            "decor    decor";
         gap: 0.5rem;
         padding: 0.5rem;
     }
 
     .card {
-        padding: 1.25rem;
-    }
-
-    .headerCard {
-        padding: 1.25rem 1.5rem;
+        padding: 1rem;
     }
 
     .title {
-        font-size: 1.75rem;
+        font-size: 1.25rem;
     }
 
     .label {
-        font-size: 0.65rem;
-        margin-bottom: 0.5rem;
+        font-size: 0.55rem;
+        margin-bottom: 0.4rem;
     }
 
     .textCard {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     .revealText {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         line-height: 1.7;
     }
 
     .skillIcons {
-        gap: 0.4rem;
+        gap: 0.35rem;
     }
 
     .skillIcon {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
     }
 }
 
@@ -305,19 +319,15 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 480px) {
     .title {
-        font-size: 1.5rem;
-    }
-
-    .label {
-        font-size: 0.6rem;
+        font-size: 1.1rem;
     }
 
     .revealText {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .skillIcon {
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
     }
 }
