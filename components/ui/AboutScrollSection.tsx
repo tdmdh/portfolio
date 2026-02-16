@@ -1,10 +1,13 @@
 "use client"
 
-import { ComponentPropsWithoutRef, FC, useRef } from "react"
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion"
+import { ComponentPropsWithoutRef, FC, useEffect, useRef, useState } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
 import { TextReveal } from "@/components/ui/TextReveal"
 import type { IconType } from "react-icons"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export interface SkillData {
     name: string
@@ -22,26 +25,40 @@ export interface AboutScrollSectionProps extends ComponentPropsWithoutRef<"div">
 
 export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }) => {
     const containerRef = useRef<HTMLDivElement | null>(null)
+    const skillPinRef = useRef<HTMLDivElement | null>(null)
+    const [orbitProgress, setOrbitProgress] = useState(0)
 
-    // Orbit animation — full visibility range
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    })
+    // GSAP ScrollTrigger for skill orbit pinning + progress
+    useEffect(() => {
+        const container = containerRef.current
+        const skillPin = skillPinRef.current
+        if (!container || !skillPin) return
 
-    // Pinning — same range that TextReveal uses
-    const { scrollYProgress: pinProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
-    })
+        // Pin the skill overlay alongside the text
+        const pinTrigger = ScrollTrigger.create({
+            trigger: container,
+            start: "top top",
+            end: "bottom bottom",
+            pin: skillPin,
+            pinSpacing: false,
+        })
 
-    // JS-driven pinning for the skill overlay (avoids broken position:sticky)
-    const skillPinY = useTransform(pinProgress, (progress) => {
-        if (!containerRef.current) return 0
-        const containerH = containerRef.current.offsetHeight
-        const windowH = window.innerHeight
-        return progress * (containerH - windowH)
-    })
+        // Orbit progress — full range for smooth rotation
+        const orbitTrigger = ScrollTrigger.create({
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            onUpdate: (self) => {
+                setOrbitProgress(self.progress)
+            },
+        })
+
+        return () => {
+            pinTrigger.kill()
+            orbitTrigger.kill()
+        }
+    }, [])
 
     const allSkills = skills.flatMap(cat => cat.skills)
     const totalSkills = allSkills.length
@@ -53,7 +70,7 @@ export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }
             </TextReveal>
 
             <div className={styles.skillsOverlay}>
-                <motion.div className={styles.pinnedContainer} style={{ y: skillPinY }}>
+                <div ref={skillPinRef} className={styles.pinnedContainer}>
                      <div className={styles.rotatingFrame}> 
                         {allSkills.map((skill, i) => (
                             <SkillCard 
@@ -61,11 +78,11 @@ export const AboutScrollSection: FC<AboutScrollSectionProps> = ({ text, skills }
                                 skill={skill} 
                                 index={i} 
                                 total={totalSkills} 
-                                progress={scrollYProgress} 
+                                progress={orbitProgress} 
                             />
                         ))}
                      </div>
-                </motion.div>
+                </div>
             </div>
         </div>
     )
@@ -75,7 +92,7 @@ interface SkillCardProps {
     skill: SkillData
     index: number
     total: number
-    progress: MotionValue<number>
+    progress: number
 }
 
 const SkillCard: FC<SkillCardProps> = ({ skill, index, total, progress }) => {
@@ -84,31 +101,22 @@ const SkillCard: FC<SkillCardProps> = ({ skill, index, total, progress }) => {
     const width = 1600
     const height = 700
 
-    const x = useTransform(progress, (p) => {
-        const currentP = (p + (index / total)) % 1
-        return getRectangularPosition(currentP, width, height).x
-    })
-
-    const y = useTransform(progress, (p) => {
-        const currentP = (p + (index / total)) % 1
-        return getRectangularPosition(currentP, width, height).y
-    })
+    const currentP = (progress + (index / total)) % 1
+    const pos = getRectangularPosition(currentP, width, height)
 
     return (
-        <motion.div
+        <div
             className={styles.orbitingSkillCard}
             style={{ 
-                left: `calc(50 %)`, 
-                top: `calc(50 %)`,
-                x,
-                y
+                left: `50%`, 
+                top: `50%`,
+                transform: `translate(${pos.x}px, ${pos.y}px)`,
             }}
         >
             <div className={styles.orbitIconWrapper}>
                 <IconComp size={50} color={skill.color} />
             </div>
-            {/* <span className={styles.orbitSkillName}>{skill.name}</span> */}
-        </motion.div>
+        </div>
     )
 }
 

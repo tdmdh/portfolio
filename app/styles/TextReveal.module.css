@@ -1,23 +1,21 @@
 .revealContainer {
   position: relative;
   width: 100%;
+  /* ScrollTrigger scrubs from container-top → container-bottom.
+     300vh gives ~2 viewport-heights of scrolling for the reveal. */
   height: 300vh;
   z-index: 0;
 }
 
-/* Absolutely positioned — JS-driven translateY keeps it visually pinned.
-   This avoids `position: sticky` which breaks under ancestor transforms. */
-.revealPinned {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* GSAP ScrollTrigger pins this element.
+   It is reparented outside ancestor transforms automatically. */
+.revealPin {
   width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
-  will-change: transform;
 }
 
 .background {
