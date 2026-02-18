@@ -24,7 +24,7 @@ const skillCategories: { title: string; skills: SkillItem[] }[] = [
     {
         title: "Frontend",
         skills: [
-            { name: "React", icon: SiReact, color: "#61DAFB" },
+            { name: "React (Native)", icon: SiReact, color: "#61DAFB" },
             { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
             { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
             { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
