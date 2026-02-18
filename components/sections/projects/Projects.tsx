@@ -87,7 +87,7 @@ const projects: Project[] = [
     type: "desktop",
     link: "https://github.com/tdmdh/smart-cms-server",
     linkText: "View Repo",
-    tech: ["Go", "gRPC", "PostgreSQL", "Redis"],
+    tech: ["Go", "gRPC", "Next.js", "PostgreSQL", "Redis"],
     features: [
       "Multi-tenant architecture",
       "Real-time content sync",
