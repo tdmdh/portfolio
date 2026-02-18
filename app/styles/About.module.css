@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   About Section – Center Text + Floating Minicards
+   About Section – Centered Text + Corner Cards
    ═══════════════════════════════════════════════ */
 
 .main {
@@ -10,26 +10,25 @@
 }
 
 /* ── Bento Grid ──
-   5 columns × 5 rows. Spacer tracks (0.4fr cols, 0.35fr rows)
-   create visual separation between minicards and the center text. */
+   Large text card pinned to the center. Individual skill + accent
+   cards float at the four corners, separated by spacer tracks. */
 .bentoGrid {
     display: grid;
-    grid-template-columns: 1.1fr 1.1fr 0.4fr 2.8fr 0.4fr 1.1fr 1.1fr;
+    grid-template-columns: 1.2fr 0.5fr 3fr 0.5fr 1.2fr;
     grid-template-rows: 1fr 0.35fr 2.4fr 0.35fr 1fr;
     grid-template-areas:
-        "header  header  .  accent   .  frontend  frontend"
-        ".       .       .  .        .  .         ."
-        ".       .       .  text     .  .         ."
-        ".       .       .  .        .  .         ."
-        "backend backend .  tools    .  decor     decor";
-    gap: 0.6rem;
+        "front   .     .     .    accent"
+        "  .     .     .     .      .   "
+        "  .     .    text   .      .   "
+        "  .     .     .     .      .   "
+        "back    .     .     .    tools ";
     width: 100%;
     height: 100vh;
-    padding: 0.75rem;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
-/* ── Card Base ── */
+
 .card {
     background: rgba(5, 10, 48, 0.04);
     border: 1px solid rgba(5, 10, 48, 0.06);
@@ -49,75 +48,23 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
-/* ── Mini Card (shared) ── */
-.miniCard {
-    padding: 1rem 1.1rem;
+/* ── Corner Card (shared) ── */
+.cornerCard {
+    padding: 0.9rem 1rem;
 }
 
-/* ── Header Card ── */
-.headerCard {
-    grid-area: header;
-    justify-content: center;
-    align-items: flex-start;
-    background: linear-gradient(
-        145deg,
-        rgba(5, 10, 48, 0.06) 0%,
-        rgba(5, 10, 48, 0.02) 100%
-    );
-}
-
-.label {
-    display: inline-block;
-    font-family: var(--primary-font);
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--secondary-color);
-    background: rgba(74, 78, 105, 0.1);
-    padding: 0.3rem 0.6rem;
-    border-radius: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.title {
-    font-family: var(--primary-font);
-    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
-    font-weight: 700;
-    color: var(--primary-color);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin: 0;
-}
-
-.highlight {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* ── Accent / Decor Cards ── */
-.accentCard,
-.decorCard {
+/* ── Accent Card (top-right corner) ── */
+.accentCard {
+    grid-area: accent;
     padding: 0;
     background: transparent;
     border: none;
 }
 
-.accentCard:hover,
-.decorCard:hover {
+.accentCard:hover {
     background: transparent;
     border-color: transparent;
     box-shadow: none;
-}
-
-.accentCard {
-    grid-area: accent;
-}
-
-.decorCard {
-    grid-area: decor;
 }
 
 .accentGradient {
@@ -136,11 +83,6 @@
     animation: gradientShift 8s ease infinite;
 }
 
-.decorCard .accentGradient {
-    animation-direction: reverse;
-    animation-delay: -4s;
-}
-
 @keyframes gradientShift {
     0%   { background-position: 0% 50%; }
     25%  { background-position: 100% 0%; }
@@ -149,24 +91,60 @@
     100% { background-position: 0% 50%; }
 }
 
-/* ── Text Reveal Card (Center) ── */
+/* ── Text Reveal Card (center) ── */
 .textCard {
     grid-area: text;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem;
+    padding: 3rem 4rem;
     background: rgba(255, 255, 255, 0.35);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
 }
 
+.textHeader {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.label {
+    display: inline-block;
+    font-family: var(--primary-font);
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--secondary-color);
+    background: rgba(74, 78, 105, 0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-family: var(--primary-font);
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.highlight {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .revealText {
     font-family: var(--secondary-font);
-    font-size: clamp(1rem, 1.6vw, 1.45rem);
+    font-size: clamp(1.1rem, 1.7vw, 1.5rem);
     font-weight: 500;
-    line-height: 1.9;
+    line-height: 2;
     text-align: center;
-    max-width: 680px;
+    max-width: 700px;
     margin: 0;
 }
 
@@ -186,13 +164,13 @@
     color: var(--primary-color);
 }
 
-/* ── Skill Cards ── */
+/* ── Skill Cards (corners) ── */
 .frontendCard {
-    grid-area: frontend;
+    grid-area: front;
 }
 
 .backendCard {
-    grid-area: backend;
+    grid-area: back;
 }
 
 .toolsCard {
@@ -205,32 +183,37 @@
     justify-content: center;
     align-items: flex-start;
     gap: 0.5rem;
+    background: linear-gradient(
+        145deg,
+        rgba(5, 10, 48, 0.06) 0%,
+        rgba(5, 10, 48, 0.02) 100%
+    );
 }
 
 .cardLabel {
     font-family: var(--primary-font);
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--secondary-color);
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 .skillIcons {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.35rem;
 }
 
 .skillIcon {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
+    border-radius: 6px;
     transition: all 0.3s ease;
     cursor: default;
 }
@@ -246,57 +229,54 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
     .bentoGrid {
-        grid-template-columns: 1fr 1fr 0.3fr 2.4fr 0.3fr 1fr 1fr;
-        grid-template-rows: 1fr 0.25fr 2fr 0.25fr 1fr;
-    }
-
-    .title {
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        grid-template-columns: 1.1fr 0.4fr 2.8fr 0.4fr 1.1fr;
+        grid-template-rows: 1fr 0.3fr 2.2fr 0.3fr 1fr;
     }
 
     .textCard {
-        padding: 2rem;
+        padding: 2rem 2.5rem;
     }
 
     .revealText {
-        font-size: clamp(0.95rem, 1.5vw, 1.25rem);
+        font-size: clamp(0.95rem, 1.4vw, 1.2rem);
     }
 }
 
 /* ═══════════════════════════════════════════════
    Responsive – Mobile (≤ 640px)
+   Text on top, corner cards become a 2×2 grid below
    ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
     .bentoGrid {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto 0.2fr 1fr 0.2fr auto auto;
+        grid-template-rows: 2fr 0.15fr auto auto;
         grid-template-areas:
-            "header   accent"
-            "frontend frontend"
-            ".        ."
             "text     text"
             ".        ."
-            "backend  tools"
-            "decor    decor";
-        gap: 0.5rem;
+            "front    accent"
+            "back     tools";
+        gap: 0.4rem;
         padding: 0.5rem;
     }
 
     .card {
-        padding: 1rem;
-    }
-
-    .title {
-        font-size: 1.25rem;
-    }
-
-    .label {
-        font-size: 0.55rem;
-        margin-bottom: 0.4rem;
+        padding: 0.9rem;
     }
 
     .textCard {
-        padding: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .label {
+        font-size: 0.5rem;
+    }
+
+    .textHeader {
+        margin-bottom: 1rem;
     }
 
     .revealText {
@@ -305,12 +285,12 @@
     }
 
     .skillIcons {
-        gap: 0.35rem;
+        gap: 0.25rem;
     }
 
     .skillIcon {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
 }
 
@@ -319,7 +299,7 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 480px) {
     .title {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
 
     .revealText {
@@ -327,7 +307,7 @@
     }
 
     .skillIcon {
-        width: 26px;
-        height: 26px;
+        width: 24px;
+        height: 24px;
     }
 }
