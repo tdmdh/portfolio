@@ -25,8 +25,8 @@
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1.6fr 1fr 0.8fr;
     grid-template-areas:
-        "head  head  prof  prof  email email"
-        "head  head  prof  prof  stat  cta"
+        "head  head  head  email email email"
+        "head  head  head  stat  stat  cta"
         "loc   clock soc1  soc2  soc3  cta";
     gap: 0.75rem;
     width: 100%;
@@ -124,56 +124,7 @@
     max-width: 340px;
 }
 
-/* ═══════════════════════════════════════════════
-   B: Profile Picture – 2×2 center
-   ═══════════════════════════════════════════════ */
-.profileCard {
-    grid-area: prof;
-    padding: 0;
-    justify-content: flex-end;
-}
 
-.profileImageWrapper {
-    position: absolute;
-    inset: 0;
-}
-
-.profileImage {
-    object-fit: cover;
-    width: 100% !important;
-    height: 100% !important;
-    transition: transform 0.6s ease;
-}
-
-.profileCard:hover .profileImage {
-    transform: scale(1.05);
-}
-
-.profileOverlay {
-    position: relative;
-    z-index: 2;
-    padding: 2rem;
-    background: linear-gradient(0deg, rgba(5, 10, 48, 0.85) 0%, transparent 100%);
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-}
-
-.profileName {
-    font-family: var(--primary-font);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--quinary-color);
-}
-
-.profileRole {
-    font-family: var(--secondary-font);
-    font-size: 0.85rem;
-    color: var(--quaternary-color);
-    opacity: 0.7;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
 
 /* ═══════════════════════════════════════════════
    C: Email CTA – 2 cols top-right
@@ -477,10 +428,9 @@
 
     .bentoGrid {
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto;
         grid-template-areas:
-            "head  head  prof  prof"
-            "head  head  prof  prof"
+            "head  head  head  head"
             "email email stat  cta"
             "loc   clock soc1  soc2"
             "soc3  soc3  soc3  soc3";
@@ -512,7 +462,6 @@
         grid-template-rows: auto;
         grid-template-areas:
             "head   head"
-            "prof   prof"
             "stat   cta"
             "loc    clock"
             "soc1   soc2"
@@ -537,22 +486,6 @@
     .headlineSubtext {
         font-size: 0.85rem;
         margin-top: 0.75rem;
-    }
-
-    .profileCard {
-        min-height: 220px;
-        width: 100%;
-    }
-
-    .profileName {
-        font-size: 1.15rem;
-    }
-
-    .profileRole {
-        font-size: 0.75rem;
-    }
-    .profileOverlay {
-        display: none;
     }
 
     .emailAddress {

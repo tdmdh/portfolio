@@ -4,7 +4,6 @@ import { useRef, forwardRef, useState, useEffect } from "react"
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion"
 import { Icon } from "@iconify/react"
 import styles from "@/app/styles/Contact.module.css"
-import Image from "next/image"
 
 const EMAIL = "haftarou.dev@gmail.com"
 
@@ -84,21 +83,7 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     </p>
                 </motion.div>
 
-                <motion.div className={`${styles.card} ${styles.profileCard}`} variants={scaleIn}>
-                    <div className={styles.profileImageWrapper}>
-                        <Image
-                            src="/photo/me2.jpeg"
-                            alt="Mohammed"
-                            fill
-                            className={styles.profileImage}
-                            
-                        />
-                    </div>
-                    <div className={styles.profileOverlay}>
-                        <span className={styles.profileName}>Mohammed</span>
-                        <span className={styles.profileRole}>Software Developer</span>
-                    </div>
-                </motion.div>
+
 
                 <motion.a
                     href={`mailto:${EMAIL}`}

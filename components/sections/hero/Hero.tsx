@@ -1,29 +1,13 @@
 "use client"
 
-import React, { forwardRef, useEffect, useState } from "react"
+import React, { forwardRef } from "react"
 import { motion } from "framer-motion"
 import { Icon } from "@iconify/react"
 import styles from "@/app/styles/Hero.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
+import Image from "next/image"
 
 const Home = forwardRef<HTMLDivElement>((props, ref) => {
-  const [time, setTime] = useState("")
-
-  useEffect(() => {
-    const tick = () =>
-      setTime(
-        new Date().toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-          timeZone: "Europe/Amsterdam",
-        })
-      )
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [])
-
   const stagger = {
     hidden: { opacity: 0 },
     visible: {
@@ -41,6 +25,36 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
       transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
     },
   }
+
+  const fadeIn = {
+    hidden: { opacity: 0, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      filter: "blur(0px)",
+      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
+    },
+  }
+
+  const fadeInLeft = {
+    hidden: { opacity: 0, x: -80, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      filter: "blur(0px)",
+      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
+    },
+  }
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 80, filter: "blur(8px)" },
+    visible: {
+      opacity: 1,
+      x: 0,
+      filter: "blur(0px)",
+      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
+    },
+  }
+
 
   const scaleIn = {
     hidden: { opacity: 0, scale: 0.6, filter: "blur(10px)" },
@@ -60,7 +74,7 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
         initial="hidden"
         animate="visible"
       >
-        <motion.div className={`${styles.card} ${styles.greetingCard}`} variants={fadeUp}>
+        <motion.div className={`${styles.card} ${styles.greetingCard}`} variants={fadeInLeft}>
           <div className={styles.greetingContent}>
             <HeroTitle
               title="Hi, I'm"
@@ -72,11 +86,18 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
         </motion.div>
 
-        <motion.div className={`${styles.card} ${styles.accentCard}`} variants={scaleIn}>
-          <div className={styles.accentGradient} />
-          <div className={styles.accentContent}>
-            {/* <span className={styles.accentTime}>{time}</span> */}
-            {/* <span className={styles.accentLocation}>Rotterdam, NL</span> */}
+        <motion.div className={`${styles.card} ${styles.profileCard}`} variants={fadeInRight}>
+          <div className={styles.profileImageWrapper}>
+            <Image
+              src="/photo/me2.jpeg"
+              alt="Mohammed"
+              fill
+              className={styles.profileImage}
+            />
+          </div>
+          <div className={styles.profileOverlay}>
+            <span className={styles.profileName}>Mohammed</span>
+            <span className={styles.profileRole}>Software Developer</span>
           </div>
         </motion.div>
 
@@ -92,7 +113,7 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
         </motion.div>
 
-        <motion.div className={`${styles.card} ${styles.tagCard}`} variants={fadeUp}>
+        {/* <motion.div className={`${styles.card} ${styles.tagCard}`} variants={fadeUp}>
           <p className={styles.tagText}>
             Building digital experiences with clean code &amp; creative design
           </p>
@@ -117,7 +138,7 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
           <span className={styles.scrollText}>Scroll</span>
           <Icon icon="ph:arrow-down" className={styles.scrollArrow} />
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </motion.div>
   )
