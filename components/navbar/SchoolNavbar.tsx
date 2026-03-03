@@ -1,7 +1,7 @@
 "use client"
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { gsap } from "gsap"
 import styles from "@/app/school/styles/Navbar.module.css"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
 import SchoolNavLinks from "./components/SchoolNavLinks"
@@ -10,23 +10,43 @@ export default function Navbar() {
   const [isBlurred, setIsBlurred] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
-
-  const { scrollY } = useScroll()
+  const navContainerRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+  const progressBarRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      setIsBlurred(latest > 50)
-    })
-    return () => unsubscribe()
-  }, [scrollY])
+    const onScroll = () => {
+      const scrolled = window.scrollY > 50
+      setIsBlurred(scrolled)
 
-  const navWidth = useTransform(scrollY, [0, 100], ["60rem", "26.2rem"])
-  const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
-  const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
-  const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
-  const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
-  const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 100
-  const progressScaleX = useTransform(scrollY, [0, scrollMax], [0, 1])
+      const nav = navRef.current
+      if (!nav) return
+      const t = Math.min(window.scrollY / 100, 1)
+      nav.style.borderRadius = scrolled ? "2rem" : "0rem 0rem 1.7rem 1.7rem"
+      nav.style.zIndex = scrolled ? "10" : "0"
+      nav.style.width = `${60 - t * 33.8}rem`
+      nav.style.transform = `translateY(${t * 15}px)`
+
+      // Progress bar
+      const scrollMax = document.body.scrollHeight - window.innerHeight
+      if (progressBarRef.current && scrollMax > 0) {
+        progressBarRef.current.style.transform = `scaleX(${window.scrollY / scrollMax})`
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  // Entry animation
+  useEffect(() => {
+    const container = navContainerRef.current
+    if (!container) return
+    gsap.fromTo(container,
+      { opacity: 0, y: -50 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+    )
+  }, [])
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev)
@@ -41,20 +61,19 @@ export default function Navbar() {
   }, [pathname])
 
   return (
-    <motion.div className={styles.nav_container} initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+    <div ref={navContainerRef} className={styles.nav_container} style={{ opacity: 0 }}>
       <TopCorners isBlurred={isBlurred} position="left" fill="#050a30" />
 
-      <motion.nav
+      <nav
+        ref={navRef}
         className={`${styles.navbar} ${isBlurred ? styles.navbarBlur : ""}`}
         aria-label="Main navigation"
-        style={{ borderRadius: navBorderRadius, zIndex: navZIndex, width: navWidth, y: navTranslateY, transition: navTransition }}
+        style={{ transition: "all 0.3s ease" }}
       >
-        <motion.div
+        <div
+         ref={progressBarRef}
          className={styles.progressBar} 
-         style={{ scaleX: progressScaleX, transformOrigin: "left"  }} 
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 0.5 }}
+         style={{ transform: "scaleX(0)", transformOrigin: "left" }}
          />
          <div
         className={styles.mobileMenuToggle}
@@ -69,9 +88,9 @@ export default function Navbar() {
         </div>
       </div>
         <SchoolNavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} />
-      </motion.nav>
+      </nav>
 
       <TopCorners isBlurred={isBlurred} position="right" fill="#050a30" />
-    </motion.div>
+    </div>
   )
 }

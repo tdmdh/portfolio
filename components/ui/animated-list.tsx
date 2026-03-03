@@ -1,30 +1,35 @@
 "use client";
 
 import { cn } from "@/app/utils/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { gsap } from "gsap";
 import React, {
   ComponentPropsWithoutRef,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
 export function AnimatedListItem({ children }: { children: React.ReactNode }) {
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (itemRef.current) {
+      gsap.fromTo(itemRef.current,
+        { y: 30, opacity: 0, scale: 0.95 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }
+      );
+    }
+  }, []);
+
   return (
-    <motion.div
-      initial={{ y: 30, opacity: 0, scale: 0.95 }}
-      animate={{ y: 0, opacity: 1, scale: 1 }}
-      exit={{ y: -20, opacity: 0, scale: 0.9 }} 
-      transition={{
-        type: "spring",
-        stiffness: 250,
-        damping: 20,
-      }}
-      layout
+    <div
+      ref={itemRef}
       className="mx-auto w-full"
+      style={{ opacity: 0 }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -66,13 +71,11 @@ export const AnimatedList = React.memo(
 
     return (
       <div className={cn("flex flex-col items-center gap-4", className)} {...props}>
-        <AnimatePresence>
-          {itemsToShow.map((item) => (
-            <AnimatedListItem key={(item as React.ReactElement).key}>
-              {item}
-            </AnimatedListItem>
-          ))}
-        </AnimatePresence>
+        {itemsToShow.map((item) => (
+          <AnimatedListItem key={(item as React.ReactElement).key}>
+            {item}
+          </AnimatedListItem>
+        ))}
       </div>
     );
   }

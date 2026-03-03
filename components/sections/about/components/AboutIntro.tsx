@@ -1,26 +1,24 @@
-import { motion } from "framer-motion"
+import { useRef, useEffect } from "react"
+import { gsap } from "gsap"
 import styles from "@/app/styles/About.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
 export default function AboutIntro({ isBlurred }: { isBlurred: boolean }) {
+  const articleRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (articleRef.current) {
+      gsap.fromTo(articleRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" })
+    }
+  }, [])
+
   return (
-    <motion.article
+    <article
+      ref={articleRef}
       className={styles.aboutContainer}
-      animate={{ y: [50, 0], opacity: [0, 1] }}
-      transition={{ duration: 0.8 }}
+      style={{ opacity: 0 }}
     >
-      <motion.header
-        className={styles.title}
-      >
+      <header className={styles.title}>
         <HeroTitle
           animationDelay={0.1}
           animationType="letter"
@@ -28,7 +26,7 @@ export default function AboutIntro({ isBlurred }: { isBlurred: boolean }) {
           animationDuration={5}
           title="About Me"
         />
-      </motion.header>
-    </motion.article>
+      </header>
+    </article>
   )
 }

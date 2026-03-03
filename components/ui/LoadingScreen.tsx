@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { gsap } from "gsap"
 import styles from "@/app/styles/Loading.module.css"
 
 export default function LoadingScreen() {
@@ -10,6 +10,7 @@ export default function LoadingScreen() {
     const progressRef = useRef(0)
     const rafRef = useRef<number | null>(null)
     const barRef = useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         if (typeof window === "undefined") return
@@ -23,11 +24,64 @@ export default function LoadingScreen() {
     const finish = useCallback(() => {
         setExit(true)
         sessionStorage.setItem("intro-seen", "1")
-        setTimeout(() => {
-            setShow(false)
-            document.body.style.overflow = ""
-        }, 800)
+
+        // Exit animation
+        if (containerRef.current) {
+            gsap.to(containerRef.current, {
+                opacity: 0,
+                scale: 1.05,
+                filter: "blur(12px)",
+                duration: 0.6,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    setShow(false)
+                    document.body.style.overflow = ""
+                },
+            })
+        }
     }, [])
+
+    // Entrance animations
+    useEffect(() => {
+        if (!show || exit) return
+        const container = containerRef.current
+        if (!container) return
+
+        const letters = container.querySelectorAll(`.${styles.letter}`)
+        const subtitle = container.querySelector(`.${styles.subtitle}`)
+        const progressContainer = container.querySelector(`.${styles.progressContainer}`)
+
+        gsap.fromTo(letters,
+            { y: 80, opacity: 0, scale: 0.3, filter: "blur(8px)" },
+            {
+                y: 0, opacity: 1, scale: 1, filter: "blur(0px)",
+                duration: 0.6, ease: "back.out(1.7)",
+                stagger: 0.06, delay: 0.15,
+            }
+        )
+
+        if (subtitle) {
+            gsap.fromTo(subtitle,
+                { opacity: 0, y: 30, filter: "blur(6px)" },
+                {
+                    opacity: 1, y: 0, filter: "blur(0px)",
+                    duration: 0.5, ease: "power2.out",
+                    delay: 0.15 + 8 * 0.06 + 0.15,
+                }
+            )
+        }
+
+        if (progressContainer) {
+            gsap.fromTo(progressContainer,
+                { opacity: 0, scaleX: 0 },
+                {
+                    opacity: 1, scaleX: 1,
+                    duration: 0.4, ease: "power2.out",
+                    delay: 0.5,
+                }
+            )
+        }
+    }, [show, exit])
 
     useEffect(() => {
         if (!show || exit) return
@@ -64,131 +118,33 @@ export default function LoadingScreen() {
     const name = "MOHAMMED"
     const subtitle = "Software Developer"
 
-    const letterVariants = {
-        hidden: { y: 80, opacity: 0, scale: 0.3, filter: "blur(8px)" },
-        visible: (i: number) => ({
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            filter: "blur(0px)",
-            transition: {
-                type: "spring" as const,
-                stiffness: 400,
-                damping: 20,
-                mass: 0.6,
-                delay: 0.15 + i * 0.06,
-            },
-        }),
-        exit: (i: number) => ({
-            y: -60,
-            opacity: 0,
-            scale: 0.7,
-            filter: "blur(6px)",
-            transition: {
-                type: "spring" as const,
-                stiffness: 300,
-                damping: 25,
-                delay: i * 0.03,
-            },
-        }),
-    }
-
-    const subtitleVariants = {
-        hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
-        visible: {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            transition: {
-                type: "spring" as const,
-                stiffness: 200,
-                damping: 20,
-                delay: 0.15 + name.length * 0.06 + 0.15,
-            },
-        },
-        exit: {
-            opacity: 0,
-            y: -30,
-            filter: "blur(6px)",
-            transition: { duration: 0.3 },
-        },
-    }
-
-    const barContainerVariants = {
-        hidden: { opacity: 0, scaleX: 0 },
-        visible: {
-            opacity: 1,
-            scaleX: 1,
-            transition: {
-                delay: 0.5,
-                duration: 0.4,
-                ease: [0.25, 0.46, 0.45, 0.94] as const,
-            },
-        },
-        exit: {
-            opacity: 0,
-            scaleX: 0,
-            transition: { duration: 0.3 },
-        },
-    }
-
     return (
-        <AnimatePresence>
-            {!exit ? (
-                <motion.div
-                    className={styles.loadingContainer}
-                    initial={{ opacity: 1 }}
-                    exit={{
-                        opacity: 0,
-                        scale: 1.05,
-                        filter: "blur(12px)",
-                        transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-                    }}
-                    key="loader"
-                >
-                    <div className={styles.loadingContent}>
-                        <div className={styles.nameContainer}>
-                            {name.split("").map((letter, i) => (
-                                <motion.span
-                                    key={i}
-                                    className={styles.letter}
-                                    custom={i}
-                                    variants={letterVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                >
-                                    {letter}
-                                </motion.span>
-                            ))}
-                        </div>
-                        <motion.span
-                            className={styles.subtitle}
-                            variants={subtitleVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
+        <div ref={containerRef} className={styles.loadingContainer}>
+            <div className={styles.loadingContent}>
+                <div className={styles.nameContainer}>
+                    {name.split("").map((letter, i) => (
+                        <span
+                            key={i}
+                            className={styles.letter}
+                            style={{ opacity: 0 }}
                         >
-                            {subtitle}
-                        </motion.span>
+                            {letter}
+                        </span>
+                    ))}
+                </div>
+                <span className={styles.subtitle} style={{ opacity: 0 }}>
+                    {subtitle}
+                </span>
 
-                        <motion.div
-                            className={styles.progressContainer}
-                            variants={barContainerVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                        >
-                            <div className={styles.progressBarWrapper}>
-                                <div ref={barRef} className={styles.progressBar} />
-                            </div>
-                        </motion.div>
+                <div className={styles.progressContainer} style={{ opacity: 0 }}>
+                    <div className={styles.progressBarWrapper}>
+                        <div ref={barRef} className={styles.progressBar} />
                     </div>
+                </div>
+            </div>
 
-                    <div className={`${styles.corner} ${styles.cornerTL}`} />
-                    <div className={`${styles.corner} ${styles.cornerBR}`} />
-                </motion.div>
-            ) : null}
-        </AnimatePresence>
+            <div className={`${styles.corner} ${styles.cornerTL}`} />
+            <div className={`${styles.corner} ${styles.cornerBR}`} />
+        </div>
     )
 }

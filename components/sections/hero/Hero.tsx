@@ -1,80 +1,47 @@
 "use client"
 
-import React, { forwardRef } from "react"
-import { motion } from "framer-motion"
-import { Icon } from "@iconify/react"
+import React, { forwardRef, useRef, useEffect } from "react"
+import { gsap } from "gsap"
 import styles from "@/app/styles/Hero.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 import Image from "next/image"
 
 const Home = forwardRef<HTMLDivElement>((props, ref) => {
-  const stagger = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.06, delayChildren: 0.05 },
-    },
-  }
+  const gridRef = useRef<HTMLDivElement>(null)
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 120, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
-    },
-  }
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = gridRef.current?.children
+      if (!cards) return
 
-  const fadeIn = {
-    hidden: { opacity: 0, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
-    },
-  }
+      gsap.set(cards, { opacity: 0 })
 
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -80, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
-    },
-  }
+      gsap.fromTo(
+        `.${styles.greetingCard}`,
+        { opacity: 0, x: -80, filter: "blur(8px)" },
+        { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", delay: 0.05 }
+      )
 
-  const fadeInRight = {
-    hidden: { opacity: 0, x: 80, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-      transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
-    },
-  }
+      gsap.fromTo(
+        `.${styles.profileCard}`,
+        { opacity: 0, x: 80, filter: "blur(8px)" },
+        { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", delay: 0.11 }
+      )
 
+      gsap.fromTo(
+        `.${styles.nameCard}`,
+        { opacity: 0, y: 120, filter: "blur(8px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", delay: 0.17 }
+      )
+    }, gridRef)
 
-  const scaleIn = {
-    hidden: { opacity: 0, scale: 0.6, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0px)",
-      transition: { type: "spring" as const, stiffness: 350, damping: 22, mass: 0.7 },
-    },
-  }
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <motion.div ref={ref} className={styles.main}>
-      <motion.div
-        className={styles.bentoGrid}
-        variants={stagger}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div className={`${styles.card} ${styles.greetingCard}`} variants={fadeInLeft}>
+    <div ref={ref} className={styles.main}>
+      <div ref={gridRef} className={styles.bentoGrid}>
+        <div className={`${styles.card} ${styles.greetingCard}`}>
           <div className={styles.greetingContent}>
             <HeroTitle
               title="Hi, I'm"
@@ -84,9 +51,9 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
               animationDuration={0.5}
             />
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div className={`${styles.card} ${styles.profileCard}`} variants={fadeInRight}>
+        <div className={`${styles.card} ${styles.profileCard}`}>
           <div className={styles.profileImageWrapper}>
             <Image
               src="/photo/me2.jpeg"
@@ -99,9 +66,9 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
             <span className={styles.profileName}>Mohammed</span>
             <span className={styles.profileRole}>Software Developer</span>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div className={`${styles.card} ${styles.nameCard}`} variants={fadeUp}>
+        <div className={`${styles.card} ${styles.nameCard}`}>
           <div className={styles.nameContent}>
             <HeroTitle
               title="Mohammed"
@@ -111,36 +78,9 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
               animationDuration={0.5}
             />
           </div>
-        </motion.div>
-
-        {/* <motion.div className={`${styles.card} ${styles.tagCard}`} variants={fadeUp}>
-          <p className={styles.tagText}>
-            Building digital experiences with clean code &amp; creative design
-          </p>
-        </motion.div>
-
-        <motion.div className={`${styles.card} ${styles.roleCard}`} variants={scaleIn}>
-          <div className={styles.statusDot}>
-            <span className={styles.ping} />
-            <span className={styles.dot} />
-          </div>
-          <span className={styles.roleLabel}>Current Role</span>
-          <span className={styles.roleText}>Software Developer</span>
-        </motion.div>
-
-        <motion.div className={`${styles.card} ${styles.scrollCard}`} variants={fadeUp}>
-          <div className={styles.scrollInner}>
-            <motion.div
-              className={styles.scrollLine}
-              animate={{ y: [0, 16, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
-          <span className={styles.scrollText}>Scroll</span>
-          <Icon icon="ph:arrow-down" className={styles.scrollArrow} />
-        </motion.div> */}
-      </motion.div>
-    </motion.div>
+        </div>
+      </div>
+    </div>
   )
 })
 

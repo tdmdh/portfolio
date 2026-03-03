@@ -1,4 +1,5 @@
-import { motion } from "framer-motion"
+import { useRef, useEffect } from "react"
+import { gsap } from "gsap"
 import styles from "@/app/styles/Navbar.module.css"
 
 interface TopCornersProps {
@@ -23,12 +24,35 @@ export const TopCorners = ({
   translateY = 0,
   isDarkSection = true,
 }: TopCornersProps) => {
+  const svgRef = useRef<SVGSVGElement>(null)
+  const pathRef = useRef<SVGPathElement>(null)
   const fallbackRotation = position === "left" ? 180 : 0
 
   const dynamicFill = isDarkSection ? "var(--quinary-color)" : "var(--secondary-color)"
 
+  useEffect(() => {
+    const svg = svgRef.current
+    if (!svg) return
+
+    gsap.to(svg, {
+      y: isBlurred ? -20 : 0,
+      opacity: isBlurred ? 0 : 1,
+      rotate: rotate ?? (position === "left" ? 90 : 0),
+      scale: isBlurred ? 0 : 1,
+      duration: 0.4,
+      ease: "power2.out",
+    })
+  }, [isBlurred, rotate, position])
+
+  useEffect(() => {
+    const path = pathRef.current
+    if (!path) return
+    gsap.to(path, { fill: dynamicFill, duration: 0.4, ease: "power2.out" })
+  }, [dynamicFill])
+
   return (
-    <motion.svg
+    <svg
+      ref={svgRef}
       className={`${position === "left" ? styles.topLeft : styles.topRight} ${className || ""}`}
       width="30"
       height="30"
@@ -37,19 +61,12 @@ export const TopCorners = ({
       style={{
         transform: `rotate(${rotate ?? fallbackRotation}deg) scale(${scale}) translate(${translateX}px, ${translateY}px)`,
       }}
-      animate={{
-        y: isBlurred ? -20 : 0,
-        opacity: isBlurred ? 0 : 1,
-        rotate: rotate ?? (position === "left" ? 90 : 0),
-        scale: isBlurred ? 0 : 1,
-      }}
-      transition={{ duration: 0.4 }}
     >
       <g transform="scale(2)" clipPath="url(#clip0_310_2)">
-        <motion.path
+        <path
+          ref={pathRef}
           d="M30 0H0V30C0 16.431 16.431 0 30 0Z"
-          animate={{ fill: dynamicFill }}
-          transition={{ duration: 0.4 }}
+          fill={dynamicFill}
         />
       </g>
       <defs>
@@ -57,6 +74,6 @@ export const TopCorners = ({
           <rect width="30" height="30" fill="white" />
         </clipPath>
       </defs>
-    </motion.svg>
+    </svg>
   )
 }

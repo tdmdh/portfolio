@@ -1,4 +1,3 @@
-import { motion } from "framer-motion"
 import styles from "@/app/styles/About.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 import { TextReveal } from "@/components/ui/TextReveal"

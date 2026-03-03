@@ -1,67 +1,68 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useEffect, useRef } from "react"
+import { gsap } from "gsap"
 import Link from "next/link"
 import styles from "@/app/styles/NotFound.module.css"
 
-const stagger = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.06, delayChildren: 0.05 },
-    },
-}
-
-const slideUp = {
-    hidden: { opacity: 0, y: 120, filter: "blur(8px)" },
-    visible: {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 },
-    },
-}
-
-const scaleIn = {
-    hidden: { opacity: 0, scale: 0.5, filter: "blur(10px)" },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-        transition: { type: "spring" as const, stiffness: 350, damping: 22, mass: 0.7 },
-    },
-}
-
 export default function NotFound() {
+    const gridRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (!gridRef.current) return
+        const ctx = gsap.context(() => {
+            const cards = gridRef.current!.children
+            // Scale-in cards
+            const scaleCards = gridRef.current!.querySelectorAll(
+                `.${styles.codeCard}, .${styles.accentCard}, .${styles.decorCard}`
+            )
+            // Slide-up cards
+            const slideCards = gridRef.current!.querySelectorAll(
+                `.${styles.messageCard}, .${styles.ctaCard}`
+            )
+
+            gsap.fromTo(scaleCards,
+                { opacity: 0, scale: 0.5, filter: "blur(10px)" },
+                { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "back.out(1.4)", stagger: 0.06, delay: 0.05 }
+            )
+            gsap.fromTo(slideCards,
+                { opacity: 0, y: 120, filter: "blur(8px)" },
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "back.out(1.4)", stagger: 0.06, delay: 0.05 }
+            )
+        }, gridRef)
+        return () => ctx.revert()
+    }, [])
+
     return (
         <div className={styles.main}>
-            <motion.div
+            <div
+                ref={gridRef}
                 className={styles.bentoGrid}
-                variants={stagger}
-                initial="hidden"
-                animate="visible"
             >
-                <motion.div className={`${styles.card} ${styles.codeCard}`} variants={scaleIn}>
+                <div className={`${styles.card} ${styles.codeCard}`} style={{ opacity: 0 }}>
                     <span className={styles.code}>404</span>
-                </motion.div>
+                </div>
 
-                <motion.div className={`${styles.card} ${styles.accentCard}`} variants={scaleIn}>
+                <div className={`${styles.card} ${styles.accentCard}`} style={{ opacity: 0 }}>
                     <div className={styles.accentGradient} />
-                </motion.div>
+                </div>
 
-                <motion.div className={`${styles.card} ${styles.messageCard}`} variants={slideUp}>
+                <div className={`${styles.card} ${styles.messageCard}`} style={{ opacity: 0 }}>
                     <h1 className={styles.title}>Page Not Found</h1>
                     <p className={styles.description}>
                         The page you&apos;re looking for doesn&apos;t exist or has been moved.
                     </p>
-                </motion.div>
+                </div>
 
-                <motion.div className={`${styles.card} ${styles.ctaCard}`} variants={slideUp}>
+                <div className={`${styles.card} ${styles.ctaCard}`} style={{ opacity: 0 }}>
                     <Link href="/" className={styles.ctaLink}>
-                        <motion.div
+                        <div
                             className={styles.ctaButton}
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.97 }}
+                            style={{ transition: "transform 0.2s" }}
+                            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.05) translateY(-2px)" }}
+                            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)" }}
+                            onMouseDown={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(0.97)" }}
+                            onMouseUp={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.05) translateY(-2px)" }}
                         >
                             <span className={styles.ctaText}>Go Home</span>
                             <svg
@@ -78,17 +79,17 @@ export default function NotFound() {
                                 <path d="M5 12h14" />
                                 <path d="m12 5 7 7-7 7" />
                             </svg>
-                        </motion.div>
+                        </div>
                     </Link>
-                </motion.div>
+                </div>
 
-                <motion.div className={`${styles.card} ${styles.decorCard}`} variants={scaleIn}>
+                <div className={`${styles.card} ${styles.decorCard}`} style={{ opacity: 0 }}>
                     <div className={styles.decorContent}>
                         <span className={styles.decorSymbol}>&#123; &#125;</span>
                         <span className={styles.decorLabel}>Lost in code</span>
                     </div>
-                </motion.div>
-            </motion.div>
+                </div>
+            </div>
         </div>
     )
 }

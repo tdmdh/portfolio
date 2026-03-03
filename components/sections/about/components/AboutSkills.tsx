@@ -1,4 +1,5 @@
-import { motion } from "framer-motion"
+import { useRef, useEffect } from "react"
+import { gsap } from "gsap"
 import styles from "@/app/styles/About.module.css"
 import HeroTitle from "../../components/HeroTitle"
 import { IconCloud3D } from "@/components/sections/components/Icons"
@@ -8,12 +9,27 @@ export default function AboutSkills({ isBlurred, showIcon, setShowIcon }: {
   showIcon: boolean,
   setShowIcon: (val: boolean) => void
 }) {
+  const titleRef = useRef<HTMLDivElement>(null)
+  const iconRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (titleRef.current) {
+      gsap.fromTo(titleRef.current, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (showIcon && iconRef.current) {
+      gsap.fromTo(iconRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "back.out(1.4)" })
+    }
+  }, [showIcon])
+
   return (
     <div className={styles.mySkillContainer}>
-      <motion.div
+      <div
+        ref={titleRef}
         className={styles.title}
-        animate={{ scale: [0.9, 1], opacity: [0, 1] }}
-        transition={{ duration: 0.1 }}
+        style={{ opacity: 0 }}
       >
         <HeroTitle
           animationDuration={5}
@@ -23,18 +39,16 @@ export default function AboutSkills({ isBlurred, showIcon, setShowIcon }: {
           title="My Skills"
           onAnimationComplete={() => setShowIcon(true)}
         />
-      </motion.div>
+      </div>
 
       {showIcon && (
-        <motion.div
-          style={{ display: 'inline-block', width: '500px', height: '500px' }}
+        <div
+          ref={iconRef}
+          style={{ display: 'inline-block', width: '500px', height: '500px', opacity: 0 }}
           className={styles.icons}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
         >
           {/* <IconCloud3D /> */}
-        </motion.div>
+        </div>
       )}
     </div>
   )

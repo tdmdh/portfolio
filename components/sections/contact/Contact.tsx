@@ -1,9 +1,12 @@
 "use client"
 
 import { useRef, forwardRef, useState, useEffect } from "react"
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Icon } from "@iconify/react"
 import styles from "@/app/styles/Contact.module.css"
+
+gsap.registerPlugin(ScrollTrigger)
 
 const EMAIL = "haftarou.dev@gmail.com"
 
@@ -13,24 +16,9 @@ const socials = [
     { name: "LinkedIn", href: "https://linkedin.com", icon: "mdi:linkedin" },
 ]
 
-function useMagnetic(strength = 0.35) {
-    const x = useMotionValue(0)
-    const y = useMotionValue(0)
-    const springX = useSpring(x, { stiffness: 200, damping: 20 })
-    const springY = useSpring(y, { stiffness: 200, damping: 20 })
-    const handleMouse = (e: React.MouseEvent<HTMLElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        x.set((e.clientX - (rect.left + rect.width / 2)) * strength)
-        y.set((e.clientY - (rect.top + rect.height / 2)) * strength)
-    }
-    const reset = () => { x.set(0); y.set(0) }
-    return { springX, springY, handleMouse, reset }
-}
-
 const Contact = forwardRef<HTMLDivElement>((props, ref) => {
-    const containerRef = useRef(null)
-    const isInView = useInView(containerRef, { once: true, margin: "-80px" })
-    const { springX, springY, handleMouse, reset } = useMagnetic(0.25)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const ctaCircleRef = useRef<HTMLDivElement>(null)
 
     const [time, setTime] = useState("")
     useEffect(() => {
@@ -49,29 +37,62 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
         return () => clearInterval(id)
     }, [])
 
-    const stagger = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 0.05 } },
+    useEffect(() => {
+        const container = containerRef.current
+        if (!container) return
+
+        const ctx = gsap.context(() => {
+            gsap.fromTo(
+                [
+                    `.${styles.headlineCard}`,
+                    `.${styles.emailCard}`,
+                    `.${styles.statusCard}`,
+                    `.${styles.locationCard}`,
+                    `.${styles.clockCard}`,
+                    `.${styles.socialCard}`,
+                ],
+                { opacity: 0, y: 100, filter: "blur(8px)" },
+                {
+                    opacity: 1, y: 0, filter: "blur(0px)",
+                    duration: 0.7, ease: "power3.out",
+                    stagger: 0.05,
+                    scrollTrigger: { trigger: container, start: "top 80%", once: true },
+                }
+            )
+
+            gsap.fromTo(
+                `.${styles.ctaCard}`,
+                { opacity: 0, scale: 0.5, filter: "blur(10px)" },
+                {
+                    opacity: 1, scale: 1, filter: "blur(0px)",
+                    duration: 0.7, ease: "back.out(1.4)",
+                    scrollTrigger: { trigger: container, start: "top 80%", once: true },
+                }
+            )
+        }, container)
+
+        return () => ctx.revert()
+    }, [])
+
+    const handleCtaMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+        const el = ctaCircleRef.current
+        if (!el) return
+        const rect = el.getBoundingClientRect()
+        const x = (e.clientX - (rect.left + rect.width / 2)) * 0.25
+        const y = (e.clientY - (rect.top + rect.height / 2)) * 0.25
+        gsap.to(el, { x, y, duration: 0.3, ease: "power2.out" })
     }
-    const fadeUp = {
-        hidden: { opacity: 0, y: 100, filter: "blur(8px)" },
-        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 300, damping: 24, mass: 0.8 } },
-    }
-    const scaleIn = {
-        hidden: { opacity: 0, scale: 0.5, filter: "blur(10px)" },
-        visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 350, damping: 22, mass: 0.7 } },
+
+    const handleCtaLeave = () => {
+        if (ctaCircleRef.current) {
+            gsap.to(ctaCircleRef.current, { x: 0, y: 0, duration: 0.4, ease: "elastic.out(1, 0.4)" })
+        }
     }
 
     return (
-        <motion.section ref={ref} className={styles.contactSection}>
-            <motion.div
-                ref={containerRef}
-                className={styles.bentoGrid}
-                variants={stagger}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-            >
-                <motion.div className={`${styles.card} ${styles.headlineCard}`} variants={fadeUp}>
+        <section ref={ref} className={styles.contactSection}>
+            <div ref={containerRef} className={styles.bentoGrid}>
+                <div className={`${styles.card} ${styles.headlineCard}`}>
                     <span className={styles.label}>Get In Touch</span>
                     <h2 className={styles.headline}>
                         <span className={styles.line}>Let&apos;s</span>
@@ -81,16 +102,11 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     <p className={styles.headlineSubtext}>
                         Have a project in mind? I&apos;d love to hear about it.
                     </p>
-                </motion.div>
+                </div>
 
-
-
-                <motion.a
+                <a
                     href={`mailto:${EMAIL}`}
                     className={`${styles.card} ${styles.emailCard}`}
-                    variants={fadeUp}
-                    whileHover={{ scale: 1.015 }}
-                    whileTap={{ scale: 0.98 }}
                 >
                     <div className={styles.emailTop}>
                         <span className={styles.cardLabel}>Get in touch</span>
@@ -100,67 +116,63 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     <div className={styles.emailArrow}>
                         <Icon icon="ph:arrow-up-right-bold" />
                     </div>
-                </motion.a>
+                </a>
 
-                <motion.div className={`${styles.card} ${styles.statusCard}`} variants={fadeUp}>
+                <div className={`${styles.card} ${styles.statusCard}`}>
                     <div className={styles.statusDot}>
                         <span className={styles.ping} />
                         <span className={styles.dot} />
                     </div>
                     <span className={styles.statusLabel}>Current Status</span>
                     <span className={styles.statusText}>Available for work</span>
-                </motion.div>
+                </div>
 
-                <motion.a
+                <a
                     href={`mailto:${EMAIL}`}
                     className={`${styles.card} ${styles.ctaCard}`}
-                    variants={scaleIn}
                 >
-                    <motion.div
+                    <div
+                        ref={ctaCircleRef}
                         className={styles.ctaCircle}
-                        style={{ x: springX, y: springY }}
-                        onMouseMove={handleMouse}
-                        onMouseLeave={reset}
+                        onMouseMove={handleCtaMouse}
+                        onMouseLeave={handleCtaLeave}
                     >
                         <span className={styles.ctaText}>Send</span>
                         <span className={styles.ctaText}>Email</span>
                         <Icon icon="ph:arrow-up-right-bold" className={styles.ctaArrow} />
                         <div className={styles.ctaRing} />
-                    </motion.div>
-                </motion.a>
+                    </div>
+                </a>
 
-                <motion.div className={`${styles.card} ${styles.locationCard}`} variants={fadeUp}>
+                <div className={`${styles.card} ${styles.locationCard}`}>
                     <div>
                         <span className={styles.cardLabel}>Based in</span>
                         <span className={styles.locationText}>Remote / Rotterdam</span>
                     </div>
-                </motion.div>
+                </div>
 
-                <motion.div className={`${styles.card} ${styles.clockCard}`} variants={fadeUp}>
+                <div className={`${styles.card} ${styles.clockCard}`}>
                     <div>
                         <span className={styles.cardLabel}>Local Time (UTC)</span>
                         <span className={styles.clockTime}>{time}</span>
                     </div>
-                </motion.div>
+                </div>
 
                 {socials.map((s, i) => (
-                    <motion.a
+                    <a
                         key={s.name}
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`${styles.card} ${styles.socialCard} ${styles[`social${i + 1}`]}`}
-                        variants={fadeUp}
-                        whileHover={{ scale: 1.05, y: -4 }}
-                        whileTap={{ scale: 0.97 }}
                     >
                         <Icon icon={s.icon} className={styles.socialIcon} />
                         <span className={styles.socialName}>{s.name}</span>
                         <Icon icon="ph:arrow-up-right" className={styles.socialArrow} />
-                    </motion.a>
+                    </a>
                 ))}
-            </motion.div>
-        </motion.section>
+            </div>
+        </section>
     )
 })
 

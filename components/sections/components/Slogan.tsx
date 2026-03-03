@@ -1,7 +1,6 @@
 "use client"
-import React from "react"
-import { motion } from "framer-motion"
-import type { Variant } from "framer-motion"
+import React, { useEffect, useRef } from "react"
+import { gsap } from "gsap"
 import styles from "@/app/styles/Hero.module.css"
 import { Carattere } from "next/font/google"
 
@@ -14,43 +13,35 @@ const cormorant = Carattere({
 const Slogan: React.FC = () => {
   const sloganText = "Turning ideas into beautiful, interactive realities."
   const sloganLetters = sloganText.split("")
+  const containerRef = useRef<HTMLHeadingElement>(null)
 
-  const letterVariants: Record<string, Variant> = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-      },
-    },
-  }
+  useEffect(() => {
+    if (!containerRef.current) return
+    const letters = containerRef.current.querySelectorAll(`.${styles.sloganLetter}`)
+    gsap.fromTo(letters,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", stagger: 0.05 }
+    )
+  }, [])
 
   return (
     <div className={styles.sloganContainer}>
-      <motion.h1
+      <h1
+        ref={containerRef}
         className={`${styles.slogan} ${cormorant.className}`}
-        initial="hidden"
-        animate="visible"
-        variants={{
-          visible: { transition: { staggerChildren: 0.05 } },
-            hidden: { transition: { staggerChildren: 0.05 } },
-            
-        }}
       >
         {sloganLetters.map((letter, index) => (
-          <motion.span
+          <span
             key={index}
-            variants={letterVariants}
             className={styles.sloganLetter}
-            whileHover={{ scale: 1.1 }}  
+            style={{ opacity: 0, display: "inline-block", transition: "transform 0.2s" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.1)" }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)" }}
           >
-            {letter}
-          </motion.span>
+            {letter === " " ? "\u00A0" : letter}
+          </span>
         ))}
-      </motion.h1>
+      </h1>
     </div>
   )
 }

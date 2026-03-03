@@ -1,5 +1,5 @@
-import { motion } from "framer-motion"
-import React from "react"
+import React, { useRef, useEffect } from "react"
+import { gsap } from "gsap"
 
 interface TopCornersProps {
   isBlurred?: boolean
@@ -31,6 +31,8 @@ export const TopCorners = ({
   size = 30,
   style = {},
 }: TopCornersProps) => {
+  const svgRef = useRef<SVGSVGElement>(null)
+
   const dynamicStyle: React.CSSProperties = {
     position: "relative",
     zIndex: 1,
@@ -39,21 +41,28 @@ export const TopCorners = ({
     ...style,
   }
 
-  const clipId = React.useId() // unique per render
+  const clipId = React.useId()
+
+  useEffect(() => {
+    if (svgRef.current) {
+      gsap.to(svgRef.current, {
+        y: isBlurred ? -20 : 0,
+        opacity: isBlurred ? 0 : 1,
+        duration: 0.4,
+        ease: "power2.out",
+      })
+    }
+  }, [isBlurred])
 
   return (
-    <motion.svg
+    <svg
+      ref={svgRef}
       className={className}
       width={size}
       height={size}
       viewBox="0 0 60 60"
       xmlns="http://www.w3.org/2000/svg"
       style={dynamicStyle}
-      animate={{
-        y: isBlurred ? -20 : 0,
-        opacity: isBlurred ? 0 : 1,
-      }}
-      transition={{ duration: 0.4 }}
     >
       <g transform="scale(2,1.5)" clipPath={`url(#${clipId})`}>
         <path d="M30 0H0V30C0 16.431 16.431 0 30 0Z" fill={color} />
@@ -63,6 +72,6 @@ export const TopCorners = ({
           <rect width="30" height="30" fill={color} />
         </clipPath>
       </defs>
-    </motion.svg>
+    </svg>
   )
 }

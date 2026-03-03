@@ -1,7 +1,6 @@
 "use client"
 
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
@@ -52,38 +51,6 @@ const skillCategories: { title: string; skills: SkillItem[] }[] = [
 
 const aboutText = "I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust."
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 80, filter: "blur(8px)" },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: {
-      type: "spring" as const,
-      stiffness: 300,
-      damping: 24,
-      mass: 0.8,
-      delay,
-    },
-  }),
-}
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.6, filter: "blur(10px)" },
-  visible: (delay: number) => ({
-    opacity: 1,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: {
-      type: "spring" as const,
-      stiffness: 350,
-      damping: 22,
-      mass: 0.7,
-      delay,
-    },
-  }),
-}
-
 const About = forwardRef<HTMLDivElement>((props, ref) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
@@ -104,16 +71,43 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     const grid = gridRef.current
     if (!container || !grid) return
 
-    const trigger = ScrollTrigger.create({
-      trigger: container,
-      start: "top top",
-      end: "bottom bottom",
-      pin: grid,
-      pinSpacing: false,
-      onUpdate: (self) => setProgress(self.progress),
-    })
+    const ctx = gsap.context(() => {
+      // Pin the grid while scrolling through the container
+      ScrollTrigger.create({
+        trigger: container,
+        start: "top top",
+        end: "bottom bottom",
+        pin: grid,
+        pinSpacing: false,
+        onUpdate: (self) => setProgress(self.progress),
+      })
 
-    return () => trigger.kill()
+      // Animate corner cards on scroll into view
+      const cornerCards = grid.querySelectorAll(`.${styles.cornerCard}`)
+      cornerCards.forEach((card, i) => {
+        gsap.fromTo(card,
+          { opacity: 0, scale: 0.6, filter: "blur(10px)" },
+          {
+            opacity: 1, scale: 1, filter: "blur(0px)",
+            duration: 0.7, ease: "back.out(1.4)",
+            delay: i * 0.06,
+            scrollTrigger: { trigger: card, start: "top 90%", once: true },
+          }
+        )
+      })
+
+      // Text card
+      gsap.fromTo(`.${styles.textCard}`,
+        { opacity: 0, y: 80, filter: "blur(8px)" },
+        {
+          opacity: 1, y: 0, filter: "blur(0px)",
+          duration: 0.7, ease: "power3.out",
+          scrollTrigger: { trigger: `.${styles.textCard}`, start: "top 90%", once: true },
+        }
+      )
+    }, container)
+
+    return () => ctx.revert()
   }, [])
 
   const words = aboutText.split(" ")
@@ -122,14 +116,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     <div ref={setRefs} className={styles.main}>
       <div ref={gridRef} className={styles.bentoGrid}>
         {/* Top-left corner: Frontend */}
-        <motion.div
-          className={`${styles.card} ${styles.cornerCard} ${styles.frontendCard}`}
-          custom={0}
-          variants={scaleIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className={`${styles.card} ${styles.cornerCard} ${styles.frontendCard}`}>
           <span className={styles.cardLabel}>Frontend</span>
           <div className={styles.skillIcons}>
             {skillCategories[0].skills.map((skill) => (
@@ -138,29 +125,15 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Top-right corner: Accent gradient */}
-        <motion.div
-          className={`${styles.card} ${styles.cornerCard} ${styles.accentCard}`}
-          custom={0.06}
-          variants={scaleIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className={`${styles.card} ${styles.cornerCard} ${styles.accentCard}`}>
           <div className={styles.accentGradient} />
-        </motion.div>
+        </div>
 
         {/* Center: Text reveal card */}
-        <motion.div
-          className={`${styles.card} ${styles.textCard}`}
-          custom={0.1}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className={`${styles.card} ${styles.textCard}`}>
           <div className={styles.textHeader}>
             <span className={styles.label}>Get To Know Me</span>
             <h2 className={styles.title}>
@@ -190,17 +163,10 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
               )
             })}
           </p>
-        </motion.div>
+        </div>
 
         {/* Bottom-left corner: Backend */}
-        <motion.div
-          className={`${styles.card} ${styles.cornerCard} ${styles.backendCard}`}
-          custom={0.16}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className={`${styles.card} ${styles.cornerCard} ${styles.backendCard}`}>
           <span className={styles.cardLabel}>Backend</span>
           <div className={styles.skillIcons}>
             {skillCategories[1].skills.map((skill) => (
@@ -209,17 +175,10 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Bottom-right corner: Tools & Cloud */}
-        <motion.div
-          className={`${styles.card} ${styles.cornerCard} ${styles.toolsCard}`}
-          custom={0.2}
-          variants={scaleIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className={`${styles.card} ${styles.cornerCard} ${styles.toolsCard}`}>
           <span className={styles.cardLabel}>Tools & Cloud</span>
           <div className={styles.skillIcons}>
             {skillCategories[2].skills.map((skill) => (
@@ -228,7 +187,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   )

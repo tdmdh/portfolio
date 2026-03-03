@@ -1,9 +1,9 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
+import { gsap } from "gsap"
 import styles from "@/app/styles/Hero.module.css"
 import { useSectionRefs } from "@/context/section-context"
-import { motion } from "framer-motion"
 
 interface HeroProps {
   title?: string 
@@ -16,6 +16,13 @@ interface HeroProps {
 export default function Cta({ title, subtitle, isBlurred, className, children }: HeroProps) {
   const { refs } = useSectionRefs()
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (wrapRef.current) {
+      gsap.fromTo(wrapRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" })
+    }
+  }, [])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const button = buttonRef.current
@@ -36,22 +43,21 @@ export default function Cta({ title, subtitle, isBlurred, className, children }:
 
   return (
     <section ref={refs.heroRef}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <motion.button
+      <div ref={wrapRef} style={{ opacity: 0 }}>
+        <button
           ref={buttonRef}
           className={styles.ctaWarp}
           onClick={scrollToProjects}
           onMouseMove={handleMouseMove}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          style={{ transition: "transform 0.2s" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.05)" }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)" }}
+          onMouseDown={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(0.95)" }}
+          onMouseUp={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.05)" }}
         >
           Explore The Galaxy 
-        </motion.button>
-      </motion.div>
+        </button>
+      </div>
     </section>
   )
 }

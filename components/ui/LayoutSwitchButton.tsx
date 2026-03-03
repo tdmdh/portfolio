@@ -1,7 +1,7 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { usePathname } from "next/navigation"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { gsap } from "gsap"
 import styles from "@/app/school/styles/School.module.css"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
 import Link from "next/link"
@@ -11,70 +11,66 @@ import { Home, School } from "lucide-react"
 export default function LayoutSwitchButton() {
   const [isBlurred, setIsBlurred] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const { scrollY } = useScroll()
   const router = useRouter()
+  const mainRef = useRef<HTMLDivElement>(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
+
+  const pathname = usePathname()
 
   const handleClick = () => {
     router.push(pathname === "/school" ? "/" : "/school")
   }
 
+  // Scroll-driven style updates
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      setIsBlurred(y > 50)
 
+      const btn = btnRef.current
+      if (!btn) return
+      const t = Math.min(y / 100, 1)
+      const radius = `${t * 2}rem`
+      btn.style.borderTopLeftRadius = radius
+      btn.style.borderTopRightRadius = radius
+      btn.style.borderBottomRightRadius = "2rem"
+      btn.style.borderBottomLeftRadius = radius
+      btn.style.zIndex = t > 0.5 ? "10" : "0"
+      btn.style.transform = `translate(${t * 15}px, ${t * 15}px)`
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   useEffect(() => {
-    return scrollY.onChange((latest) => {
-      if (latest > 50) {
-        setIsBlurred(true)
-      } else {
-        setIsBlurred(false)
-      }
-    })
-  }, [scrollY])
-
-  useEffect(() =>{
     const handleWitdh = () => {
       setIsMobile(window.innerWidth <= 768)
     }
-
     handleWitdh()
     window.addEventListener("resize", handleWitdh)
-    return () => window.removeEventListener("resize",handleWitdh)
+    return () => window.removeEventListener("resize", handleWitdh)
   }, [])
-  
-  const pathname = usePathname()
 
-
-  const borderTopLeftRadius = useTransform(scrollY, [0, 100], ["0rem", "2rem"])
-  const borderTopRightRadius = useTransform(scrollY, [0, 100], ["0rem", "2rem"])
-  const borderBottomRightRadius = useTransform(scrollY, [0, 100], ["2rem", "2rem"])
-  const borderBottomLeftRadius = useTransform(scrollY, [0, 100], ["0rem", "2rem"])  
-  const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
-  const btnTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
-  const btnTranslateX = useTransform(scrollY, [0, 100], ["0px", "15px"])
-  const btnTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
-
-
+  // Entry animation
+  useEffect(() => {
+    if (mainRef.current) {
+      gsap.fromTo(mainRef.current, { opacity: 0, y: -50 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" })
+    }
+  }, [])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }, [pathname])
 
   return (
-    <motion.div className={styles.main} initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+    <div ref={mainRef} className={styles.main} style={{ opacity: 0 }}>
 
-      <motion.div
-        className={styles.btncontainer}>
-        <motion.button 
+      <div className={styles.btncontainer}>
+        <button
+        ref={btnRef}
         className={`${styles.schoolbtn} ${isBlurred ? styles.schoolbtnBlur : ""}`}
-        style={{
-          borderTopLeftRadius,
-          borderTopRightRadius,
-          borderBottomRightRadius,
-          borderBottomLeftRadius,
-          zIndex: navZIndex,
-          x: btnTranslateX,
-          y: btnTranslateY,
-          transition: btnTransition
-        }}
+        style={{ transition: "border-radius 0.3s, transform 0.3s" }}
         onClick={handleClick}
         >
          <span className={styles.btnLink}>
@@ -84,11 +80,11 @@ export default function LayoutSwitchButton() {
               pathname === "/school" ? "Back to Portfolio" : "School Section"
             )}
           </span>
-        </motion.button>
+        </button>
       <TopCorners position="right" isBlurred={isBlurred} rotate={0}  fill="#4a4e69"  />
-      </motion.div>
+      </div>
 
       <TopCorners position="left" isBlurred={isBlurred} className={styles.bottomLeftCorner} rotate={0} fill="#4a4e69" />
-    </motion.div>
+    </div>
   )
 }

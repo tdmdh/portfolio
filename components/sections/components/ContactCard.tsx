@@ -1,36 +1,57 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styles from "@/app/styles/ContactCard.module.css";
-import { motion, useInView } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroTitle from './HeroTitle';
 
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ContactCard() {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const cardVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { opacity: 1, y: 0 }
-    };
+    useEffect(() => {
+        if (!containerRef.current) return;
+        const ctx = gsap.context(() => {
+            const card = containerRef.current!.querySelector(`.${styles.contactCard}`);
+            const image = containerRef.current!.querySelector(`.${styles.contactImage}`);
 
-    const imageVariants = {
-        hidden: { opacity: 0, scale: 1, x: 100 },
-        visible: { opacity: 1, scale: 1, x: 0 }
-    };
+            gsap.fromTo(containerRef.current!, 
+                { opacity: 0, y: 50 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "power2.out",
+                    scrollTrigger: { trigger: containerRef.current!, start: "top 80%", once: true }
+                }
+            );
+
+            if (card) {
+                gsap.fromTo(card, 
+                    { opacity: 0, y: 50 },
+                    { opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power2.out",
+                        scrollTrigger: { trigger: containerRef.current!, start: "top 80%", once: true }
+                    }
+                );
+            }
+
+            if (image) {
+                gsap.fromTo(image, 
+                    { opacity: 0, x: 100 },
+                    { opacity: 1, x: 0, duration: 0.8, delay: 0.4, ease: "power2.out",
+                        scrollTrigger: { trigger: containerRef.current!, start: "top 80%", once: true }
+                    }
+                );
+            }
+        }, containerRef);
+
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <motion.div
-            ref={ref}
+        <div
+            ref={containerRef}
             className={styles.contactCardContainer}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={cardVariants}
-            transition={{ duration: 0.8 }}
+            style={{ opacity: 0 }}
         >
-            <motion.div 
+            <div 
                 className={styles.contactCard}
-                variants={cardVariants}
-                transition={{ duration: 0.8, delay: 0.2 }}
             >
                 <HeroTitle title="Contact me" animationDelay={0.1}
                     animationType="letter"
@@ -46,17 +67,15 @@ export default function ContactCard() {
                         <a href="mailto:haftarou.dev@gmail.com" title='email' className={styles.contactButton}>
                             Email Me
                         </a>
-            </motion.div>
-            <motion.div 
+            </div>
+            <div 
                 className={styles.contactImage}
-                variants={imageVariants}
-                transition={{ duration: 0.8, delay: 0.4 }}
             >
-                <motion.img
+                <img
                     src="/photo/me.CR3" 
                     alt="Contact"
                     className={styles.contactImage}
                 />
-            </motion.div>
-        </motion.div>
+            </div>
+        </div>
     )};

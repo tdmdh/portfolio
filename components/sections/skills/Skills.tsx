@@ -1,9 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/Skills.module.css"
-import { forwardRef, useRef } from "react"
-import { useInView } from "framer-motion"
+import { forwardRef, useRef, useEffect } from "react"
 import type { IconType } from "react-icons"
 import {
     SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
@@ -11,6 +11,8 @@ import {
     SiGit, SiDocker, SiGooglecloud, SiJsonwebtokens, SiSocketdotio, SiOpenai
 } from "react-icons/si"
 import { Code2, Server, Cloud } from "lucide-react"
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface Skill {
     name: string
@@ -60,68 +62,84 @@ const skillCategories: SkillCategoryData[] = [
     }
 ]
 
-const SkillCard = ({ skill, index }: { skill: Skill; index: number }) => {
+const SkillCard = ({ skill }: { skill: Skill }) => {
     const IconComp = skill.icon
     return (
-        <motion.div
-            className={styles.skillCard}
-            initial={{ opacity: 0, scale: 0.5, filter: "blur(6px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ type: "spring", stiffness: 400, damping: 20, mass: 0.6, delay: index * 0.03 }}
-            viewport={{ once: true }}
-            whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)" }}
-        >
+        <div className={styles.skillCard}>
             <div className={styles.iconWrapper}>
                 <IconComp size={28} color={skill.color} />
             </div>
             <span className={styles.skillName}>{skill.name}</span>
-        </motion.div>
+        </div>
     )
 }
 
-const SkillCategory = ({ category, categoryIndex }: { category: SkillCategoryData; categoryIndex: number }) => {
+const SkillCategory = ({ category }: { category: SkillCategoryData }) => {
     const CategoryIcon = category.icon
     return (
-        <motion.div
-            className={styles.categorySection}
-            initial={{ opacity: 0, y: 80, filter: "blur(8px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ type: "spring", stiffness: 280, damping: 22, mass: 0.8, delay: categoryIndex * 0.1 }}
-            viewport={{ once: true }}
-        >
+        <div className={styles.categorySection}>
             <div className={styles.categoryHeader}>
                 <div className={styles.categoryIconWrapper}>
                     <CategoryIcon size={24} />
                 </div>
-                {/* <h3 className={styles.categoryTitle}>{category.title}</h3> */}
             </div>
             <div className={styles.skillsGrid}>
-                {category.skills.map((skill, index) => (
-                    <SkillCard
-                        key={skill.name}
-                        skill={skill}
-                        index={index}
-                    />
+                {category.skills.map((skill) => (
+                    <SkillCard key={skill.name} skill={skill} />
                 ))}
             </div>
-        </motion.div>
+        </div>
     )
 }
 
 const Skills = forwardRef<HTMLDivElement>((props, ref) => {
-    const containerRef = useRef(null)
+    const sectionRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const section = sectionRef.current
+        if (!section) return
+
+        const ctx = gsap.context(() => {
+            gsap.fromTo(
+                `.${styles.header}`,
+                { opacity: 0, y: 100, filter: "blur(8px)" },
+                {
+                    opacity: 1, y: 0, filter: "blur(0px)",
+                    duration: 0.7, ease: "power3.out",
+                    scrollTrigger: { trigger: `.${styles.header}`, start: "top 85%", once: true },
+                }
+            )
+
+            gsap.fromTo(
+                `.${styles.categorySection}`,
+                { opacity: 0, y: 80, filter: "blur(8px)" },
+                {
+                    opacity: 1, y: 0, filter: "blur(0px)",
+                    duration: 0.7, ease: "power3.out",
+                    stagger: 0.1,
+                    scrollTrigger: { trigger: `.${styles.categoriesContainer}`, start: "top 85%", once: true },
+                }
+            )
+
+            gsap.fromTo(
+                `.${styles.skillCard}`,
+                { opacity: 0, scale: 0.5, filter: "blur(6px)" },
+                {
+                    opacity: 1, scale: 1, filter: "blur(0px)",
+                    duration: 0.5, ease: "back.out(1.4)",
+                    stagger: 0.03,
+                    scrollTrigger: { trigger: `.${styles.categoriesContainer}`, start: "top 80%", once: true },
+                }
+            )
+        }, section)
+
+        return () => ctx.revert()
+    }, [])
 
     return (
         <section ref={ref} className={styles.main}>
-            <div className={styles.content}>
-                <motion.div
-                    ref={containerRef}
-                    className={styles.header}
-                    initial={{ opacity: 0, y: 100, filter: "blur(8px)" }}
-                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{ type: "spring", stiffness: 300, damping: 24, mass: 0.8 }}
-                    viewport={{ once: true }}
-                >
+            <div ref={sectionRef} className={styles.content}>
+                <div className={styles.header}>
                     <span className={styles.label}>Expertise</span>
                     <h2 className={styles.title}>
                         Technical <span className={styles.highlight}>Skills</span>
@@ -129,15 +147,11 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
                     <p className={styles.subtitle}>
                         A comprehensive toolkit enabling scalable, performant, and user-centric solutions.
                     </p>
-                </motion.div>
+                </div>
 
                 <div className={styles.categoriesContainer}>
-                    {skillCategories.map((category, index) => (
-                        <SkillCategory
-                            key={category.title}
-                            category={category}
-                            categoryIndex={index}
-                        />
+                    {skillCategories.map((category) => (
+                        <SkillCategory key={category.title} category={category} />
                     ))}
                 </div>
             </div>

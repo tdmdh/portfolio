@@ -1,16 +1,33 @@
 "use client"
 
-import React, { useRef, forwardRef } from "react"
-import { motion, HTMLMotionProps } from "framer-motion"
+import React, { useRef, useEffect, forwardRef } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
 
-interface AboutSectionProps extends HTMLMotionProps<"section"> {}
+gsap.registerPlugin(ScrollTrigger)
+
+interface AboutSectionProps extends React.HTMLAttributes<HTMLElement> {}
 
 const AboutSectionWrapper = forwardRef<HTMLElement, AboutSectionProps>(({ children, ...props }, ref) => {
   const sectionRef = useRef<HTMLElement | null>(null)
 
+  useEffect(() => {
+    if (!sectionRef.current) return
+    const ctx = gsap.context(() => {
+      gsap.fromTo(sectionRef.current!,
+        { opacity: 0 },
+        {
+          opacity: 1, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: sectionRef.current!, start: "top 80%", once: true }
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <motion.section
+    <section
       ref={(el) => {
         sectionRef.current = el
         if (ref) {
@@ -18,13 +35,11 @@ const AboutSectionWrapper = forwardRef<HTMLElement, AboutSectionProps>(({ childr
           else (ref as React.MutableRefObject<HTMLElement | null>).current = el
         }
       }}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      style={{ opacity: 0 }}
       {...props}
     >
       {children}
-    </motion.section>
+    </section>
   )
 })
 

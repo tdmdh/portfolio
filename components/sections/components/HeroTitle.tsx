@@ -1,9 +1,11 @@
 "use client"
 
-import React from "react"
-import { motion, Variants } from "framer-motion"
-
+import React, { useRef, useEffect } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/Hero.module.css"
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface HeroTitleProps {
   size?: string
@@ -29,39 +31,58 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
   className,
   onAnimationComplete
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const split = (str: string) =>
     animationType === "word" ? str.split(" ") : str.split("")
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const spans = container.querySelectorAll(`.${styles.letter}, .gsap-subtitle-letter, .gsap-text-letter`)
+    if (spans.length === 0) return
+
+    gsap.set(spans, { opacity: 0, y: 20 })
+
+    const animProps = {
+      opacity: 1,
+      y: 0,
+      duration: animationDuration,
+      ease: "power2.out",
+      stagger: animationDelay,
+      onComplete: onAnimationComplete,
+    }
+
+    if (trigger === "onMount") {
+      gsap.to(spans, animProps)
+    } else if (trigger === "inView") {
+      gsap.to(spans, {
+        ...animProps,
+        scrollTrigger: { trigger: container, start: "top 85%", once: true },
+      })
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(st => {
+        if (st.trigger === container) st.kill()
+      })
+    }
+  }, [trigger, animationDelay, animationDuration, onAnimationComplete])
 
   const titleUnits = title ? split(title) : []
   const subtitleUnits = subtitle ? split(subtitle) : []
   const textUnits = text ? split(text) : []
 
-  const letterVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * animationDelay,
-        duration: animationDuration,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    }),
-  }
-
   return (
-    <div className={`${styles.heroContainer} ${className || ""}`}>
+    <div ref={containerRef} className={`${styles.heroContainer} ${className || ""}`}>
       {title && (
         <h1 className={styles.heroTitle}>
           {titleUnits.map((unit, i) => (
-            <motion.span
+            <span
               key={`title-${i}`}
               className={styles.letter}
-              variants={letterVariants}
-              initial="hidden"
-              animate="visible"
-              custom={i}
-              onAnimationComplete={onAnimationComplete}
+              style={{ opacity: 0 }}
             >
               {(unit === "m" || unit === "M") ? (
                 <span className={styles.mLetter}>{unit}</span>
@@ -71,7 +92,7 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
                   {animationType === "word" && " "}
                 </>
               )}
-            </motion.span>
+            </span>
           ))}
         </h1>
       )}
@@ -79,17 +100,14 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
       {subtitle && (
         <h2>
           {subtitleUnits.map((unit, i) => (
-            <motion.span
+            <span
               key={`subtitle-${i}`}
-              className={styles.subtitleLetter}
-              variants={letterVariants}
-              initial="hidden"
-              animate="visible"
-              custom={i + titleUnits.length}
+              className={`${styles.subtitleLetter || ""} gsap-subtitle-letter`}
+              style={{ opacity: 0, display: "inline-block" }}
             >
               {unit}
               {animationType === "word" && " "}
-            </motion.span>
+            </span>
           ))}
         </h2>
       )}
@@ -97,17 +115,14 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
       {text && (
         <p>
           {textUnits.map((unit, i) => (
-            <motion.span
+            <span
               key={`text-${i}`}
-              className={styles.textLetters}
-              variants={letterVariants}
-              initial="hidden"
-              animate="visible"
-              custom={i + titleUnits.length + subtitleUnits.length}
+              className={`${styles.textLetters || ""} gsap-text-letter`}
+              style={{ opacity: 0, display: "inline-block" }}
             >
               {unit}
               {animationType === "word" && " "}
-            </motion.span>
+            </span>
           ))}
         </p>
       )}
