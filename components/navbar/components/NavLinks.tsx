@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
-import { gsap } from "gsap"
+import { useEffect, useState } from "react"
+import { motion, useScroll, } from "framer-motion"
 import styles from "@/app/styles/Navbar.module.css"
 import { useSectionRefs } from "@/context/section-context"
 
@@ -18,24 +18,15 @@ export default function NavLinks({
   const [isScrolled, setIsScrolled] = useState(false)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [activeId, setActiveId] = useState<string>("hero")
-  const listRef = useRef<HTMLUListElement>(null)
+
+  const { scrollY } = useScroll()
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
-  useEffect(() => {
-    const list = listRef.current
-    if (!list) return
-    const items = list.querySelectorAll("li")
-    gsap.fromTo(list, { opacity: 0, y: -50 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" })
-    gsap.fromTo(items,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.1 }
-    )
-  }, [])
+    const unsubscribe = scrollY.on("change", (latest) => {
+      setIsScrolled(latest > 50)
+    })
+    return () => unsubscribe()
+  }, [scrollY])
 
   const NavLinksStyle = {
     borderRadius: isScrolled ? "2rem" : "3rem",
@@ -77,17 +68,21 @@ export default function NavLinks({
   const colorModeClass = isDarkSection ? styles.linksLight : styles.linksDark
 
   return (
-    <ul
-      ref={listRef}
+    <motion.ul
       className={`${styles.nav_links} ${isScrolled ? styles.scrolled : ""} ${isMenuOpen ? styles.menu_open : ""} ${colorModeClass}`}
-      style={{ opacity: 0 }}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       {sections.map((section, index) => (
-        <li
+        <motion.li
           key={section.id}
           className={styles.nav_item}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
           style={NavLinksStyle}
         >
           <button
@@ -96,13 +91,23 @@ export default function NavLinks({
             onBlur={() => setHoveredIndex(null)}
             onClick={() => scrollToSection(section.ref)}
           >
+
             {hoveredIndex === index && (
-              <span className={styles.hoverBackground} />
+              <motion.span
+                layoutId="hoverBackground"
+                className={styles.hoverBackground}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+
+                }}
+              />
             )}
             <span className={styles.linkText}>{section.name}</span>
           </button>
-        </li>
+        </motion.li>
       ))}
-    </ul>
+    </motion.ul>
   )
 }

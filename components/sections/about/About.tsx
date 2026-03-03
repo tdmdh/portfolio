@@ -105,6 +105,24 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           scrollTrigger: { trigger: `.${styles.textCard}`, start: "top 90%", once: true },
         }
       )
+
+      // Decoration cards (chaotic grid + floaters)
+      const decorCards = grid.querySelectorAll(`.${styles.decorCard}, .${styles.decorCardFloat}`)
+      gsap.from(decorCards, {
+        opacity: 0,
+        scale: 0.2,
+        y: () => gsap.utils.random(-50, 50),
+        x: () => gsap.utils.random(-30, 30),
+        rotation: () => gsap.utils.random(-90, 90),
+        duration: 0.9,
+        ease: "back.out(1.7)",
+        stagger: { amount: 0.7, from: "random" },
+        scrollTrigger: {
+          trigger: grid,
+          start: "top 75%",
+          once: true
+        }
+      })
     }, container)
 
     return () => ctx.revert()
@@ -115,7 +133,40 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <div ref={setRefs} className={styles.main}>
       <div ref={gridRef} className={styles.bentoGrid}>
-        {/* Top-left corner: Frontend */}
+        
+        {/* Decorative mini cards (chaotic grid, hidden on mobile) */}
+        {/* <div className={`${styles.decorCard} ${styles.dec1}`}><SiReact size={25} opacity={0.6} /></div>
+        <div className={`${styles.decorCard} ${styles.dec2}`}><div className="w-2 h-2 rounded-full bg-cyan-400/60"></div></div>
+        <div className={`${styles.decorCard} ${styles.dec3}`}><SiNextdotjs size={25} opacity={0.6} /></div>
+        <div className={`${styles.decorCard} ${styles.dec4}`}><div className="w-4 h-4 border border-purple-400/50 rotate-45"></div></div>
+        <div className={`${styles.decorCard} ${styles.dec5}`}><SiTailwindcss size={25} opacity={0.6} /></div>
+        <div className={`${styles.decorCard} ${styles.dec6}`}><div className="w-1.5 h-8 bg-gradient-to-t from-pink-400/50 to-purple-400/50 rounded-full"></div></div>
+        <div className={`${styles.decorCard} ${styles.dec7}`}><SiGo size={25} opacity={0.6} /></div>
+        <div className={`${styles.decorCard} ${styles.dec8}`}>
+          <div className="flex gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-cyan-400/60"/><div className="w-1.5 h-1.5 rounded-full bg-blue-400/60"/></div>
+        </div>
+        <div className={`${styles.decorCard} ${styles.dec9}`}><SiDocker size={25} opacity={0.6} /></div>
+        <div className={`${styles.decorCard} ${styles.dec10}`}><div className="w-full h-full rounded-full border-2 border-dashed border-teal-500/30"></div></div>
+        <div className={`${styles.decorCard} ${styles.dec11}`}><SiTypescript size={25} opacity={0.6} /></div>
+        <div className={`${styles.decorCard} ${styles.dec12}`}><div className="w-4 h-4 bg-yellow-400/20 rounded-sm rotate-12"></div></div>
+
+
+        <div className={`${styles.decorCardFloat} ${styles.floatA}`}><SiNodedotjs size={25} color="#5FA04E" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatB}`}><div className={styles.pillGradient} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatC}`}><SiGit size={25} color="#F05032" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatD}`}><div className={styles.dotCluster}><span/><span/><span/></div></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatE}`}><SiSass size={25} color="#CC6699" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatF}`}><div className={styles.ring} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatG}`}><SiPhp size={25} color="#777BB4" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatH}`}><div className={styles.diagBar} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatI}`}><SiGooglecloud size={25} color="#4285F4" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatJ}`}><div className={styles.cross}><span/><span/></div></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatK}`}><SiPostgresql size={25} color="#4169E1" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatL}`}><div className={styles.arcPill} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatM}`}><SiGo size={25} color="#00ADD8" opacity={0.7} /></div>
+        <div className={`${styles.decorCardFloat} ${styles.floatN}`}><div className={styles.tri} /></div> */}
+
+
         <div className={`${styles.card} ${styles.cornerCard} ${styles.frontendCard}`}>
           <span className={styles.cardLabel}>Frontend</span>
           <div className={styles.skillIcons}>
@@ -127,12 +178,10 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
         </div>
 
-        {/* Top-right corner: Accent gradient */}
         <div className={`${styles.card} ${styles.cornerCard} ${styles.accentCard}`}>
           <div className={styles.accentGradient} />
         </div>
 
-        {/* Center: Text reveal card */}
         <div className={`${styles.card} ${styles.textCard}`}>
           <div className={styles.textHeader}>
             <span className={styles.label}>Get To Know Me</span>
@@ -165,7 +214,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           </p>
         </div>
 
-        {/* Bottom-left corner: Backend */}
         <div className={`${styles.card} ${styles.cornerCard} ${styles.backendCard}`}>
           <span className={styles.cardLabel}>Backend</span>
           <div className={styles.skillIcons}>
@@ -177,7 +225,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           </div>
         </div>
 
-        {/* Bottom-right corner: Tools & Cloud */}
         <div className={`${styles.card} ${styles.cornerCard} ${styles.toolsCard}`}>
           <span className={styles.cardLabel}>Tools & Cloud</span>
           <div className={styles.skillIcons}>

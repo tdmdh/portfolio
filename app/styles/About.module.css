@@ -17,11 +17,12 @@
     grid-template-columns: 1.2fr 0.5fr 3fr 0.5fr 1.2fr;
     grid-template-rows: 1fr 0.35fr 2.4fr 0.35fr 1fr;
     grid-template-areas:
-        "front   .     .     .    accent"
-        "  .     .     .     .      .   "
-        "  .     .    text   .      .   "
-        "  .     .     .     .      .   "
-        "back    .     .     .    tools ";
+        "front   dec1  dec2  dec3 accent"
+        "dec4    .     .     .    dec5"
+        "dec6    .    text   .    dec7"
+        "dec8    .     .     .    dec9"
+        "back    dec10 dec11 dec12 tools";
+    position: relative;
     width: 100%;
     height: 100vh;
     padding: 1rem;
@@ -164,6 +165,163 @@
     color: var(--primary-color);
 }
 
+/* ── Decoration Mini Cards (chaotic asymmetrical grid) ── */
+.decorCard {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondary-color);
+    font-family: var(--primary-font);
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    opacity: 0.7; /* Final state after GSAP from() animation */
+}
+
+.decorCard:hover {
+    transform: scale(1.15) !important;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* Specific Placements & Chaotic Transforms */
+.dec1 { grid-area: dec1; width: 45px; height: 45px; justify-self: center; align-self: center; transform: rotate(15deg) translate(10px, 10px); }
+.dec2 { grid-area: dec2; width: 60px; height: 30px; justify-self: center; align-self: end; transform: translateY(20px) rotate(-10deg); border-radius: 20px; }
+.dec3 { grid-area: dec3; width: 35px; height: 35px; justify-self: center; align-self: start; transform: rotate(45deg) translate(-10px, 15px); }
+.dec4 { grid-area: dec4; width: 50px; height: 50px; justify-self: end; align-self: center; transform: translateX(15px) rotate(-20deg); border-radius: 50%; }
+.dec5 { grid-area: dec5; width: 40px; height: 40px; justify-self: start; align-self: end; transform: translateX(-15px) rotate(25deg); }
+.dec6 { grid-area: dec6; width: 30px; height: 70px; justify-self: start; align-self: center; transform: translateX(20px) rotate(8deg); border-radius: 15px; }
+.dec7 { grid-area: dec7; width: 65px; height: 40px; justify-self: center; align-self: start; transform: translateY(-15px) rotate(-15deg); border-radius: 12px; }
+.dec8 { grid-area: dec8; width: 45px; height: 35px; justify-self: end; align-self: center; transform: rotate(12deg) translate(-5px, -10px); }
+.dec9 { grid-area: dec9; width: 40px; height: 40px; justify-self: center; align-self: end; transform: translateX(15px) rotate(-35deg); border-radius: 50%; }
+.dec10 { grid-area: dec10; width: 55px; height: 55px; justify-self: center; align-self: start; transform: rotate(-18deg) translate(10px, -15px); }
+.dec11 { grid-area: dec11; width: 40px; height: 40px; justify-self: start; align-self: center; transform: rotate(10deg); }
+.dec12 { grid-area: dec12; width: 35px; height: 35px; justify-self: end; align-self: end; transform: translateY(-10px) rotate(-12deg); border-radius: 8px; }
+
+/* ── Floating Absolutely-Positioned Deco Cards ── */
+.decorCardFloat {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+.decorCardFloat:hover {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* Safe zones: top < 24%, bottom > 76%, left < 24%, right > 76% */
+/* ─ TOP STRIP ─ */
+.floatA { top: 4%;  left: 13%;  width: 46px; height: 46px; border-radius: 10px;  transform: rotate(-18deg); }
+.floatB { top: 8%;  left: 30%;  width: 72px; height: 28px; border-radius: 30px;  transform: rotate(8deg);  }
+.floatC { top: 2%;  left: 48%;  width: 36px; height: 36px; border-radius: 8px;   transform: rotate(28deg); }
+.floatD { top: 11%; left: 60%;  width: 50px; height: 38px; border-radius: 12px;  transform: rotate(-12deg); }
+.floatE { top: 4%;  right: 12%; width: 38px; height: 38px; border-radius: 50%;   transform: rotate(15deg);  }
+/* ─ LEFT STRIP ─ */
+.floatF { top: 30%; left: 3%;   width: 42px; height: 42px; border-radius: 50%;   transform: translateX(6px) rotate(20deg);  }
+.floatG { top: 47%; left: 6%;   width: 56px; height: 34px; border-radius: 16px;  transform: rotate(-22deg); }
+.floatH { top: 62%; left: 2%;   width: 32px; height: 60px; border-radius: 20px;  transform: translateX(10px) rotate(10deg); }
+/* ─ RIGHT STRIP ─ */
+.floatI { top: 32%; right: 3%;  width: 44px; height: 44px; border-radius: 10px;  transform: rotate(25deg);  }
+.floatJ { top: 50%; right: 5%;  width: 38px; height: 38px; border-radius: 50%;   transform: rotate(-10deg); }
+.floatK { top: 64%; right: 2%;  width: 60px; height: 30px; border-radius: 14px;  transform: rotate(-30deg); }
+/* ─ BOTTOM STRIP ─ */
+.floatL { bottom: 3%;  left: 14%;  width: 68px; height: 26px; border-radius: 26px; transform: rotate(12deg);  }
+.floatM { bottom: 8%;  left: 40%;  width: 48px; height: 48px; border-radius: 10px; transform: rotate(-20deg); }
+.floatN { bottom: 4%;  right: 14%; width: 34px; height: 34px; border-radius: 6px;  transform: rotate(38deg);  }
+
+/* ── Inline Shape Helpers ── */
+.pillGradient {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(97,218,251,0.33) 0%, rgba(49,120,198,0.33) 100%);
+}
+
+.pill {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.dotCluster {
+    display: flex;
+    gap: 4px;
+}
+.dotCluster span {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(74, 78, 105, 0.35);
+}
+.dotCluster span:nth-child(2) { width: 10px; height: 10px; background: rgba(74, 78, 105, 0.55); }
+
+.ring {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px dashed rgba(74, 78, 105, 0.35);
+}
+
+.diagBar {
+    width: 8px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(97,218,251,0.45) 0%, rgba(49,120,198,0.45) 100%);
+}
+
+.cross {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+.cross span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 20px;
+    height: 2.5px;
+    border-radius: 2px;
+    background: rgba(74, 78, 105, 0.4);
+    transform-origin: center;
+}
+.cross span:first-child  { transform: translate(-50%, -50%) rotate(0deg); }
+.cross span:last-child   { transform: translate(-50%, -50%) rotate(90deg); }
+
+.arcPill {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(204,102,153,0.4) 0%, rgba(49,120,198,0.35) 100%);
+}
+
+.tri {
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 20px solid rgba(74, 78, 105, 0.25);
+}
+
 /* ── Skill Cards (corners) ── */
 .frontendCard {
     grid-area: front;
@@ -291,6 +449,11 @@
     .skillIcon {
         width: 28px;
         height: 28px;
+    }
+
+    .decorCard,
+    .decorCardFloat {
+        display: none !important;
     }
 }
 
