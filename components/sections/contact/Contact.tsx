@@ -24,12 +24,13 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
     useEffect(() => {
         const tick = () =>
             setTime(
-                new Date().toLocaleTimeString("en-US", {
+                // Netherlands is UTC+2 during daylight savingme
+                new Date().toLocaleTimeString('en-US', {
                     hour: "2-digit",
                     minute: "2-digit",
                     second: "2-digit",
                     hour12: true,
-                    timeZone: "UTC",
+                    timeZone: "Europe/Amsterdam",
                 })
             )
         tick()

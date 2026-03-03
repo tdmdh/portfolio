@@ -5,6 +5,7 @@ import { gsap } from "gsap"
 import styles from "@/app/styles/Hero.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 import Image from "next/image"
+import { TopCorners } from "@/components/navbar/components/Topcorners"
 
 const Home = forwardRef<HTMLDivElement>((props, ref) => {
   const gridRef = useRef<HTMLDivElement>(null)

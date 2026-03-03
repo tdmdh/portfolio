@@ -7,6 +7,7 @@ import NavbarSwitcher from "@/components/layout/NavbarSwitcher"
 import { SectionProviderSwitcher } from "@/context/section-provider-switcher"
 import Logo from "@/components/layout/Logo"
 import LoadingScreen from "@/components/ui/LoadingScreen"
+import PixelTrail from "@/components/layout/Pixels"
 
 const inter = Inter({ subsets: ["latin"] })
 
