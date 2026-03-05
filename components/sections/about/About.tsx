@@ -23,24 +23,24 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
   {
     title: "Frontend",
     skills: [
-      { name: "React (Native)", icon: SiReact, color: "#61DAFB" },
+      { name: "React (Native)", type: "badge", label: "React (Native)", icon: SiReact, color: "#61DAFB" },
+      { name: "React 19", type: "badge", label: "React 19", icon: SiReact, color: "#61DAFB" },
       { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
       { type: "gradient", name: "web-gradient", gradient: "linear-gradient(135deg,#61DAFB 0%,#3178C6 100%)", label: "Web" },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
       { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
       { type: "code", name: "jsx-code", text: "</>", color: "#CC6699" },
-      { name: "SCSS", icon: SiSass, color: "#CC6699" },
-      { name: "HTML", icon: SiHtml5, color: "#E34F26" },
+      { name: "SCSS", type: "badge", label: "SCSS", icon: SiSass, color: "#CC6699" },
+      { name: "HTML", type: "badge", label: "HTML", icon: SiHtml5, color: "#E34F26" },
     ]
   },
   {
     title: "Backend",
     skills: [
       { name: "Go", icon: SiGo, color: "#00ADD8" },
-      { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+      { type: 'badge', label: "Node.js", name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
       { type: "gradient", name: "api-gradient", gradient: "linear-gradient(135deg,#00ADD8 0%,#5FA04E 100%)", label: "API" },
       { name: "PHP", icon: SiPhp, color: "#777BB4" },
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
       { type: "code", name: "curly-code", text: "{ }", color: "#777BB4" },
       { name: "MySQL", icon: SiMysql, color: "#4479A1" },
       { type: "badge", name: "pg-badge", label: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
@@ -50,7 +50,6 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
     title: "Tools & Cloud",
     skills: [
       { name: "Git", icon: SiGit, color: "#F05032" },
-      { name: "Docker", icon: SiDocker, color: "#2496ED" },
       { type: "gradient", name: "devops-gradient", gradient: "linear-gradient(135deg,#F05032 0%,#2496ED 100%)", label: "DevOps" },
       { name: "GCP", icon: SiGooglecloud, color: "#4285F4" },
       { type: "code", name: "terminal-code", text: ">_", color: "#4285F4" },
@@ -270,7 +269,7 @@ function SkillEntryCard({ entry }: { entry: SkillEntry }) {
   // default: icon
   return (
     <div className={styles.skillIcon} title={entry.name}>
-      <entry.icon size={30} color={entry.color} />
+      <entry.icon size={40} color={entry.color} />
     </div>
   )
 }

@@ -285,7 +285,6 @@
 }
 
 .skillDecorBadge:hover {
-  transform: scale(1.08);
   background: rgba(255, 255, 255, 0.6);
 }
 
