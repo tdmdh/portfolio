@@ -52,10 +52,10 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     `.${styles.clockCard}`,
                     `.${styles.socialCard}`,
                 ],
-                { opacity: 0, y: 100, filter: "blur(8px)" },
+                { opacity: 0, y: 60 },
                 {
-                    opacity: 1, y: 0, filter: "blur(0px)",
-                    duration: 0.7, ease: "power3.out",
+                    opacity: 1, y: 0,
+                    duration: 0.65, ease: "power3.out",
                     stagger: 0.05,
                     scrollTrigger: { trigger: container, start: "top 80%", once: true },
                 }
@@ -63,10 +63,10 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
 
             gsap.fromTo(
                 `.${styles.ctaCard}`,
-                { opacity: 0, scale: 0.5, filter: "blur(10px)" },
+                { opacity: 0, scale: 0.6 },
                 {
-                    opacity: 1, scale: 1, filter: "blur(0px)",
-                    duration: 0.7, ease: "back.out(1.4)",
+                    opacity: 1, scale: 1,
+                    duration: 0.65, ease: "back.out(1.4)",
                     scrollTrigger: { trigger: container, start: "top 80%", once: true },
                 }
             )

@@ -52,14 +52,108 @@
 .accentCard {
     grid-area: accent;
     padding: 0;
-    background: transparent;
-    border: none;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
-.accentCard:hover {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
+.accentCard:hover .orb {
+    animation-play-state: paused;
+}
+
+/* ── Mesh container ── */
+.meshWrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+/* ── Shared orb base ── */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(42px);
+    mix-blend-mode: multiply;
+    will-change: transform;
+    opacity: 0.55;
+}
+
+/* orb 1 – quaternary (dusty rose) */
+.orb1 {
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle, var(--quaternary-color) 0%, transparent 70%);
+    top: -15%;
+    left: -10%;
+    animation: orbDrift1 9s ease-in-out infinite alternate;
+}
+
+/* orb 2 – secondary (slate purple) */
+.orb2 {
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
+    bottom: -15%;
+    right: -10%;
+    animation: orbDrift2 11s ease-in-out infinite alternate;
+}
+
+/* orb 3 – tertiary (mauve) */
+.orb3 {
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, var(--tertiary-color) 0%, transparent 70%);
+    bottom: 20%;
+    left: 10%;
+    animation: orbDrift3 7s ease-in-out infinite alternate;
+}
+
+/* orb 4 – primary (navy) */
+.orb4 {
+    width: 45%;
+    height: 45%;
+    background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
+    top: 15%;
+    right: 5%;
+    animation: orbDrift4 13s ease-in-out infinite alternate;
+}
+
+/* subtle noise overlay for texture */
+.meshNoise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 150px;
+    opacity: 0.35;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+@keyframes orbDrift1 {
+    0%   { transform: translate(0%, 0%)    scale(1); }
+    33%  { transform: translate(18%, 12%)  scale(1.08); }
+    66%  { transform: translate(8%, 22%)   scale(0.95); }
+    100% { transform: translate(22%, 5%)   scale(1.12); }
+}
+@keyframes orbDrift2 {
+    0%   { transform: translate(0%, 0%)     scale(1); }
+    33%  { transform: translate(-20%, -10%) scale(1.1); }
+    66%  { transform: translate(-8%, -25%)  scale(0.92); }
+    100% { transform: translate(-25%, -8%) scale(1.05); }
+}
+@keyframes orbDrift3 {
+    0%   { transform: translate(0%, 0%)   scale(1); }
+    50%  { transform: translate(25%, -18%) scale(1.15); }
+    100% { transform: translate(10%, -30%) scale(0.9); }
+}
+@keyframes orbDrift4 {
+    0%   { transform: translate(0%, 0%)    scale(1); }
+    40%  { transform: translate(-15%, 20%) scale(1.08); }
+    100% { transform: translate(-25%, 10%) scale(0.95); }
 }
 
 .accentGradient {
@@ -157,6 +251,7 @@
     position: absolute;
     inset: 0;
     color: var(--primary-color);
+    will-change: opacity;
 }
 
 .accentCard {
@@ -212,12 +307,12 @@
   width: 52px;
   height: 52px;
   border-radius: 6px;
-  background: var(--decor-bg, linear-gradient(135deg, #61DAFB, #3178C6));
+  background: var(--decor-bg, linear-gradient(135deg, var(--quaternary-color), var(--secondary-color)));
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   padding: 5px 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 14px rgba(5, 10, 48, 0.15);
   flex-shrink: 0;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -242,20 +337,20 @@
   width: 52px;
   height: 52px;
   border-radius: 6px;
-  background: rgba(10, 10, 20, 0.75);
+  background: rgba(5, 10, 48, 0.82);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(74, 78, 105, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(5, 10, 48, 0.18);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .skillDecorCode:hover {
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 8px 22px rgba(5, 10, 48, 0.28);
 }
 
 .skillDecorCodeText {
@@ -264,28 +359,28 @@
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
-  color: var(--decor-color, #CC6699);
+  color: var(--quinary-color);
 }
 
 /* ── Decor: badge card ── */
 .skillDecorBadge {
   height: 52px;
   padding: 0 10px;
-    border-radius: 6px;
-  background: rgba(255, 255, 255, 0.38);
+  border-radius: 6px;
+  background: rgba(201, 173, 167, 0.28);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(201, 173, 167, 0.5);
   display: flex;
   align-items: center;
   gap: 5px;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(5, 10, 48, 0.07);
   transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .skillDecorBadge:hover {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(201, 173, 167, 0.45);
 }
 
 .skillDecorBadgeLabel {
@@ -295,7 +390,7 @@
   letter-spacing: 0.05em;
   white-space: nowrap;
   line-height: 1;
-  color: var(--decor-color, inherit);
+  color: var(--secondary-color);
 }
 
 .skillIcon {

@@ -1,6 +1,6 @@
 
 "use client"
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react"
+import { forwardRef, useCallback, useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
@@ -26,7 +26,7 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
       { name: "React (Native)", type: "badge", label: "React (Native)", icon: SiReact, color: "#61DAFB" },
       { name: "React 19", type: "badge", label: "React 19", icon: SiReact, color: "#61DAFB" },
       { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
-      { type: "gradient", name: "web-gradient", gradient: "linear-gradient(135deg,#61DAFB 0%,#3178C6 100%)", label: "Web" },
+      { type: "gradient", name: "web-gradient", gradient: "linear-gradient(135deg,#c9ada7 0%,#4a4e69 100%)", label: "Web" },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
       { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
       { type: "code", name: "jsx-code", text: "</>", color: "#CC6699" },
@@ -39,7 +39,7 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
     skills: [
       { name: "Go", icon: SiGo, color: "#00ADD8" },
       { type: 'badge', label: "Node.js", name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
-      { type: "gradient", name: "api-gradient", gradient: "linear-gradient(135deg,#00ADD8 0%,#5FA04E 100%)", label: "API" },
+      { type: "gradient", name: "api-gradient", gradient: "linear-gradient(135deg,#4a4e69 0%,#9a8c98 100%)", label: "API" },
       { name: "PHP", icon: SiPhp, color: "#777BB4" },
       { type: "code", name: "curly-code", text: "{ }", color: "#777BB4" },
       { name: "MySQL", icon: SiMysql, color: "#4479A1" },
@@ -50,7 +50,7 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
     title: "Tools & Cloud",
     skills: [
       { name: "Git", icon: SiGit, color: "#F05032" },
-      { type: "gradient", name: "devops-gradient", gradient: "linear-gradient(135deg,#F05032 0%,#2496ED 100%)", label: "DevOps" },
+      { type: "gradient", name: "devops-gradient", gradient: "linear-gradient(135deg,#050a30 0%,#4a4e69 100%)", label: "DevOps" },
       { name: "GCP", icon: SiGooglecloud, color: "#4285F4" },
       { type: "code", name: "terminal-code", text: ">_", color: "#4285F4" },
       { name: "Redis", icon: SiRedis, color: "#FF4438" },
@@ -64,7 +64,7 @@ const aboutText = "I'm Mohammed — a dedicated software development student wit
 const About = forwardRef<HTMLDivElement>((props, ref) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
-  const [progress, setProgress] = useState(0)
+  const wordFgRefs = useRef<(HTMLSpanElement | null)[]>([])
 
 
   
@@ -93,17 +93,26 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
         end: "bottom bottom",
         pin: grid,
         pinSpacing: false,
-        onUpdate: (self) => setProgress(self.progress),
+        onUpdate: (self) => {
+          const p = self.progress
+          const total = wordFgRefs.current.length
+          wordFgRefs.current.forEach((el, i) => {
+            if (!el) return
+            const start = i / total
+            const end = start + 1 / total
+            el.style.opacity = p <= start ? "0" : p >= end ? "1" : String((p - start) / (end - start))
+          })
+        },
       })
 
       // Animate corner cards on scroll into view
       const cornerCards = grid.querySelectorAll(`.${styles.cornerCard}`)
       cornerCards.forEach((card, i) => {
         gsap.fromTo(card,
-          { opacity: 0, scale: 0.6, filter: "blur(10px)" },
+          { opacity: 0, scale: 0.7 },
           {
-            opacity: 1, scale: 1, filter: "blur(0px)",
-            duration: 0.7, ease: "back.out(1.4)",
+            opacity: 1, scale: 1,
+            duration: 0.6, ease: "back.out(1.4)",
             delay: i * 0.06,
             scrollTrigger: { trigger: card, start: "top 90%", once: true },
           }
@@ -112,9 +121,9 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
 
       // Text card
       gsap.fromTo(`.${styles.textCard}`,
-        { opacity: 0, y: 80, filter: "blur(8px)" },
+        { opacity: 0, y: 60 },
         {
-          opacity: 1, y: 0, filter: "blur(0px)",
+          opacity: 1, y: 0,
           duration: 0.7, ease: "power3.out",
           scrollTrigger: { trigger: `.${styles.textCard}`, start: "top 90%", once: true },
         }
@@ -124,13 +133,13 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
       const decorCards = grid.querySelectorAll(`.${styles.decorCard}, .${styles.decorCardFloat}`)
       gsap.from(decorCards, {
         opacity: 0,
-        scale: 0.2,
-        y: () => gsap.utils.random(-50, 50),
-        x: () => gsap.utils.random(-30, 30),
-        rotation: () => gsap.utils.random(-90, 90),
-        duration: 0.9,
-        ease: "back.out(1.7)",
-        stagger: { amount: 0.7, from: "random" },
+        scale: 0.3,
+        y: () => gsap.utils.random(-40, 40),
+        x: () => gsap.utils.random(-20, 20),
+        rotation: () => gsap.utils.random(-60, 60),
+        duration: 0.7,
+        ease: "back.out(1.4)",
+        stagger: { amount: 0.5, from: "random" },
         scrollTrigger: {
           trigger: grid,
           start: "top 75%",
@@ -155,7 +164,13 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
         </div>
 
         <div className={`${styles.card} ${styles.cornerCard} ${styles.accentCard}`}>
-          {/* <div className={styles.accentGradient} /> */}
+          <div className={styles.meshWrap}>
+            <div className={`${styles.orb} ${styles.orb1}`} />
+            <div className={`${styles.orb} ${styles.orb2}`} />
+            <div className={`${styles.orb} ${styles.orb3}`} />
+            <div className={`${styles.orb} ${styles.orb4}`} />
+            <div className={styles.meshNoise} />
+          </div>
         </div>
 
         <div className={`${styles.card} ${styles.textCard}`}>
@@ -166,27 +181,17 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
             </h2>
           </div>
           <p className={styles.revealText}>
-            {words.map((word, i) => {
-              const start = i / words.length
-              const end = start + 1 / words.length
-              const wordOpacity =
-                progress <= start
-                  ? 0
-                  : progress >= end
-                    ? 1
-                    : (progress - start) / (end - start)
-              return (
-                <span key={i} className={styles.wordWrapper}>
-                  <span className={styles.wordBg}>{word}</span>
-                  <span
-                    className={styles.wordFg}
-                    style={{ opacity: wordOpacity }}
-                  >
-                    {word}
-                  </span>
+            {words.map((word, i) => (
+              <span key={i} className={styles.wordWrapper}>
+                <span className={styles.wordBg}>{word}</span>
+                <span
+                  ref={(el) => { wordFgRefs.current[i] = el }}
+                  className={styles.wordFg}
+                >
+                  {word}
                 </span>
-              )
-            })}
+              </span>
+            ))}
           </p>
         </div>
 

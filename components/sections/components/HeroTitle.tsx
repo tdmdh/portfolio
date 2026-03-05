@@ -40,34 +40,32 @@ const HeroTitle: React.FC<HeroTitleProps> = ({
     const container = containerRef.current
     if (!container) return
 
-    const spans = container.querySelectorAll(`.${styles.letter}, .gsap-subtitle-letter, .gsap-text-letter`)
-    if (spans.length === 0) return
+    const ctx = gsap.context(() => {
+      const spans = container.querySelectorAll(`.${styles.letter}, .gsap-subtitle-letter, .gsap-text-letter`)
+      if (spans.length === 0) return
 
-    gsap.set(spans, { opacity: 0, y: 20 })
+      gsap.set(spans, { opacity: 0, y: 20 })
 
-    const animProps = {
-      opacity: 1,
-      y: 0,
-      duration: animationDuration,
-      ease: "power2.out",
-      stagger: animationDelay,
-      onComplete: onAnimationComplete,
-    }
+      const animProps = {
+        opacity: 1,
+        y: 0,
+        duration: animationDuration,
+        ease: "power2.out",
+        stagger: animationDelay,
+        onComplete: onAnimationComplete,
+      }
 
-    if (trigger === "onMount") {
-      gsap.to(spans, animProps)
-    } else if (trigger === "inView") {
-      gsap.to(spans, {
-        ...animProps,
-        scrollTrigger: { trigger: container, start: "top 85%", once: true },
-      })
-    }
+      if (trigger === "onMount") {
+        gsap.to(spans, animProps)
+      } else if (trigger === "inView") {
+        gsap.to(spans, {
+          ...animProps,
+          scrollTrigger: { trigger: container, start: "top 85%", once: true },
+        })
+      }
+    }, container)
 
-    return () => {
-      ScrollTrigger.getAll().forEach(st => {
-        if (st.trigger === container) st.kill()
-      })
-    }
+    return () => ctx.revert()
   }, [trigger, animationDelay, animationDuration, onAnimationComplete])
 
   const titleUnits = title ? split(title) : []

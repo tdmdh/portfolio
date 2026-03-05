@@ -235,15 +235,14 @@ const ExpandedProject = ({
     const els = contentRef.current.querySelectorAll("[data-animate]")
     gsap.fromTo(
       els,
-      { opacity: 0, y: 30, filter: "blur(4px)" },
+      { opacity: 0, y: 20 },
       {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
-        duration: 0.6,
-        stagger: 0.07,
+        duration: 0.5,
+        stagger: 0.06,
         ease: "power3.out",
-        delay: 0.3,
+        delay: 0.25,
       }
     )
   }, [project])
@@ -397,18 +396,17 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
         const headerEls = headerRef.current.children
         gsap.fromTo(
           headerEls,
-          { opacity: 0, y: 60, filter: "blur(8px)" },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 0.8,
-            stagger: 0.1,
+            duration: 0.7,
+            stagger: 0.08,
             ease: "power3.out",
             scrollTrigger: {
               trigger: headerRef.current,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         )
@@ -419,19 +417,18 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       if (cards.length > 0) {
         gsap.fromTo(
           cards,
-          { opacity: 0, y: 80, scale: 0.92, filter: "blur(6px)" },
+          { opacity: 0, y: 50, scale: 0.95 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            filter: "blur(0px)",
-            duration: 0.7,
-            stagger: 0.1,
+            duration: 0.6,
+            stagger: 0.08,
             ease: "power3.out",
             scrollTrigger: {
               trigger: gridRef.current,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              once: true,
             },
           }
         )

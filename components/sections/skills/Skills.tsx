@@ -102,34 +102,29 @@ const Skills = forwardRef<HTMLDivElement>((props, ref) => {
         const ctx = gsap.context(() => {
             gsap.fromTo(
                 `.${styles.header}`,
-                { opacity: 0, y: 100, filter: "blur(8px)" },
+                { opacity: 0, y: 60 },
                 {
-                    opacity: 1, y: 0, filter: "blur(0px)",
+                    opacity: 1, y: 0,
                     duration: 0.7, ease: "power3.out",
                     scrollTrigger: { trigger: `.${styles.header}`, start: "top 85%", once: true },
                 }
             )
 
-            gsap.fromTo(
-                `.${styles.categorySection}`,
-                { opacity: 0, y: 80, filter: "blur(8px)" },
-                {
-                    opacity: 1, y: 0, filter: "blur(0px)",
-                    duration: 0.7, ease: "power3.out",
-                    stagger: 0.1,
-                    scrollTrigger: { trigger: `.${styles.categoriesContainer}`, start: "top 85%", once: true },
-                }
-            )
+            // Single ScrollTrigger for both category + skill card reveals
+            const tl = gsap.timeline({
+                scrollTrigger: { trigger: `.${styles.categoriesContainer}`, start: "top 85%", once: true },
+            })
 
-            gsap.fromTo(
+            tl.fromTo(
+                `.${styles.categorySection}`,
+                { opacity: 0, y: 60 },
+                { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.1 },
+                0
+            ).fromTo(
                 `.${styles.skillCard}`,
-                { opacity: 0, scale: 0.5, filter: "blur(6px)" },
-                {
-                    opacity: 1, scale: 1, filter: "blur(0px)",
-                    duration: 0.5, ease: "back.out(1.4)",
-                    stagger: 0.03,
-                    scrollTrigger: { trigger: `.${styles.categoriesContainer}`, start: "top 80%", once: true },
-                }
+                { opacity: 0, scale: 0.6 },
+                { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.4)", stagger: 0.025 },
+                0.08
             )
         }, section)
 
