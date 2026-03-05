@@ -1,52 +1,63 @@
-"use client"
 
+"use client"
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
 import {
-    SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
-    SiGo, SiNodedotjs, SiPhp, SiPostgresql,
-    SiGit, SiDocker, SiGooglecloud
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
+  SiGo, SiNodedotjs, SiPhp, SiPostgresql,
+  SiGit, SiDocker, SiGooglecloud, SiHtml5, SiMysql, SiRedis
 } from "react-icons/si"
 import type { IconType } from "react-icons"
 
 gsap.registerPlugin(ScrollTrigger)
 
-interface SkillItem {
-    name: string
-    icon: IconType
-    color: string
-}
+type SkillEntry =
+  | { type?: "icon"; name: string; icon: IconType; color: string }
+  | { type: "gradient"; name: string; gradient: string; label?: string }
+  | { type: "code"; name: string; text: string; color: string }
+  | { type: "badge"; name: string; label: string; icon: IconType; color: string }
 
-const skillCategories: { title: string; skills: SkillItem[] }[] = [
-    {
-        title: "Frontend",
-        skills: [
-            { name: "React (Native)", icon: SiReact, color: "#61DAFB" },
-            { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
-            { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-            { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
-            { name: "SCSS", icon: SiSass, color: "#CC6699" },
-        ]
-    },
-    {
-        title: "Backend",
-        skills: [
-            { name: "Go", icon: SiGo, color: "#00ADD8" },
-            { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
-            { name: "PHP", icon: SiPhp, color: "#777BB4" },
-            { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
-        ]
-    },
-    {
-        title: "Tools & Cloud",
-        skills: [
-            { name: "Git", icon: SiGit, color: "#F05032" },
-            { name: "Docker", icon: SiDocker, color: "#2496ED" },
-            { name: "GCP", icon: SiGooglecloud, color: "#4285F4" },
-        ]
-    }
+const skillCategories: { title: string; skills: SkillEntry[] }[] = [
+  {
+    title: "Frontend",
+    skills: [
+      { name: "React (Native)", icon: SiReact, color: "#61DAFB" },
+      { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
+      { type: "gradient", name: "web-gradient", gradient: "linear-gradient(135deg,#61DAFB 0%,#3178C6 100%)", label: "Web" },
+      { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+      { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
+      { type: "code", name: "jsx-code", text: "</>", color: "#CC6699" },
+      { name: "SCSS", icon: SiSass, color: "#CC6699" },
+      { name: "HTML", icon: SiHtml5, color: "#E34F26" },
+    ]
+  },
+  {
+    title: "Backend",
+    skills: [
+      { name: "Go", icon: SiGo, color: "#00ADD8" },
+      { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+      { type: "gradient", name: "api-gradient", gradient: "linear-gradient(135deg,#00ADD8 0%,#5FA04E 100%)", label: "API" },
+      { name: "PHP", icon: SiPhp, color: "#777BB4" },
+      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+      { type: "code", name: "curly-code", text: "{ }", color: "#777BB4" },
+      { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+      { type: "badge", name: "pg-badge", label: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+    ]
+  },
+  {
+    title: "Tools & Cloud",
+    skills: [
+      { name: "Git", icon: SiGit, color: "#F05032" },
+      { name: "Docker", icon: SiDocker, color: "#2496ED" },
+      { type: "gradient", name: "devops-gradient", gradient: "linear-gradient(135deg,#F05032 0%,#2496ED 100%)", label: "DevOps" },
+      { name: "GCP", icon: SiGooglecloud, color: "#4285F4" },
+      { type: "code", name: "terminal-code", text: ">_", color: "#4285F4" },
+      { name: "Redis", icon: SiRedis, color: "#FF4438" },
+      { type: "badge", name: "docker-badge", label: "Docker", icon: SiDocker, color: "#2496ED" },
+    ]
+  },
 ]
 
 const aboutText = "I'm Mohammed — a dedicated software development student with a passion for building clean, scalable, and engaging web applications. With a strong foundation in modern web technologies and an eye for design, I specialize in crafting intuitive user experiences that are both aesthetically pleasing and technically robust."
@@ -55,6 +66,10 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
   const [progress, setProgress] = useState(0)
+
+
+  
+
 
   const setRefs = useCallback(
     (el: HTMLDivElement | null) => {
@@ -127,59 +142,21 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
 
     return () => ctx.revert()
   }, [])
-
   const words = aboutText.split(" ")
+
 
   return (
     <div ref={setRefs} className={styles.main}>
       <div ref={gridRef} className={styles.bentoGrid}>
-        
-        {/* Decorative mini cards (chaotic grid, hidden on mobile) */}
-        {/* <div className={`${styles.decorCard} ${styles.dec1}`}><SiReact size={25} opacity={0.6} /></div>
-        <div className={`${styles.decorCard} ${styles.dec2}`}><div className="w-2 h-2 rounded-full bg-cyan-400/60"></div></div>
-        <div className={`${styles.decorCard} ${styles.dec3}`}><SiNextdotjs size={25} opacity={0.6} /></div>
-        <div className={`${styles.decorCard} ${styles.dec4}`}><div className="w-4 h-4 border border-purple-400/50 rotate-45"></div></div>
-        <div className={`${styles.decorCard} ${styles.dec5}`}><SiTailwindcss size={25} opacity={0.6} /></div>
-        <div className={`${styles.decorCard} ${styles.dec6}`}><div className="w-1.5 h-8 bg-gradient-to-t from-pink-400/50 to-purple-400/50 rounded-full"></div></div>
-        <div className={`${styles.decorCard} ${styles.dec7}`}><SiGo size={25} opacity={0.6} /></div>
-        <div className={`${styles.decorCard} ${styles.dec8}`}>
-          <div className="flex gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-cyan-400/60"/><div className="w-1.5 h-1.5 rounded-full bg-blue-400/60"/></div>
-        </div>
-        <div className={`${styles.decorCard} ${styles.dec9}`}><SiDocker size={25} opacity={0.6} /></div>
-        <div className={`${styles.decorCard} ${styles.dec10}`}><div className="w-full h-full rounded-full border-2 border-dashed border-teal-500/30"></div></div>
-        <div className={`${styles.decorCard} ${styles.dec11}`}><SiTypescript size={25} opacity={0.6} /></div>
-        <div className={`${styles.decorCard} ${styles.dec12}`}><div className="w-4 h-4 bg-yellow-400/20 rounded-sm rotate-12"></div></div>
-
-
-        <div className={`${styles.decorCardFloat} ${styles.floatA}`}><SiNodedotjs size={25} color="#5FA04E" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatB}`}><div className={styles.pillGradient} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatC}`}><SiGit size={25} color="#F05032" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatD}`}><div className={styles.dotCluster}><span/><span/><span/></div></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatE}`}><SiSass size={25} color="#CC6699" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatF}`}><div className={styles.ring} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatG}`}><SiPhp size={25} color="#777BB4" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatH}`}><div className={styles.diagBar} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatI}`}><SiGooglecloud size={25} color="#4285F4" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatJ}`}><div className={styles.cross}><span/><span/></div></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatK}`}><SiPostgresql size={25} color="#4169E1" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatL}`}><div className={styles.arcPill} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatM}`}><SiGo size={25} color="#00ADD8" opacity={0.7} /></div>
-        <div className={`${styles.decorCardFloat} ${styles.floatN}`}><div className={styles.tri} /></div> */}
-
 
         <div className={`${styles.card} ${styles.cornerCard} ${styles.frontendCard}`}>
-          <span className={styles.cardLabel}>Frontend</span>
           <div className={styles.skillIcons}>
-            {skillCategories[0].skills.map((skill) => (
-              <div key={skill.name} className={styles.skillIcon} title={skill.name}>
-                <skill.icon size={22} color={skill.color} />
-              </div>
-            ))}
+          <TriangleSkills skills={skillCategories[0].skills} corner='top-left' />
           </div>
         </div>
 
         <div className={`${styles.card} ${styles.cornerCard} ${styles.accentCard}`}>
-          <div className={styles.accentGradient} />
+          {/* <div className={styles.accentGradient} /> */}
         </div>
 
         <div className={`${styles.card} ${styles.textCard}`}>
@@ -215,24 +192,14 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
         </div>
 
         <div className={`${styles.card} ${styles.cornerCard} ${styles.backendCard}`}>
-          <span className={styles.cardLabel}>Backend</span>
           <div className={styles.skillIcons}>
-            {skillCategories[1].skills.map((skill) => (
-              <div key={skill.name} className={styles.skillIcon} title={skill.name}>
-                <skill.icon size={22} color={skill.color} />
-              </div>
-            ))}
+            <TriangleSkills skills={skillCategories[1].skills} corner='bottom-left' />
           </div>
         </div>
 
         <div className={`${styles.card} ${styles.cornerCard} ${styles.toolsCard}`}>
-          <span className={styles.cardLabel}>Tools & Cloud</span>
           <div className={styles.skillIcons}>
-            {skillCategories[2].skills.map((skill) => (
-              <div key={skill.name} className={styles.skillIcon} title={skill.name}>
-                <skill.icon size={22} color={skill.color} />
-              </div>
-            ))}
+            <TriangleSkills skills={skillCategories[2].skills} corner='bottom-right' />
           </div>
         </div>
       </div>
@@ -243,3 +210,100 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
 About.displayName = "About"
 
 export default About
+
+
+
+
+type Corner = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
+function chunkSkills(skills: SkillEntry[]) {
+  const rows: SkillEntry[][] = [];
+  let index = 0;
+  let size = 1;
+
+  while (index < skills.length) {
+    rows.push(skills.slice(index, index + size));
+    index += size;
+    size++;
+  }
+
+  return rows;
+}
+
+function SkillEntryCard({ entry }: { entry: SkillEntry }) {
+  if (entry.type === "gradient") {
+    return (
+      <div
+        className={styles.skillDecorGradient}
+        style={{ ["--decor-bg" as string]: entry.gradient }}
+        title={entry.label}
+      >
+        {entry.label && <span className={styles.skillDecorGradientLabel}>{entry.label}</span>}
+      </div>
+    )
+  }
+  if (entry.type === "code") {
+    return (
+      <div className={styles.skillDecorCode} title={entry.name}>
+        <span
+          className={styles.skillDecorCodeText}
+          style={{ ["--decor-color" as string]: entry.color }}
+        >
+          {entry.text}
+        </span>
+      </div>
+    )
+  }
+  if (entry.type === "badge") {
+    return (
+      <div className={styles.skillDecorBadge} title={entry.name}>
+        <entry.icon size={14} color={entry.color} />
+        <span
+          className={styles.skillDecorBadgeLabel}
+          style={{ ["--decor-color" as string]: entry.color }}
+        >
+          {entry.label}
+        </span>
+      </div>
+    )
+  }
+  // default: icon
+  return (
+    <div className={styles.skillIcon} title={entry.name}>
+      <entry.icon size={30} color={entry.color} />
+    </div>
+  )
+}
+
+export function TriangleSkills({
+  skills,
+  corner,
+}: {
+  skills: SkillEntry[];
+  corner: Corner;
+}) {
+  const rows = chunkSkills(skills);
+
+  const isRightSide = corner === "top-right" || corner === "bottom-right";
+
+  const displayRows =
+    corner === "top-left" || corner === "top-right"
+      ? [...rows].reverse()
+      : rows;
+
+  return (
+    <div className={`${styles.triangle} ${styles[corner]}`}>
+      {displayRows.map((row, rowIndex) => (
+        <div
+          key={rowIndex}
+          className={`${styles.row} ${isRightSide ? styles.rowRight : styles.rowLeft}`}
+        >
+          {row.map((entry) => (
+            <SkillEntryCard key={entry.name} entry={entry} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+

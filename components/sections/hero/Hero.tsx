@@ -47,7 +47,7 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
             <HeroTitle
               title="Hi, I'm"
               animationDelay={0.05}
-              animationType="letter"
+              animationType="word"
               trigger="onMount"
               animationDuration={0.5}
             />
@@ -62,10 +62,6 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
               fill
               className={styles.profileImage}
             />
-          </div>
-          <div className={styles.profileOverlay}>
-            <span className={styles.profileName}>Mohammed</span>
-            <span className={styles.profileRole}>Software Developer</span>
           </div>
         </div>
 
