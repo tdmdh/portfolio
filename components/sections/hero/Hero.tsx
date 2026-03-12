@@ -20,19 +20,19 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
       gsap.fromTo(
         `.${styles.greetingCard}`,
         { opacity: 0, x: -60 },
-        { opacity: 1, x: 0, duration: 0.7, ease: "power3.out", delay: 0.05 }
+        { opacity: 1, x: 0, duration: 0.65, ease: "power3.out", delay: 0.05 }
       )
 
       gsap.fromTo(
         `.${styles.profileCard}`,
         { opacity: 0, x: 60 },
-        { opacity: 1, x: 0, duration: 0.7, ease: "power3.out", delay: 0.11 }
+        { opacity: 1, x: 0, duration: 0.65, ease: "power3.out", delay: 0.11 }
       )
 
       gsap.fromTo(
         `.${styles.nameCard}`,
-        { opacity: 0, y: 80 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", delay: 0.17 }
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", delay: 0.17 }
       )
     }, gridRef)
 

@@ -52,11 +52,11 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
                     `.${styles.clockCard}`,
                     `.${styles.socialCard}`,
                 ],
-                { opacity: 0, y: 60 },
+                { opacity: 0, y: 50 },
                 {
                     opacity: 1, y: 0,
                     duration: 0.65, ease: "power3.out",
-                    stagger: 0.05,
+                    stagger: 0.065,
                     scrollTrigger: { trigger: container, start: "top 80%", once: true },
                 }
             )

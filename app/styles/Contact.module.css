@@ -48,6 +48,8 @@
     flex-direction: column;
     justify-content: flex-end;
     box-sizing: border-box;
+    will-change: opacity, transform;
+    backface-visibility: hidden;
 }
 
 .card:hover {

@@ -130,7 +130,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           { opacity: 0, y: 50, scale: 0.95 },
           {
             opacity: 1, y: 0, scale: 1,
-            duration: 0.6, stagger: 0.08, ease: "power3.out",
+            duration: 0.65, stagger: 0.065, ease: "power3.out",
             scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true },
           }
         )
