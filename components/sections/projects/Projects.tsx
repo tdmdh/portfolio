@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import styles from "@/app/styles/Projects.module.css"
 import { forwardRef, useRef, useState, useEffect, useCallback } from "react"
@@ -41,8 +41,7 @@ const projects: Project[] = [
       "Intelligent token management",
       "Multi-provider support",
     ],
-    images: [
-    ],
+    images: [],
   },
   {
     title: "FitUpp",
@@ -52,7 +51,7 @@ const projects: Project[] = [
     type: "app",
     link: "https://github.com/Mohammed-glr/fit-up",
     linkText: "View Repo",
-    tech: ["React Native", "Go","REST API", "PostgreSQL", "Docker"],
+    tech: ["React Native", "Go", "REST API", "PostgreSQL", "Docker"],
     features: [
       "Personalized workout plans",
       "Real-time exercise tracking",
@@ -62,12 +61,11 @@ const projects: Project[] = [
       "Role-based access control for trainers and users",
       "Generate workout plans based on user goals and fitness levels",
       "Generate receipies based on user dietary preferences and restrictions",
-
     ],
-     images: [
+    images: [
       "/photo/fu5.jpg",
-      "/photo/fu1.jpg", 
-      "/photo/fu2.jpg", 
+      "/photo/fu1.jpg",
+      "/photo/fu2.jpg",
       "/photo/fu3.jpg",
       "/photo/fu4.jpg",
       "/photo/fu6.jpg",
@@ -94,9 +92,7 @@ const projects: Project[] = [
       "Advanced caching layer",
       "Flexible content modeling",
     ],
-    images: [
-      "/photo/cms1.png",
-    ],
+    images: ["/photo/cms1.png"],
   },
   {
     title: "Lornian",
@@ -157,9 +153,9 @@ const statusConfig = {
   todo: { label: "Upcoming", className: styles.statusTodo },
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    Project Card (Bento)
-   ═══════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 const ProjectCard = ({
   project,
   index,
@@ -206,9 +202,9 @@ const ProjectCard = ({
   )
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    Expanded Project View
-   ═══════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 const ExpandedProject = ({
   project,
   index,
@@ -229,21 +225,13 @@ const ExpandedProject = ({
   const { label, className } = statusConfig[project.status]
   const contentRef = useRef<HTMLDivElement>(null)
 
-  // GSAP entrance for content elements
   useEffect(() => {
     if (!contentRef.current) return
     const els = contentRef.current.querySelectorAll("[data-animate]")
     gsap.fromTo(
       els,
       { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.06,
-        ease: "power3.out",
-        delay: 0.25,
-      }
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power3.out", delay: 0.25 }
     )
   }, [project])
 
@@ -252,7 +240,6 @@ const ExpandedProject = ({
 
   return (
     <>
-      {/* Close button */}
       <button className={styles.closeButton} onClick={onClose} aria-label="Close">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M18 6L6 18" /><path d="M6 6l12 12" />
@@ -260,7 +247,6 @@ const ExpandedProject = ({
       </button>
 
       <div ref={containerRef} className={`${styles.expandedCardContainer} ${project.type === "app" ? styles.expandedContainerApp : styles.expandedContainerDesktop}`}>
-        {/* Gallery Side */}
         <div className={`${styles.expandedGallery} ${project.type === "app" ? styles.expandedGalleryApp : styles.expandedGalleryDesktop}`}>
           {project.images.length > 0 ? (
             project.images.map((img, i) => (
@@ -278,48 +264,32 @@ const ExpandedProject = ({
 
           {project.images.length > 1 && (
             <>
-              <span className={styles.galleryCounter}>
-                {galleryIndex + 1} / {project.images.length}
-              </span>
+              <span className={styles.galleryCounter}>{galleryIndex + 1} / {project.images.length}</span>
               <button className={`${styles.galleryArrow} ${styles.galleryArrowLeft}`} onClick={(e) => { e.stopPropagation(); prevSlide() }} aria-label="Previous">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
               </button>
               <button className={`${styles.galleryArrow} ${styles.galleryArrowRight}`} onClick={(e) => { e.stopPropagation(); nextSlide() }} aria-label="Next">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
               </button>
               <div className={styles.galleryNav}>
                 {project.images.map((_, i) => (
-                  <button
-                    key={i}
-                    className={`${styles.galleryDot} ${i === galleryIndex ? styles.galleryDotActive : ""}`}
-                    onClick={(e) => { e.stopPropagation(); onGalleryChange(i) }}
-                    aria-label={`Go to image ${i + 1}`}
-                  />
+                  <button key={i} className={`${styles.galleryDot} ${i === galleryIndex ? styles.galleryDotActive : ""}`} onClick={(e) => { e.stopPropagation(); onGalleryChange(i) }} aria-label={`Go to image ${i + 1}`} />
                 ))}
               </div>
             </>
           )}
         </div>
 
-        {/* Content Side */}
         <div ref={contentRef} className={styles.expandedContent}>
           <span data-animate className={styles.expandedNumber}>Project {String(index + 1).padStart(2, "0")}</span>
-
           <div data-animate className={styles.expandedHeader}>
             <h3 className={styles.expandedTitle}>{project.title}</h3>
             <div className={styles.expandedStatus}>
               <span className={`${styles.status} ${className}`}>{label}</span>
             </div>
           </div>
-
           <hr data-animate className={styles.expandedDivider} />
-
           <p data-animate className={styles.expandedDescription}>{project.fullDescription}</p>
-
           <div data-animate className={styles.expandedTechSection}>
             <span className={styles.expandedTechLabel}>Tech Stack</span>
             <div className={styles.expandedTechTags}>
@@ -328,7 +298,6 @@ const ExpandedProject = ({
               ))}
             </div>
           </div>
-
           <div data-animate className={styles.expandedFeatures}>
             <span className={styles.expandedFeaturesLabel}>Key Features</span>
             <ul className={styles.featuresList}>
@@ -340,7 +309,6 @@ const ExpandedProject = ({
               ))}
             </ul>
           </div>
-
           {project.link && (
             <div data-animate className={styles.expandedAction}>
               <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.expandedButton} onClick={(e) => e.stopPropagation()}>
@@ -354,16 +322,10 @@ const ExpandedProject = ({
         </div>
       </div>
 
-      {/* Bottom Navigation */}
       <div className={styles.expandedNavigation}>
         <div className={styles.expandedNavigationDots}>
           {projects.map((_, idx) => (
-            <button
-              key={idx}
-              className={`${styles.navigationDot} ${idx === index ? styles.navigationDotActive : ""}`}
-              onClick={(e) => e.stopPropagation()}
-              aria-label={`Project ${idx + 1}`}
-            />
+            <button key={idx} className={`${styles.navigationDot} ${idx === index ? styles.navigationDotActive : ""}`} onClick={(e) => e.stopPropagation()} aria-label={`Project ${idx + 1}`} />
           ))}
         </div>
         <div className={styles.expandedHint}>
@@ -374,12 +336,11 @@ const ExpandedProject = ({
   )
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    Main Projects Section
-   ═══════════════════════════════════════════ */
+   ═══════════════════════════════════════════════ */
 const Projects = forwardRef<HTMLDivElement>((props, ref) => {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const headerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -388,109 +349,53 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const [galleryIndex, setGalleryIndex] = useState(0)
 
-  // ── GSAP: Bento grid card entrance ──
+  // Card area classes for the bento grid
+  const cellClasses = [
+    styles.cell0,
+    styles.cell1,
+    styles.cell2,
+    styles.cell3,
+    styles.cell4,
+    styles.cell5,
+  ]
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animation
-      if (headerRef.current) {
-        const headerEls = headerRef.current.children
-        gsap.fromTo(
-          headerEls,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headerRef.current,
-              start: "top 85%",
-              once: true,
-            },
-          }
-        )
-      }
-
-      // Card stagger reveal
       const cards = cardRefs.current.filter(Boolean)
       if (cards.length > 0) {
         gsap.fromTo(
           cards,
           { opacity: 0, y: 50, scale: 0.95 },
           {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            stagger: 0.08,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 85%",
-              once: true,
-            },
+            opacity: 1, y: 0, scale: 1,
+            duration: 0.6, stagger: 0.07, ease: "power3.out",
+            scrollTrigger: { trigger: gridRef.current, start: "top 80%", once: true },
           }
         )
       }
-
-      // Subtle parallax on cards
-      cards.forEach((card) => {
-        if (!card) return
-        gsap.to(card, {
-          y: -20,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        })
-      })
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
-  // ── Open expanded view ──
   const handleCardClick = useCallback((index: number) => {
     setExpandedIndex(index)
     setGalleryIndex(0)
     document.body.style.overflow = "hidden"
 
-    // Animate overlay + container in
     requestAnimationFrame(() => {
-      if (overlayRef.current) {
-        overlayRef.current.classList.add(styles.expandedOverlayVisible)
-      }
+      if (overlayRef.current) overlayRef.current.classList.add(styles.expandedOverlayVisible)
       if (expandedContainerRef.current) {
-        gsap.to(expandedContainerRef.current, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.5,
-          ease: "power3.out",
-          delay: 0.1,
-        })
+        gsap.to(expandedContainerRef.current, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out", delay: 0.1 })
       }
     })
   }, [])
 
-  // ── Close expanded view ──
   const handleClose = useCallback(() => {
     if (expandedContainerRef.current) {
-      gsap.to(expandedContainerRef.current, {
-        opacity: 0,
-        y: 30,
-        scale: 0.97,
-        duration: 0.3,
-        ease: "power2.in",
-      })
+      gsap.to(expandedContainerRef.current, { opacity: 0, y: 30, scale: 0.97, duration: 0.3, ease: "power2.in" })
     }
-    if (overlayRef.current) {
-      overlayRef.current.classList.remove(styles.expandedOverlayVisible)
-    }
+    if (overlayRef.current) overlayRef.current.classList.remove(styles.expandedOverlayVisible)
     setTimeout(() => {
       setExpandedIndex(null)
       setGalleryIndex(0)
@@ -498,7 +403,6 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     }, 400)
   }, [])
 
-  // ── ESC key ──
   useEffect(() => {
     if (expandedIndex === null) return
     const handleKey = (e: KeyboardEvent) => {
@@ -516,10 +420,7 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     return () => window.removeEventListener("keydown", handleKey)
   }, [expandedIndex, handleClose])
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => { document.body.style.overflow = "" }
-  }, [])
+  useEffect(() => { return () => { document.body.style.overflow = "" } }, [])
 
   return (
     <div
@@ -530,25 +431,26 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
       }}
       className={styles.main}
     >
-      {/* Header */}
-      <div ref={headerRef} className={styles.header}>
-        <span className={styles.label}>My Work</span>
-        <h2 className={styles.title}>
-          Featured <span className={styles.highlight}>Projects</span>
-        </h2>
-        <p className={styles.subtitle}>
-          Explore my journey through code — from learning platforms to backend systems,
-          each project represents a step forward in my development career.
-        </p>
-      </div>
-
-      {/* Bento Grid */}
       <div ref={gridRef} className={styles.bentoGrid}>
+        {/* Head Card */}
+        <div ref={(el) => { cardRefs.current[0] = el }} className={`${styles.card} ${styles.headCard}`}>
+          <span className={styles.label}>My Work</span>
+          <h2 className={styles.headline}>
+            <span className={styles.line}>Featured</span>
+            <span className={`${styles.line} ${styles.outlineLine}`}>Projects</span>
+          </h2>
+          <p className={styles.headlineSubtext}>
+            Explore my journey through code — from learning platforms to backend systems,
+            each project represents a step forward in my development career.
+          </p>
+        </div>
+
+        {/* Project Cards */}
         {projects.map((project, index) => (
           <div
             key={index}
-            ref={(el) => { cardRefs.current[index] = el }}
-            className={styles.cardWrapper}
+            ref={(el) => { cardRefs.current[index + 1] = el }}
+            className={`${styles.cardWrapper} ${cellClasses[index]}`}
           >
             <ProjectCard
               project={project}
@@ -559,12 +461,8 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
         ))}
       </div>
 
-      {/* Expanded Overlay (always mounted, toggled via CSS class) */}
-      <div
-        ref={overlayRef}
-        className={styles.expandedOverlay}
-        onClick={handleClose}
-      >
+      {/* Expanded Overlay */}
+      <div ref={overlayRef} className={styles.expandedOverlay} onClick={handleClose}>
         {expandedIndex !== null && (
           <div onClick={(e) => e.stopPropagation()}>
             <ExpandedProject
@@ -584,6 +482,4 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
 })
 
 Projects.displayName = "Projects"
-
 export default Projects
-

@@ -19,9 +19,10 @@ type SkillEntry =
   | { type: "code"; name: string; text: string; color: string }
   | { type: "badge"; name: string; label: string; icon: IconType; color: string }
 
-const skillCategories: { title: string; skills: SkillEntry[] }[] = [
+const skillCategories: { title: string; areaClass: string; skills: SkillEntry[] }[] = [
   {
     title: "Frontend",
+    areaClass: "feCard",
     skills: [
       { name: "React (Native)", type: "badge", label: "React (Native)", icon: SiReact, color: "#61DAFB" },
       { name: "React 19", type: "badge", label: "React 19", icon: SiReact, color: "#61DAFB" },
@@ -36,6 +37,7 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
   },
   {
     title: "Backend",
+    areaClass: "beCard",
     skills: [
       { name: "Go", icon: SiGo, color: "#00ADD8" },
       { type: "badge", label: "Node.js", name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
@@ -48,6 +50,7 @@ const skillCategories: { title: string; skills: SkillEntry[] }[] = [
   },
   {
     title: "Tools & Cloud",
+    areaClass: "toolsCard",
     skills: [
       { name: "Git", icon: SiGit, color: "#F05032" },
       { type: "gradient", name: "devops-gradient", gradient: "linear-gradient(135deg,#050a30 0%,#4a4e69 100%)", label: "DevOps" },
@@ -107,8 +110,6 @@ function SkillEntryCard({ entry }: { entry: SkillEntry }) {
 
 const About = forwardRef<HTMLDivElement>((props, ref) => {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const headerRef = useRef<HTMLDivElement>(null)
-  const gridRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const setRefs = useCallback(
@@ -122,17 +123,6 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (headerRef.current) {
-        gsap.fromTo(
-          Array.from(headerRef.current.children),
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: "power3.out",
-            scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true },
-          }
-        )
-      }
-
       const cards = cardRefs.current.filter(Boolean)
       if (cards.length > 0) {
         gsap.fromTo(
@@ -141,7 +131,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           {
             opacity: 1, y: 0, scale: 1,
             duration: 0.6, stagger: 0.08, ease: "power3.out",
-            scrollTrigger: { trigger: gridRef.current, start: "top 85%", once: true },
+            scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true },
           }
         )
       }
@@ -152,22 +142,13 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div ref={setRefs} className={styles.main}>
-      {/* Header */}
-      <div ref={headerRef} className={styles.header}>
-        <span className={styles.label}>Get To Know Me</span>
-        <h2 className={styles.title}>
-          About <span className={styles.highlight}>Me</span>
-        </h2>
-        <p className={styles.subtitle}>
-          Passionate about building clean, scalable web applications with a strong eye for design and user experience.
-        </p>
-      </div>
-
-      {/* Bento Grid */}
-      <div ref={gridRef} className={styles.bentoGrid}>
-        {/* Bio Card – spans 2 columns */}
+      <div className={styles.bentoGrid}>
+        {/* Bio Card */}
         <div ref={(el) => { cardRefs.current[0] = el }} className={`${styles.card} ${styles.bioCard}`}>
-          <span className={styles.cardLabel}>Bio</span>
+          <span className={styles.sectionLabel}>Get To Know Me</span>
+          <h2 className={styles.bioTitle}>
+            About <span className={styles.highlight}>Me</span>
+          </h2>
           <p className={styles.bioText}>{aboutText}</p>
         </div>
 
@@ -187,7 +168,7 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
           <div
             key={cat.title}
             ref={(el) => { cardRefs.current[i + 2] = el }}
-            className={`${styles.card} ${styles.skillCard}`}
+            className={`${styles.card} ${styles.skillCard} ${styles[cat.areaClass]}`}
           >
             <span className={styles.cardLabel}>{cat.title}</span>
             <div className={styles.skillGrid}>
