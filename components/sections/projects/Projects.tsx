@@ -5,6 +5,7 @@ import { forwardRef, useRef, useState, useEffect, useCallback } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
+import { useScrollAnimation } from "@/context/scroll-animation-controller"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -339,12 +340,19 @@ const ExpandedProject = ({
 /* ═══════════════════════════════════════════════
    Main Projects Section
    ═══════════════════════════════════════════════ */
-const Projects = forwardRef<HTMLDivElement>((props, ref) => {
+
+interface ProjectsProps {
+  onEnterViewport?: () => void
+}
+
+const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport }, ref) => {
   const sectionRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const overlayRef = useRef<HTMLDivElement>(null)
   const expandedContainerRef = useRef<HTMLDivElement>(null)
+  const hasAnimatedRef = useRef(false)
+  const scrollContext = useScrollAnimation()
 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const [galleryIndex, setGalleryIndex] = useState(0)
@@ -359,7 +367,35 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     styles.cell5,
   ]
 
+  // Trigger card animations directly (for master scroll controller)
+  const triggerCardAnimations = useCallback(() => {
+    if (hasAnimatedRef.current) return
+    hasAnimatedRef.current = true
+
+    const cards = cardRefs.current.filter(Boolean)
+    if (cards.length > 0) {
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 50, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.065, ease: "power3.out" }
+      )
+    }
+  }, [])
+
+  // Setup scroll trigger OR controller callback
   useEffect(() => {
+    // If onEnterViewport callback is provided, we use the master controller
+    if (onEnterViewport) {
+      onEnterViewport()
+      return
+    }
+
+    // Skip ScrollTrigger if inside master controller (trigger will be called via registration)
+    if (scrollContext) {
+      return
+    }
+
+    // Fallback: Use ScrollTrigger for standalone behavior
     const ctx = gsap.context(() => {
       const cards = cardRefs.current.filter(Boolean)
       if (cards.length > 0) {
@@ -376,7 +412,15 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [onEnterViewport, scrollContext])
+
+  // Register animation trigger with master controller
+  useEffect(() => {
+    scrollContext.registerSectionAnimation("projects", triggerCardAnimations)
+    return () => {
+      scrollContext.unregisterSectionAnimation("projects")
+    }
+  }, [scrollContext, triggerCardAnimations])
 
   const handleCardClick = useCallback((index: number) => {
     setExpandedIndex(index)
@@ -422,15 +466,17 @@ const Projects = forwardRef<HTMLDivElement>((props, ref) => {
 
   useEffect(() => { return () => { document.body.style.overflow = "" } }, [])
 
+  const setRefs = useCallback(
+    (el: HTMLDivElement | null) => {
+      sectionRef.current = el
+      if (typeof ref === "function") ref(el)
+      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = el
+    },
+    [ref]
+  )
+
   return (
-    <div
-      ref={(el) => {
-        sectionRef.current = el
-        if (typeof ref === "function") ref(el)
-        else if (ref) ref.current = el
-      }}
-      className={styles.main}
-    >
+    <div ref={setRefs} className={styles.main}>
       <div ref={gridRef} className={styles.bentoGrid}>
         {/* Head Card */}
         <div ref={(el) => { cardRefs.current[0] = el }} className={`${styles.card} ${styles.headCard}`}>

@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useContext } from "react"
 import { usePathname } from "next/navigation"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import styles from "@/app/styles/Navbar.module.css"
 import NavLinks from "@/components/navbar/components/NavLinks"
 import { TopCorners } from "@/components/navbar/components/Topcorners"
 import { useSectionRefs } from "@/context/section-context"
+import { ScrollAnimationContext } from "@/context/scroll-animation-controller"
 
 export default function Navbar() {
   const [isBlurred, setIsBlurred] = useState(false)
@@ -15,23 +16,18 @@ export default function Navbar() {
 
   const { isDarkSection } = useSectionRefs()
 
-  const { scrollY } = useScroll()
+  const scrollContext = useContext(ScrollAnimationContext)
+  const timelineProgress = scrollContext?.timelineProgress ?? 0
 
   useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      setIsBlurred(latest > 50)
-    })
-    return () => unsubscribe()
-  }, [scrollY])
+    setIsBlurred(timelineProgress > 0.25)
+  }, [timelineProgress])
 
-  const navWidth = useTransform(scrollY, [0, 100], ["100%", "fit-content"])
-  const navBorderRadius = useTransform(scrollY, [0, 100], ["0rem 0rem 1.7rem 1.7rem", "2rem 2rem 2rem 2rem"])
-  const navPaddingInline = useTransform(scrollY, [0, 100], ["5rem", "0rem"])
-  const navZIndex = useTransform(scrollY, [0, 100], ["0", "10"])
-  const navTranslateY = useTransform(scrollY, [0, 100], ["0px", "15px"])
-  const navTransition = useTransform(scrollY, [0, 100], ["0.3s", "0.3s"])
-  // const scrollMax = typeof window !== "undefined" ? document.body.scrollHeight - window.innerHeight : 100
-  // const scrollProgress = useTransform(scrollY, [0, 100], [0, 100])
+  const navBorderRadius = timelineProgress > 0.25 ? "2rem" : "0rem 0rem 1.7rem 1.7rem"
+  const navWidth = timelineProgress > 0.25 ? "fit-content" : "100%"
+  const navPaddingInline = timelineProgress > 0.25 ? "0rem" : "5rem"
+  const navZIndex = timelineProgress > 0.25 ? "10" : "0"
+  const navTranslateY = timelineProgress > 0.25 ? "15px" : "0px"
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev)
@@ -64,9 +60,9 @@ export default function Navbar() {
           zIndex: navZIndex,
           width: navWidth,
           y: navTranslateY,
-          transition: navTransition,
+          paddingInline: navPaddingInline,
+          transition: "all 0.3s ease",
           position: 'relative',
-          paddingInline: navPaddingInline
         }}
       >
         <motion.div
@@ -98,7 +94,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <NavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} isDarkSection={isDarkSection} />
+        <NavLinks isMenuOpen={isMenuOpen} closeMenu={() => setIsMenuOpen(false)} isDarkSection={isDarkSection} isHomePage={!!scrollContext} />
       </motion.nav>
 
       <TopCorners isBlurred={isBlurred} position="right" className=" z-50" isDarkSection={isDarkSection} />

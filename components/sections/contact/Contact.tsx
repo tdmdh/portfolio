@@ -1,10 +1,11 @@
 "use client"
 
-import { useRef, forwardRef, useState, useEffect } from "react"
+import { useRef, forwardRef, useState, useEffect, useCallback } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Icon } from "@iconify/react"
 import styles from "@/app/styles/Contact.module.css"
+import { useScrollAnimation } from "@/context/scroll-animation-controller"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,9 +17,15 @@ const socials = [
     { name: "LinkedIn", href: "https://linkedin.com", icon: "mdi:linkedin" },
 ]
 
-const Contact = forwardRef<HTMLDivElement>((props, ref) => {
+interface ContactProps {
+    onEnterViewport?: () => void
+}
+
+const Contact = forwardRef<HTMLDivElement, ContactProps>(({ onEnterViewport }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const ctaCircleRef = useRef<HTMLDivElement>(null)
+    const hasAnimatedRef = useRef(false)
+    const scrollContext = useScrollAnimation()
 
     const [time, setTime] = useState("")
     useEffect(() => {
@@ -38,7 +45,52 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
         return () => clearInterval(id)
     }, [])
 
+    // Trigger card animations directly (for master scroll controller)
+    const triggerCardAnimations = useCallback(() => {
+        if (hasAnimatedRef.current) return
+        hasAnimatedRef.current = true
+
+        gsap.fromTo(
+            [
+                `.${styles.headlineCard}`,
+                `.${styles.emailCard}`,
+                `.${styles.statusCard}`,
+                `.${styles.locationCard}`,
+                `.${styles.clockCard}`,
+                `.${styles.socialCard}`,
+            ],
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1, y: 0,
+                duration: 0.65, ease: "power3.out",
+                stagger: 0.065,
+            }
+        )
+
+        gsap.fromTo(
+            `.${styles.ctaCard}`,
+            { opacity: 0, scale: 0.6 },
+            {
+                opacity: 1, scale: 1,
+                duration: 0.65, ease: "back.out(1.4)",
+            }
+        )
+    }, [])
+
+    // Setup scroll trigger OR controller callback
     useEffect(() => {
+        // If onEnterViewport callback is provided, we use the master controller
+        if (onEnterViewport) {
+            onEnterViewport()
+            return
+        }
+
+        // Skip ScrollTrigger if inside master controller (trigger will be called via registration)
+        if (scrollContext) {
+            return
+        }
+
+        // Fallback: Use ScrollTrigger for standalone behavior
         const container = containerRef.current
         if (!container) return
 
@@ -73,7 +125,15 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
         }, container)
 
         return () => ctx.revert()
-    }, [])
+    }, [onEnterViewport, scrollContext])
+
+    // Register animation trigger with master controller
+    useEffect(() => {
+        scrollContext.registerSectionAnimation("contact", triggerCardAnimations)
+        return () => {
+            scrollContext.unregisterSectionAnimation("contact")
+        }
+    }, [scrollContext, triggerCardAnimations])
 
     const handleCtaMouse = (e: React.MouseEvent<HTMLDivElement>) => {
         const el = ctaCircleRef.current
@@ -90,8 +150,17 @@ const Contact = forwardRef<HTMLDivElement>((props, ref) => {
         }
     }
 
+    const setRefs = useCallback(
+        (el: HTMLDivElement | null) => {
+            containerRef.current = el
+            if (typeof ref === "function") ref(el)
+            else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = el
+        },
+        [ref]
+    )
+
     return (
-        <section ref={ref} className={styles.contactSection}>
+        <section ref={setRefs} className={styles.contactSection}>
             <div ref={containerRef} className={styles.bentoGrid}>
                 <div className={`${styles.card} ${styles.headlineCard}`}>
                     <span className={styles.label}>Get In Touch</span>

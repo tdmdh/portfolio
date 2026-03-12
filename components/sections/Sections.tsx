@@ -8,16 +8,35 @@ import About from "@/components/sections/about/About";
 import { useSectionRefs } from "@/context/section-context";
 import styles from "@/app/styles/Sections.module.css";
 
-const Sections = () => {
+const SectionsContent = () => {
   const { refs } = useSectionRefs();
   const { heroRef, aboutRef, projectsRef, contactRef } = refs;
 
   return (
+    <>
+      <div className={styles.hero}>
+        <Hero ref={heroRef} />
+      </div>
+      <div className={styles.about}>
+        <About ref={aboutRef} />
+      </div>
+      <div className={styles.contact}>
+        <Contact ref={contactRef} />
+      </div>
+      <div className={styles.projects}>
+        <Projects ref={projectsRef} />
+      </div>
+    </>
+  );
+};
+
+const Sections = () => {
+  return (
     <div className={styles.container}>
-      <Hero ref={heroRef} />
-      <About ref={aboutRef} />
-      <Projects ref={projectsRef} />
-      <Contact ref={contactRef} />
+      <div className={styles.sectionsWrapper} data-sections-wrapper>
+        <SectionsContent />
+      </div>
+      <div className={styles.scrollPlaceholder} />
     </div>
   );
 };

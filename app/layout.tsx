@@ -5,6 +5,7 @@ import styles from "@/app/styles/Layout.module.css"
 import LayoutSwitchButton from "../components/ui/LayoutSwitchButton"
 import NavbarSwitcher from "@/components/layout/NavbarSwitcher"
 import { SectionProviderSwitcher } from "@/context/section-provider-switcher"
+import { ScrollAnimationProvider } from "@/context/scroll-animation-controller"
 import Logo from "@/components/layout/Logo"
 import LoadingScreen from "@/components/ui/LoadingScreen"
 import PixelTrail from "@/components/layout/Pixels"
@@ -27,12 +28,14 @@ export default function RootLayout({
         {/* <LoadingScreen /> */}
         <div className={styles.glassContainer}>
           <SectionProviderSwitcher>
-            <NavbarSwitcher />
-            {/* <LayoutSwitchButton /> */}
-            <main className={styles.main}>
-              <div className={styles.pageContent}>{children}</div>
-            </main>
-            {/* <Logo /> */}
+            <ScrollAnimationProvider>
+              {/* <NavbarSwitcher /> */}
+              {/* <LayoutSwitchButton /> */}
+              <main className={styles.main}>
+                <div className={styles.pageContent}>{children}</div>
+              </main>
+              {/* <Logo /> */}
+            </ScrollAnimationProvider>
           </SectionProviderSwitcher>
         </div>
       </body>

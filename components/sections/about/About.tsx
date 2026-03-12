@@ -4,6 +4,7 @@ import { forwardRef, useCallback, useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
+import { useScrollAnimation } from "@/context/scroll-animation-controller"
 import {
   SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass,
   SiGo, SiNodedotjs, SiPhp, SiPostgresql,
@@ -108,9 +109,15 @@ function SkillEntryCard({ entry }: { entry: SkillEntry }) {
   )
 }
 
-const About = forwardRef<HTMLDivElement>((props, ref) => {
+interface AboutProps {
+  onEnterViewport?: () => void
+}
+
+const About = forwardRef<HTMLDivElement, AboutProps>(({ onEnterViewport }, ref) => {
   const sectionRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const hasAnimatedRef = useRef(false)
+  const scrollContext = useScrollAnimation()
 
   const setRefs = useCallback(
     (el: HTMLDivElement | null) => {
@@ -121,7 +128,35 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     [ref]
   )
 
+  // Trigger card animations
+  const triggerCardAnimations = useCallback(() => {
+    if (hasAnimatedRef.current) return
+    hasAnimatedRef.current = true
+
+    const cards = cardRefs.current.filter(Boolean)
+    if (cards.length > 0) {
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 50, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.065, ease: "power3.out" }
+      )
+    }
+  }, [])
+
+  // Setup scroll trigger OR controller callback
   useEffect(() => {
+    // If onEnterViewport callback is provided, we use the master controller
+    if (onEnterViewport) {
+      onEnterViewport()
+      return
+    }
+
+    // Skip ScrollTrigger if inside master controller (trigger will be called via registration)
+    if (scrollContext) {
+      return
+    }
+
+    // Fallback: Use ScrollTrigger for standalone behavior
     const ctx = gsap.context(() => {
       const cards = cardRefs.current.filter(Boolean)
       if (cards.length > 0) {
@@ -138,7 +173,15 @@ const About = forwardRef<HTMLDivElement>((props, ref) => {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [onEnterViewport, scrollContext])
+
+  // Register animation trigger with master controller
+  useEffect(() => {
+    scrollContext.registerSectionAnimation("about", triggerCardAnimations)
+    return () => {
+      scrollContext.unregisterSectionAnimation("about")
+    }
+  }, [scrollContext, triggerCardAnimations])
 
   return (
     <div ref={setRefs} className={styles.main}>
