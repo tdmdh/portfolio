@@ -37,12 +37,27 @@ export const useScrollAnimation = () => {
 // SCROLL ANIMATION CONTROLLER
 // ═══════════════════════════════════════════════════════════════════
 
+const SECTION_ORDER: ScrollPhase[] = ["hero", "about", "projects", "contact"]
+const SECTION_COUNT = SECTION_ORDER.length
+
+// Each section occupies 1/4 of the timeline (0, 0.25, 0.5, 0.75)
+const sectionProgress = (index: number) => index / SECTION_COUNT
+
+// Minimum delta to trigger a section change
+const WHEEL_THRESHOLD = 30
+const TOUCH_THRESHOLD = 50
+
 export const ScrollAnimationProvider = ({ children }: { children: React.ReactNode }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
   const sectionsWrapper = useRef<HTMLDivElement>(null)
   const timelineRef = useRef<gsap.core.Timeline | null>(null)
-  const scrollTrackerRef = useRef({ wheel: 0, touch: 0, timer: 0 })
+  const snapAnimRef = useRef<gsap.core.Tween | null>(null)
+
+  const currentSectionIndexRef = useRef(0)
   const currentPhaseRef = useRef<ScrollPhase>("hero")
+  const isSnappingRef = useRef(false)
+  const wheelAccumRef = useRef(0)
+  const touchStartYRef = useRef(0)
+
   const sectionEnterCallbacksRef = useRef<Set<(section: ScrollPhase) => void>>(new Set())
   const sectionAnimationTriggersRef = useRef<Record<ScrollPhase, (() => void) | null>>({
     hero: null,
@@ -50,164 +65,115 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
     projects: null,
     contact: null,
   })
-  const isAnimatingRef = useRef(false)
+
   const timelineProgressRef = useRef(0)
 
-  // ── Scroll Distance Configuration ──
-  const SCROLL_CONFIG = {
-    about: { start: 25, end: 50 },     // 25vh to scroll right to About
-    projects: { start: 50, end: 75 },  // 50vh to scroll down to Projects
-    contact: { start: 75, end: 100 },  // 75vh to scroll left to Contact
-    hero: { start: 100, end: 125 },    // 100vh to return to Hero
-  }
-
-  const TOTAL_SCROLL_HEIGHT = 100 // Total scrollable height in viewport units (now 1/5 of before)
-
-  // ── Initialize Master Timeline ──
   const initializeTimeline = useCallback(() => {
     if (!sectionsWrapper.current) return
 
     const tl = gsap.timeline({ paused: true })
     const wrapper = sectionsWrapper.current
 
-    tl.to(
-      wrapper,
-      {
-        x: "-100vw",
-        duration: 1,
-        ease: "power2.inOut",
-      },
-      0
-    )
+    // Hero (0) → About (0.25): slide right
+    tl.to(wrapper, { x: "-100vw", duration: 1, ease: "none" }, 0)
 
-    tl.to(
-      wrapper,
-      {
-        y: "-100vh",
-        duration: 1,
-        ease: "power2.inOut",
-      },
-      1
-    )
+    // About (0.25) → Projects (0.5): slide down
+    tl.to(wrapper, { y: "-100vh", duration: 1, ease: "none" }, 1)
 
-    tl.to(
-      wrapper,
-      {
-        x: "0vw",
-        duration: 1,
-        ease: "power2.inOut",
-      },
-      2
-    )
+    // Projects (0.5) → Contact (0.75): slide left
+    tl.to(wrapper, { x: "0vw", duration: 1, ease: "none" }, 2)
 
-    tl.to(
-      wrapper,
-      {
-        y: "0vh",
-        duration: 1,
-        ease: "power2.inOut",
-      },
-      3
-    )
+    // Contact (0.75) → Hero (1.0): slide up
+    tl.to(wrapper, { y: "0vh", duration: 1, ease: "none" }, 3)
 
     timelineRef.current = tl
   }, [])
 
-  const detectPhase = useCallback((progress: number): ScrollPhase => {
-    const percent = (progress / TOTAL_SCROLL_HEIGHT) * 100
-
-    if (percent < 33) return "hero"
-    if (percent < 50) return "about"
-    if (percent < 75) return "projects"
-    return "contact"
+  // ── Section Enter Notifications ──
+  // Notifies nav/phase listeners immediately (for navbar highlight)
+  const notifySectionPhase = useCallback((phase: ScrollPhase) => {
+    if (phase === currentPhaseRef.current) return
+    currentPhaseRef.current = phase
+    sectionEnterCallbacksRef.current.forEach((cb) => cb(phase))
   }, [])
 
-  const notifySectionEnter = useCallback((phase: ScrollPhase) => {
-    if (phase !== currentPhaseRef.current) {
-      currentPhaseRef.current = phase
-      sectionEnterCallbacksRef.current.forEach((cb) => cb(phase))
-      const trigger = sectionAnimationTriggersRef.current[phase]
-      if (trigger) {
-        trigger()
-      }
-    }
-  }, [])
-
-  const updateTimelineProgress = useCallback((scrollPosition: number) => {
+  // ── Snap to Section ──
+  const snapToSection = useCallback((rawIndex: number) => {
     if (!timelineRef.current) return
 
-    const loopedPosition = scrollPosition % (TOTAL_SCROLL_HEIGHT * 100)
+    const index = ((rawIndex % SECTION_COUNT) + SECTION_COUNT) % SECTION_COUNT
+    const phase = SECTION_ORDER[index]
+    const target = sectionProgress(index)
 
-    const progress = loopedPosition / (TOTAL_SCROLL_HEIGHT * 100)
-    timelineProgressRef.current = progress
+    currentSectionIndexRef.current = index
+    isSnappingRef.current = true
+    wheelAccumRef.current = 0
 
-    timelineRef.current.progress(progress)
+    // Update phase immediately so navbar highlights the destination
+    notifySectionPhase(phase)
 
-    const newPhase = detectPhase(loopedPosition)
-    notifySectionEnter(newPhase)
-  }, [detectPhase, notifySectionEnter])
+    // Kill any in-progress snap
+    snapAnimRef.current?.kill()
 
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      if (!timelineRef.current) return
+    snapAnimRef.current = gsap.to(timelineRef.current, {
+      progress: target,
+      duration: 1,
+      ease: "power3.inOut",
+      onUpdate: () => {
+        timelineProgressRef.current = timelineRef.current?.progress() ?? 0
+      },
+      onComplete: () => {
+        isSnappingRef.current = false
+        // Fire card entrance animations once section has fully arrived
+        sectionAnimationTriggersRef.current[phase]?.()
+      },
+    })
+  }, [notifySectionPhase])
 
-      e.preventDefault()
+  // ── Navigate by direction ──
+  const navigate = useCallback((direction: 1 | -1) => {
+    if (isSnappingRef.current) return
+    snapToSection(currentSectionIndexRef.current + direction)
+  }, [snapToSection])
 
-      const delta = e.deltaY > 0 ? 50 : -50
-      scrollTrackerRef.current.wheel += delta
+  // ── Wheel ──
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault()
+    if (isSnappingRef.current) return
 
-      updateTimelineProgress(scrollTrackerRef.current.wheel)
+    wheelAccumRef.current += e.deltaY
 
-      clearTimeout(scrollTrackerRef.current.timer)
+    if (Math.abs(wheelAccumRef.current) >= WHEEL_THRESHOLD) {
+      navigate(wheelAccumRef.current > 0 ? 1 : -1)
+    }
+  }, [navigate])
 
-      isAnimatingRef.current = true
-      scrollTrackerRef.current.timer = window.setTimeout(() => {
-        isAnimatingRef.current = false
-      }, 100)
-    },
-    [updateTimelineProgress]
-  )
-
+  // ── Touch ──
   const handleTouchStart = useCallback((e: TouchEvent) => {
-    scrollTrackerRef.current.touch = e.touches[0]?.clientY || 0
+    touchStartYRef.current = e.touches[0]?.clientY ?? 0
   }, [])
 
-  const handleTouchMove = useCallback(
-    (e: TouchEvent) => {
-      if (!timelineRef.current) return
+  const handleTouchEnd = useCallback((e: TouchEvent) => {
+    const endY = e.changedTouches[0]?.clientY ?? 0
+    const delta = touchStartYRef.current - endY
 
+    if (Math.abs(delta) >= TOUCH_THRESHOLD) {
+      navigate(delta > 0 ? 1 : -1)
+    }
+  }, [navigate])
+
+  // ── Keyboard ──
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault()
+      navigate(1)
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      e.preventDefault()
+      navigate(-1)
+    }
+  }, [navigate])
 
-      const touchY = e.touches[0]?.clientY || 0
-      const delta = (scrollTrackerRef.current.touch - touchY) * 1 // Increased from 0.5 to 2 for sensitivity
-
-      scrollTrackerRef.current.touch = touchY
-      scrollTrackerRef.current.wheel += delta
-
-      updateTimelineProgress(scrollTrackerRef.current.wheel)
-    },
-    [updateTimelineProgress]
-  )
-
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (!timelineRef.current) return
-
-      const step = 200
-
-      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
-        scrollTrackerRef.current.wheel += step
-        e.preventDefault()
-      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
-        scrollTrackerRef.current.wheel -= step
-        e.preventDefault()
-      }
-
-      updateTimelineProgress(scrollTrackerRef.current.wheel)
-    },
-    [updateTimelineProgress]
-  )
-
+  // ── Callback Management ──
   const onSectionEnter = useCallback((callback: (section: ScrollPhase) => void) => {
     sectionEnterCallbacksRef.current.add(callback)
   }, [])
@@ -224,40 +190,32 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
     sectionAnimationTriggersRef.current[phase] = null
   }, [])
 
+  // ── Mount ──
   useEffect(() => {
-    // Find the sections wrapper by query selector
-    const wrapper = document.querySelector('[data-sections-wrapper]') as HTMLDivElement | null
-    if (wrapper) {
-      sectionsWrapper.current = wrapper
-    }
+    const wrapper = document.querySelector("[data-sections-wrapper]") as HTMLDivElement | null
+    if (wrapper) sectionsWrapper.current = wrapper
 
     initializeTimeline()
 
-    const preventDefault = (e: Event) => {
-      if (isAnimatingRef.current || e.target === document) {
-        e.preventDefault()
-      }
-    }
-
     document.addEventListener("wheel", handleWheel as EventListener, { passive: false })
-    document.addEventListener("touchstart", handleTouchStart as EventListener, { passive: false })
-    document.addEventListener("touchmove", handleTouchMove as EventListener, { passive: false })
+    document.addEventListener("touchstart", handleTouchStart as EventListener, { passive: true })
+    document.addEventListener("touchend", handleTouchEnd as EventListener, { passive: true })
     document.addEventListener("keydown", handleKeyDown as EventListener)
 
     return () => {
       document.removeEventListener("wheel", handleWheel as EventListener)
       document.removeEventListener("touchstart", handleTouchStart as EventListener)
-      document.removeEventListener("touchmove", handleTouchMove as EventListener)
+      document.removeEventListener("touchend", handleTouchEnd as EventListener)
       document.removeEventListener("keydown", handleKeyDown as EventListener)
-
+      snapAnimRef.current?.kill()
       timelineRef.current?.kill()
     }
-  }, [initializeTimeline, handleWheel, handleTouchStart, handleTouchMove, handleKeyDown])
+  }, [initializeTimeline, handleWheel, handleTouchStart, handleTouchEnd, handleKeyDown])
 
   const contextValue: ScrollAnimationContextType = {
     currentPhase: currentPhaseRef.current,
     timelineProgress: timelineProgressRef.current,
-    isAnimating: isAnimatingRef.current,
+    isAnimating: isSnappingRef.current,
     sectionsWrapper,
     onSectionEnter,
     offSectionEnter,
