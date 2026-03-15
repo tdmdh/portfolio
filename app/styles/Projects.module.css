@@ -734,18 +734,20 @@
 
     .expandedCardContainer {
         grid-template-columns: 1fr !important;
+        grid-template-rows: 220px 1fr !important;
         max-width: 100%;
-        max-height: 90dvh;
+        height: 85dvh;
+        max-height: 85dvh;
     }
 
     .expandedGallery {
-        min-height: 250px;
-        max-height: 300px;
+        min-height: unset;
+        max-height: unset;
     }
 
     .expandedGalleryApp {
-        min-height: 350px;
-        max-height: 400px;
+        min-height: unset;
+        max-height: unset;
     }
 
     .galleryImageApp {
@@ -762,11 +764,20 @@
     }
 
     .expandedDescription {
-        font-size: 0.9rem;
+        font-size: 0.7rem;
+    }
+
+    .featureItem {
+        font-size: 0.65rem;
+    }
+
+    .expandedTechTag {
+        padding: 0.3rem 0.65rem;
+        font-size: 0.5rem;
     }
 
     .expandedNavigation {
-        bottom: 1rem;
+        display: none;
     }
 
     .closeButton {
@@ -804,14 +815,11 @@
         font-size: clamp(1.25rem, 7vw, 1.75rem);
     }
 
-    .expandedGallery {
-        min-height: 200px;
-        max-height: 250px;
-    }
 
-    .expandedGalleryApp {
-        min-height: 300px;
-        max-height: 350px;
+    .expandedCardContainer {
+        grid-template-rows: 180px 1fr !important;
+        height: 88dvh;
+        max-height: 88dvh;
     }
 
     .expandedContent {
