@@ -424,18 +424,19 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
     .contactSection {
-        height: auto;
-        min-height: 100vh;
+        height: 100vh;
+        height: 100dvh;
     }
 
     .bentoGrid {
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: auto auto auto auto;
+        grid-template-rows: 1.8fr 1fr 0.9fr 0.7fr;
         grid-template-areas:
             "head  head  head  head"
             "email email stat  cta"
             "loc   clock soc1  soc2"
             "soc3  soc3  soc3  soc3";
+        height: 100%;
         padding: 1rem;
     }
 
@@ -454,20 +455,20 @@
    ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
     .contactSection {
-        height: auto;
-        min-height: 100vh;
-        min-height: 100dvh;
+        height: 100vh;
+        height: 100dvh;
     }
 
     .bentoGrid {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
+        grid-template-rows: 1.8fr 0.9fr 0.9fr 0.9fr 0.6fr;
         grid-template-areas:
             "head   head"
             "stat   cta"
             "loc    clock"
             "soc1   soc2"
             "soc3   soc3";
+        height: 100%;
         gap: 0.5rem;
         padding: 0.5rem;
     }

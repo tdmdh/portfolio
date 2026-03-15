@@ -2,6 +2,7 @@
 
 import styles from "@/app/styles/Projects.module.css"
 import { forwardRef, useRef, useState, useEffect, useCallback } from "react"
+import { createPortal } from "react-dom"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
@@ -247,7 +248,7 @@ const ExpandedProject = ({
         </svg>
       </button>
 
-      <div ref={containerRef} className={`${styles.expandedCardContainer} ${project.type === "app" ? styles.expandedContainerApp : styles.expandedContainerDesktop}`}>
+      <div ref={containerRef} className={`${styles.expandedCardContainer} ${project.type === "app" ? styles.expandedContainerApp : styles.expandedContainerDesktop}`} onClick={(e) => e.stopPropagation()}>
         <div className={`${styles.expandedGallery} ${project.type === "app" ? styles.expandedGalleryApp : styles.expandedGalleryDesktop}`}>
           {project.images.length > 0 ? (
             project.images.map((img, i) => (
@@ -356,6 +357,9 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const [galleryIndex, setGalleryIndex] = useState(0)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   // Card area classes for the bento grid
   const cellClasses = [
@@ -426,14 +430,23 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
     setExpandedIndex(index)
     setGalleryIndex(0)
     document.body.style.overflow = "hidden"
+  }, [])
 
-    requestAnimationFrame(() => {
+  // Animate the modal open after React commits the DOM
+  useEffect(() => {
+    if (expandedIndex === null) return
+    const id = setTimeout(() => {
       if (overlayRef.current) overlayRef.current.classList.add(styles.expandedOverlayVisible)
       if (expandedContainerRef.current) {
-        gsap.to(expandedContainerRef.current, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out", delay: 0.1 })
+        gsap.fromTo(
+          expandedContainerRef.current,
+          { opacity: 0, y: 40, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" }
+        )
       }
-    })
-  }, [])
+    }, 0)
+    return () => clearTimeout(id)
+  }, [expandedIndex])
 
   const handleClose = useCallback(() => {
     if (expandedContainerRef.current) {
@@ -444,7 +457,7 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
       setExpandedIndex(null)
       setGalleryIndex(0)
       document.body.style.overflow = ""
-    }, 400)
+    }, 350)
   }, [])
 
   useEffect(() => {
@@ -507,10 +520,10 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
         ))}
       </div>
 
-      {/* Expanded Overlay */}
-      <div ref={overlayRef} className={styles.expandedOverlay} onClick={handleClose}>
-        {expandedIndex !== null && (
-          <div onClick={(e) => e.stopPropagation()}>
+      {/* Expanded Overlay — portaled to body to escape GSAP transform containing block */}
+      {mounted && createPortal(
+        <div ref={overlayRef} className={styles.expandedOverlay} onClick={handleClose}>
+          {expandedIndex !== null && (
             <ExpandedProject
               project={projects[expandedIndex]}
               index={expandedIndex}
@@ -520,9 +533,10 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
               overlayRef={overlayRef}
               containerRef={expandedContainerRef}
             />
-          </div>
-        )}
-      </div>
+          )}
+        </div>,
+        document.body
+      )}
     </div>
   )
 })

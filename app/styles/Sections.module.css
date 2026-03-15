@@ -90,31 +90,16 @@
     z-index: -1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   Performance & GPU Acceleration
-   ═══════════════════════════════════════════════════════════════════ */
-
-.sectionsWrapper * {
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   Responsive Adjustments (Fallback for small screens)
-   ═══════════════════════════════════════════════════════════════════ */
-
+/* ── Each section cell uses dvh for accurate mobile viewport ── */
 @media (max-width: 768px) {
     .sectionsWrapper {
-        width: 200vw;
-        height: 200vh;
+        grid-template-rows: 100dvh 100dvh;
     }
 
     .hero,
     .about,
     .contact,
     .projects {
-        width: 100vw;
-        height: 100vh;
+        height: 100dvh;
     }
 }
