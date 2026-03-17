@@ -128,20 +128,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>(({ onEnterViewport }, ref) 
     [ref]
   )
 
-  // Trigger card animations
-  const triggerCardAnimations = useCallback(() => {
-    if (hasAnimatedRef.current) return
-    hasAnimatedRef.current = true
 
-    const cards = cardRefs.current.filter(Boolean)
-    if (cards.length > 0) {
-      gsap.fromTo(
-        cards,
-        { opacity: 0, y: 50, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.065, ease: "power3.out" }
-      )
-    }
-  }, [])
 
   // Setup scroll trigger OR controller callback
   useEffect(() => {
@@ -175,13 +162,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>(({ onEnterViewport }, ref) 
     return () => ctx.revert()
   }, [onEnterViewport, scrollContext])
 
-  // Register animation trigger with master controller
-  useEffect(() => {
-    scrollContext.registerSectionAnimation("about", triggerCardAnimations)
-    return () => {
-      scrollContext.unregisterSectionAnimation("about")
-    }
-  }, [scrollContext, triggerCardAnimations])
+
 
   return (
     <div ref={setRefs} className={styles.main}>

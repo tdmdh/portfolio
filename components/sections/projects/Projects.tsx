@@ -4,11 +4,7 @@ import styles from "@/app/styles/Projects.module.css"
 import { forwardRef, useRef, useState, useEffect, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
-import { useScrollAnimation } from "@/context/scroll-animation-controller"
-
-gsap.registerPlugin(ScrollTrigger)
 
 export type ProjectStatus = "done" | "in-progress" | "todo"
 
@@ -227,16 +223,7 @@ const ExpandedProject = ({
   const { label, className } = statusConfig[project.status]
   const contentRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (!contentRef.current) return
-    const els = contentRef.current.querySelectorAll("[data-animate]")
-    gsap.fromTo(
-      els,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "power3.out", delay: 0.25 }
-    )
-  }, [project])
-
+  
   const nextSlide = () => onGalleryChange((galleryIndex + 1) % Math.max(project.images.length, 1))
   const prevSlide = () => onGalleryChange((galleryIndex - 1 + Math.max(project.images.length, 1)) % Math.max(project.images.length, 1))
 
@@ -348,12 +335,8 @@ interface ProjectsProps {
 
 const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport }, ref) => {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const overlayRef = useRef<HTMLDivElement>(null)
   const expandedContainerRef = useRef<HTMLDivElement>(null)
-  const hasAnimatedRef = useRef(false)
-  const scrollContext = useScrollAnimation()
 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const [galleryIndex, setGalleryIndex] = useState(0)
@@ -371,60 +354,9 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
     styles.cell5,
   ]
 
-  // Trigger card animations directly (for master scroll controller)
-  const triggerCardAnimations = useCallback(() => {
-    if (hasAnimatedRef.current) return
-    hasAnimatedRef.current = true
-
-    const cards = cardRefs.current.filter(Boolean)
-    if (cards.length > 0) {
-      gsap.fromTo(
-        cards,
-        { opacity: 0, y: 50, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.065, ease: "power3.out" }
-      )
-    }
-  }, [])
-
-  // Setup scroll trigger OR controller callback
   useEffect(() => {
-    // If onEnterViewport callback is provided, we use the master controller
-    if (onEnterViewport) {
-      onEnterViewport()
-      return
-    }
-
-    // Skip ScrollTrigger if inside master controller (trigger will be called via registration)
-    if (scrollContext) {
-      return
-    }
-
-    // Fallback: Use ScrollTrigger for standalone behavior
-    const ctx = gsap.context(() => {
-      const cards = cardRefs.current.filter(Boolean)
-      if (cards.length > 0) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 50, scale: 0.95 },
-          {
-            opacity: 1, y: 0, scale: 1,
-            duration: 0.65, stagger: 0.065, ease: "power3.out",
-            scrollTrigger: { trigger: gridRef.current, start: "top 80%", once: true },
-          }
-        )
-      }
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [onEnterViewport, scrollContext])
-
-  // Register animation trigger with master controller
-  useEffect(() => {
-    scrollContext.registerSectionAnimation("projects", triggerCardAnimations)
-    return () => {
-      scrollContext.unregisterSectionAnimation("projects")
-    }
-  }, [scrollContext, triggerCardAnimations])
+    onEnterViewport?.()
+  }, [onEnterViewport])
 
   const handleCardClick = useCallback((index: number) => {
     setExpandedIndex(index)
@@ -490,9 +422,9 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
 
   return (
     <div ref={setRefs} className={styles.main}>
-      <div ref={gridRef} className={styles.bentoGrid}>
+      <div className={styles.bentoGrid}>
         {/* Head Card */}
-        <div ref={(el) => { cardRefs.current[0] = el }} className={`${styles.card} ${styles.headCard}`}>
+        <div className={`${styles.card} ${styles.headCard}`}>
           <span className={styles.label}>My Work</span>
           <h2 className={styles.headline}>
             <span className={styles.line}>Featured</span>
@@ -508,7 +440,6 @@ const Projects = forwardRef<HTMLDivElement, ProjectsProps>(({ onEnterViewport },
         {projects.map((project, index) => (
           <div
             key={index}
-            ref={(el) => { cardRefs.current[index + 1] = el }}
             className={`${styles.cardWrapper} ${cellClasses[index]}`}
           >
             <ProjectCard
