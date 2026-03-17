@@ -81,7 +81,7 @@ const projects: Project[] = [
     fullDescription: "A next-generation headless CMS built on a robust microservices architecture. Developed using Go for high performance, gRPC for efficient inter-service communication, and PostgreSQL for reliable data persistence. Features include multi-tenant support, real-time content synchronization, advanced caching strategies, and a flexible content modeling system.",
     status: "in-progress",
     type: "desktop",
-    link: "https://github.com/tdmdh/smart-cms-server",
+    link: "#",
     linkText: "View Repo",
     tech: ["Go", "gRPC", "Next.js", "PostgreSQL", "Redis"],
     features: [

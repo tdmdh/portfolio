@@ -4,6 +4,7 @@ import React, { forwardRef, useRef, useEffect } from "react"
 import styles from "@/app/styles/Hero.module.css"
 import HeroTitle from "@/components/sections/components/HeroTitle"
 import Image from "next/image"
+import Link from "next/link"
 
 const Home = forwardRef<HTMLDivElement>((props, ref) => {
   const gridRef = useRef<HTMLDivElement>(null)
@@ -11,6 +12,11 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div ref={ref} className={styles.main}>
+      <div className={styles.switchContainer}>
+        <Link href="/simple" className={styles.switchButton}>
+          <span>View Simple Version</span>
+        </Link>
+      </div>
       <div ref={gridRef} className={styles.bentoGrid}>
         <div className={`${styles.card} ${styles.greetingCard}`}>
           <div className={styles.greetingContent}>

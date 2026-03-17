@@ -1,0 +1,303 @@
+.main {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  overflow: hidden;
+  z-index: 50; 
+  box-sizing: border-box;
+  padding: 4rem 2rem 2rem 2rem; /* Give space for switch button on top */
+}
+
+/* On mobile let it scroll since bento grids get tall */
+@media (max-width: 1024px) {
+  .main {
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+.switchContainer {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  z-index: 100;
+}
+
+.switchButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  color: var(--quinary-color);
+  font-family: var(--primary-font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.switchButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* BENTO GRID LAYOUT */
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 800px; /* Constrain max height for standard desktop */
+}
+
+/* CARDS */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.cardTitle {
+  font-family: var(--primary-font);
+  color: var(--quinary-color);
+  font-size: 1.25rem;
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+}
+
+/* Grid Cell Placement */
+.heroCard {
+  grid-column: span 2;
+  grid-row: span 2;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.bioCard {
+  grid-column: span 2;
+  grid-row: span 1;
+  justify-content: center;
+}
+
+.skillsCard {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.projectsCard {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.contactCard {
+  grid-column: span 1;
+  grid-row: span 1;
+  justify-content: space-between;
+}
+
+.socialCard {
+  grid-column: span 1;
+  grid-row: span 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+
+/* HERO COMPONENT STYLES */
+.profileWrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 1.5rem;
+}
+.profileImage {
+  object-fit: cover;
+}
+
+.greeting {
+  font-family: var(--primary-font);
+  font-size: 1.5rem;
+  color: var(--quinary-color);
+  margin: 0;
+  font-weight: 500;
+}
+.name {
+  font-family: var(--primary-font);
+  font-size: 3rem;
+  color: var(--quinary-color);
+  margin: 0.25rem 0;
+  font-weight: 700;
+}
+.role {
+  font-family: var(--secondary-font);
+  font-size: 1.1rem;
+  color: var(--quaternary-color);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* BIO COMPONENT RULES*/
+.bioText {
+  font-family: var(--secondary-font);
+  color: var(--quaternary-color);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* SKILL SETS */
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.skillTag {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--quinary-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  font-family: var(--secondary-font);
+  font-size: 0.9rem;
+}
+
+/* PROJECTS LIST */
+.projectList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.projectList li a {
+  text-decoration: none;
+  color: var(--quinary-color);
+  display: block;
+}
+.projectList li a:hover strong {
+  text-decoration: underline;
+}
+.projectList li strong {
+  font-family: var(--primary-font);
+  font-size: 1.1rem;
+}
+.projectList li span {
+  font-family: var(--secondary-font);
+  color: var(--tertiary-color);
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+.projectList p {
+  font-family: var(--secondary-font);
+  color: var(--quaternary-color);
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* CONTACT STYLES */
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--primary-font);
+  color: var(--quinary-color);
+  font-size: 0.9rem;
+}
+.statusDot {
+  width: 10px;
+  height: 10px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.emailLink {
+  color: var(--quinary-color);
+  text-decoration: none;
+  font-family: var(--primary-font);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s;
+  word-break: break-all;
+}
+.emailLink:hover {
+  opacity: 0.8;
+}
+.location {
+  font-family: var(--secondary-font);
+  color: var(--tertiary-color);
+  font-size: 0.9rem;
+}
+
+/* SOCIALS */
+.socialLink {
+  color: var(--quinary-color);
+  transition: transform 0.2s;
+}
+.socialLink:hover {
+  transform: scale(1.1);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .bentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    max-height: none;
+  }
+  .heroCard { grid-row: span 1; }
+  .bioCard { grid-column: span 2; }
+  .skillsCard { grid-column: span 2; }
+  .projectsCard { grid-column: span 2; }
+  .contactCard { grid-column: span 1; }
+  .socialCard { grid-column: span 1; }
+}
+
+@media (max-width: 640px) {
+  .main { padding: 5rem 1rem 2rem 1rem; }
+  .switchContainer { top: 1rem; right: 1rem; }
+  .bentoGrid {
+    display: flex;
+    flex-direction: column;
+  }
+  .profileWrapper {
+    width: 90px;
+    height: 90px;
+  }
+  .name { font-size: 2.2rem; }
+}
