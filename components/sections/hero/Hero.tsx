@@ -12,11 +12,11 @@ const Home = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <div ref={ref} className={styles.main}>
-      <div className={styles.switchContainer}>
+      {/* <div className={styles.switchContainer}>
         <Link href="/simple" className={styles.switchButton}>
           <span>View Simple Version</span>
         </Link>
-      </div>
+      </div> */}
       <div ref={gridRef} className={styles.bentoGrid}>
         <div className={`${styles.card} ${styles.greetingCard}`}>
           <div className={styles.greetingContent}>

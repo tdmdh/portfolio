@@ -1,84 +1,80 @@
 .main {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-  overflow: hidden;
-  z-index: 50; 
-  box-sizing: border-box;
-  padding: 4rem 2rem 2rem 2rem; /* Give space for switch button on top */
-}
-
-/* On mobile let it scroll since bento grids get tall */
-@media (max-width: 1024px) {
-  .main {
-    height: auto;
-    overflow-y: auto;
-  }
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    z-index: 50; 
 }
 
 .switchContainer {
-  position: absolute;
-  top: 1.5rem;
-  right: 2rem;
-  z-index: 100;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 100;
 }
 
 .switchButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 2rem;
-  color: var(--quinary-color);
-  font-family: var(--primary-font);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 2rem;
+    color: var(--quinary-color);
+    font-family: var(--primary-font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
 }
 
 .switchButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* BENTO GRID LAYOUT */
+/* ── Bento Grid ── */
 .bentoGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 1rem;
-  width: 100%;
-  max-width: 1200px;
-  height: 100%;
-  max-height: 800px; /* Constrain max height for standard desktop */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 3fr 1.6fr 1.7fr;
+    grid-template-areas:
+        "hero      hero      hero      proj"
+        "hero      hero      hero      proj"
+        "bio       bio       skills    skills"
+        "contact   contact   social    social"; 
+        /* Let's redefine rows visually based on the elements we have. Wait, let me adjust the template areas below. */
+    gap: 0.75rem;
+    width: 100%;
+    height: 100%;
+    padding: 0.75rem;
+    box-sizing: border-box;
 }
 
-/* CARDS */
+/* ── Card Base ── */
 .card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--border-radius);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
-  overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 5px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
 .cardTitle {
@@ -96,7 +92,11 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+  );
 }
 
 .bioCard {
@@ -106,13 +106,13 @@
 }
 
 .skillsCard {
-  grid-column: span 2;
-  grid-row: span 1;
+  grid-column: span 1;
+  grid-row: span 2;
 }
 
 .projectsCard {
-  grid-column: span 2;
-  grid-row: span 2;
+  grid-column: span 1;
+  grid-row: span 3;
 }
 
 .contactCard {
@@ -130,6 +130,20 @@
   gap: 2rem;
 }
 
+/* Updated layouts for a more unified bento */
+@media (min-width: 1025px) {
+  .bentoGrid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1.5fr 1fr 1fr; 
+  }
+  .heroCard { grid-row: 1 / 3; grid-column: 1 / 3; }
+  .projectsCard { grid-row: 1 / 4; grid-column: 3 / 4; }
+  .skillsCard { grid-row: 1 / 3; grid-column: 4 / 5; }
+  .bioCard { grid-row: 3 / 4; grid-column: 1 / 3; }
+  .contactCard { grid-row: 3 / 4; grid-column: 4 / 5; }
+  .socialCard { grid-row: 4 / 5; grid-column: 3 / 5; display: none; } /* Or maybe combine social into contact */
+}
+
 
 /* HERO COMPONENT STYLES */
 .profileWrapper {
@@ -144,26 +158,26 @@
 .profileImage {
   object-fit: cover;
 }
-
 .greeting {
   font-family: var(--primary-font);
-  font-size: 1.5rem;
+  font-size: clamp(2rem, 5vw, 4rem);
   color: var(--quinary-color);
   margin: 0;
   font-weight: 500;
 }
 .name {
   font-family: var(--primary-font);
-  font-size: 3rem;
+  font-size: clamp(3rem, 7vw, 6rem);
   color: var(--quinary-color);
   margin: 0.25rem 0;
   font-weight: 700;
+  line-height: 1;
 }
 .role {
   font-family: var(--secondary-font);
   font-size: 1.1rem;
   color: var(--quaternary-color);
-  margin: 0;
+  margin: 1rem 0 0 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -174,22 +188,24 @@
   color: var(--quaternary-color);
   line-height: 1.6;
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 /* SKILL SETS */
 .skillsList {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.5rem;
 }
 .skillTag {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--quinary-color);
-  padding: 0.4rem 0.8rem;
-  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
   font-family: var(--secondary-font);
   font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
 }
 
 /* PROJECTS LIST */
@@ -216,15 +232,16 @@
 .projectList li span {
   font-family: var(--secondary-font);
   color: var(--tertiary-color);
-  font-size: 0.9rem;
-  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 0.25rem;
 }
 .projectList p {
   font-family: var(--secondary-font);
   color: var(--quaternary-color);
   margin: 0.5rem 0 0 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 /* CONTACT STYLES */
@@ -235,6 +252,7 @@
   font-family: var(--primary-font);
   color: var(--quinary-color);
   font-size: 0.9rem;
+  margin-bottom: 1rem;
 }
 .statusDot {
   width: 10px;
@@ -248,56 +266,61 @@
   color: var(--quinary-color);
   text-decoration: none;
   font-family: var(--primary-font);
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: space-between;
   transition: opacity 0.2s;
   word-break: break-all;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 .emailLink:hover {
-  opacity: 0.8;
+  background: rgba(255, 255, 255, 0.1);
 }
 .location {
   font-family: var(--secondary-font);
   color: var(--tertiary-color);
   font-size: 0.9rem;
 }
+.socialWrapper {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
 
 /* SOCIALS */
 .socialLink {
   color: var(--quinary-color);
   transition: transform 0.2s;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 .socialLink:hover {
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
-  .bentoGrid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
-    max-height: none;
-  }
-  .heroCard { grid-row: span 1; }
-  .bioCard { grid-column: span 2; }
-  .skillsCard { grid-column: span 2; }
-  .projectsCard { grid-column: span 2; }
-  .contactCard { grid-column: span 1; }
-  .socialCard { grid-column: span 1; }
-}
+    .main {
+        height: 100vh;
+        height: 100dvh;
+    }
 
-@media (max-width: 640px) {
-  .main { padding: 5rem 1rem 2rem 1rem; }
-  .switchContainer { top: 1rem; right: 1rem; }
-  .bentoGrid {
-    display: flex;
-    flex-direction: column;
-  }
-  .profileWrapper {
-    width: 90px;
-    height: 90px;
-  }
-  .name { font-size: 2.2rem; }
+    .bentoGrid {
+        grid-template-rows: 0.8fr 1.4fr 0.6fr;
+        padding: 1rem;
+        height: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
 }
