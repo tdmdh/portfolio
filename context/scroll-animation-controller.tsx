@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useCallback, createContext, useContext } from "react"
+import { usePathname } from "next/navigation"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -48,7 +49,8 @@ const WHEEL_THRESHOLD = 30
 const TOUCH_THRESHOLD = 50
 
 export const ScrollAnimationProvider = ({ children }: { children: React.ReactNode }) => {
-  const sectionsWrapper = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+  const sectionsWrapper = useRef<HTMLDivElement | null>(null)
   const timelineRef = useRef<gsap.core.Timeline | null>(null)
   const snapAnimRef = useRef<gsap.core.Tween | null>(null)
 
@@ -90,7 +92,6 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
   }, [])
 
   // ── Section Enter Notifications ──
-  // Notifies nav/phase listeners immediately (for navbar highlight)
   const notifySectionPhase = useCallback((phase: ScrollPhase) => {
     if (phase === currentPhaseRef.current) return
     currentPhaseRef.current = phase
@@ -138,6 +139,7 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
 
   // ── Wheel ──
   const handleWheel = useCallback((e: WheelEvent) => {
+    if (pathname !== "/") return // Allow native scroll on other pages
     e.preventDefault()
     if (isSnappingRef.current) return
 
@@ -146,24 +148,27 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
     if (Math.abs(wheelAccumRef.current) >= WHEEL_THRESHOLD) {
       navigate(wheelAccumRef.current > 0 ? 1 : -1)
     }
-  }, [navigate])
+  }, [navigate, pathname])
 
   // ── Touch ──
   const handleTouchStart = useCallback((e: TouchEvent) => {
+    if (pathname !== "/") return
     touchStartYRef.current = e.touches[0]?.clientY ?? 0
-  }, [])
+  }, [pathname])
 
   const handleTouchEnd = useCallback((e: TouchEvent) => {
+    if (pathname !== "/") return
     const endY = e.changedTouches[0]?.clientY ?? 0
     const delta = touchStartYRef.current - endY
 
     if (Math.abs(delta) >= TOUCH_THRESHOLD) {
       navigate(delta > 0 ? 1 : -1)
     }
-  }, [navigate])
+  }, [navigate, pathname])
 
   // ── Keyboard ──
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (pathname !== "/") return
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault()
       navigate(1)
@@ -171,7 +176,7 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
       e.preventDefault()
       navigate(-1)
     }
-  }, [navigate])
+  }, [navigate, pathname])
 
   // ── Callback Management ──
   const onSectionEnter = useCallback((callback: (section: ScrollPhase) => void) => {
@@ -192,9 +197,17 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
 
   // ── Mount ──
   useEffect(() => {
+    // Only hijack scroll logic on the root interactive page
+    if (pathname !== "/") return
+
     const wrapper = document.querySelector("[data-sections-wrapper]") as HTMLDivElement | null
     if (wrapper) sectionsWrapper.current = wrapper
 
+    // Make sure index starts fresh when arriving from other pages
+    currentSectionIndexRef.current = 0
+    currentPhaseRef.current = "hero"
+    timelineProgressRef.current = 0
+    
     initializeTimeline()
 
     document.addEventListener("wheel", handleWheel as EventListener, { passive: false })
@@ -210,7 +223,7 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
       snapAnimRef.current?.kill()
       timelineRef.current?.kill()
     }
-  }, [initializeTimeline, handleWheel, handleTouchStart, handleTouchEnd, handleKeyDown])
+  }, [pathname, initializeTimeline, handleWheel, handleTouchStart, handleTouchEnd, handleKeyDown])
 
   const contextValue: ScrollAnimationContextType = {
     currentPhase: currentPhaseRef.current,
