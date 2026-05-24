@@ -77,13 +77,13 @@ const projects: Project[] = [
   },
   {
     title: "Smart CMS",
-    description: "A headless CMS with microservices architecture. Built with Go, gRPC, and PostgreSQL.",
-    fullDescription: "A next-generation headless CMS built on a robust microservices architecture. Developed using Go for high performance, gRPC for efficient inter-service communication, and PostgreSQL for reliable data persistence. Features include multi-tenant support, real-time content synchronization, advanced caching strategies, and a flexible content modeling system.",
+    description: "A  CMS with pre built microservices architecture. Built with Go, gRPC, and PostgreSQL.",
+    fullDescription: "A next-generation CMS built on a robust microservices architecture. Developed using Go for high performance, gRPC for efficient inter-service communication, and PostgreSQL for reliable data persistence. Features include multi-tenant support, real-time content synchronization, advanced caching strategies, and a flexible content modeling system.",
     status: "in-progress",
     type: "desktop",
     link: "#",
     linkText: "View Repo",
-    tech: ["Go", "gRPC", "Next.js", "PostgreSQL", "Redis"],
+    tech: ["Go", "gRPC", "Tanstack Start", "PostgreSQL", "REST API"],
     features: [
       "Multi-tenant architecture",
       "Real-time content sync",
@@ -223,7 +223,7 @@ const ExpandedProject = ({
   const { label, className } = statusConfig[project.status]
   const contentRef = useRef<HTMLDivElement>(null)
 
-  
+
   const nextSlide = () => onGalleryChange((galleryIndex + 1) % Math.max(project.images.length, 1))
   const prevSlide = () => onGalleryChange((galleryIndex - 1 + Math.max(project.images.length, 1)) % Math.max(project.images.length, 1))
 
