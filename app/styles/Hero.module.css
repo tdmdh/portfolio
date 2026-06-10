@@ -96,7 +96,7 @@
 }
 
 .bottomContent {
-    font-size: clamp(5rem, 17vw, 20rem);
+    font-size: clamp(5rem, 17vw, 15.5rem);
     font-weight: 700;
     line-height: 0.9;
     letter-spacing: 0.05rem;
