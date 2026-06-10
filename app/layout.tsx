@@ -29,8 +29,7 @@ export default function RootLayout({
         <div className={styles.glassContainer}>
           <SectionProviderSwitcher>
             <ScrollAnimationProvider>
-              {/* <NavbarSwitcher /> */}
-              {/* <LayoutSwitchButton /> */}
+              {/*<NavbarSwitcher /> */}
               <main className={styles.main}>
                 <div className={styles.pageContent}>{children}</div>
               </main>

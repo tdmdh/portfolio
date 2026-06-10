@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 // TYPES & CONTEXT
 // ═══════════════════════════════════════════════════════════════════
 
-type ScrollPhase = "hero" | "about" | "projects" | "contact"
+export type ScrollPhase = "hero" | "about" | "projects" | "contact"
 
 interface ScrollAnimationContextType {
   currentPhase: ScrollPhase
@@ -22,6 +22,7 @@ interface ScrollAnimationContextType {
   offSectionEnter: (callback: (section: ScrollPhase) => void) => void
   registerSectionAnimation: (phase: ScrollPhase, trigger: () => void) => void
   unregisterSectionAnimation: (phase: ScrollPhase) => void
+  navigateTo: (index: number) => void
 }
 
 const ScrollAnimationContext = createContext<ScrollAnimationContextType | null>(null)
@@ -225,6 +226,10 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
     }
   }, [pathname, initializeTimeline, handleWheel, handleTouchStart, handleTouchEnd, handleKeyDown])
 
+  const navigateTo = useCallback((index: number) => {
+    snapToSection(index)
+  }, [snapToSection])
+
   const contextValue: ScrollAnimationContextType = {
     currentPhase: currentPhaseRef.current,
     timelineProgress: timelineProgressRef.current,
@@ -234,6 +239,7 @@ export const ScrollAnimationProvider = ({ children }: { children: React.ReactNod
     offSectionEnter,
     registerSectionAnimation,
     unregisterSectionAnimation,
+    navigateTo,
   }
 
   return (

@@ -8,21 +8,20 @@
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
-    background: linear-gradient(180deg, var(--quinary-color) 0%, var(--quaternary-color) 100%);
+    background: linear-gradient(160deg, var(--quinary-color) 0%, var(--quaternary-color) 100%);
 }
 
-/* ── Bento Grid ──
-   3 cols × 2 rows
-   Row 1: bio (2 cols) | accent (1 col)
-   Row 2: frontend | backend | tools
-   ───────────────────────────────── */
+/* ── Bento Grid ──────────────────────────────────
+   Two columns: bio (left, full height) | skills (right, 3 stacked)
+   ─────────────────────────────────────────────── */
 .bentoGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1.7fr 1fr;
+    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-rows: repeat(3, 1fr);
     grid-template-areas:
-        "bio  bio  accent"
-        "fe   be   tools";
+        "bio  fe"
+        "bio  be"
+        "bio  tools";
     gap: 0.75rem;
     width: 100%;
     height: 100%;
@@ -30,7 +29,7 @@
     box-sizing: border-box;
 }
 
-/* ── Card Base ── */
+/* ── Card base ── */
 .card {
     position: relative;
     overflow: hidden;
@@ -39,43 +38,42 @@
     flex-direction: column;
     box-sizing: border-box;
     background: rgba(5, 10, 48, 0.04);
-    border: 1px solid rgba(5, 10, 48, 0.06);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: 1px solid rgba(5, 10, 48, 0.07);
+    transition: background 0.35s ease, box-shadow 0.35s ease;
     will-change: opacity, transform;
     backface-visibility: hidden;
 }
 
 .card:hover {
     background: rgba(5, 10, 48, 0.07);
-    border-color: rgba(5, 10, 48, 0.12);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 36px rgba(5, 10, 48, 0.09);
 }
 
-/* ── Bio Card ── */
+/* ── Bio card ── */
 .bioCard {
     grid-area: bio;
     padding: 3rem;
     justify-content: center;
-    gap: 1.25rem;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(5, 10, 48, 0.03) 100%);
+    gap: 1.5rem;
 }
 
 .sectionLabel {
     display: inline-block;
     font-family: var(--primary-font);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--secondary-color);
     background: rgba(74, 78, 105, 0.1);
-    padding: 0.45rem 1rem;
+    padding: 0.4rem 1rem;
     border-radius: 2rem;
+    width: fit-content;
 }
 
 .bioTitle {
     font-family: var(--primary-font);
-    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
     font-weight: 800;
     color: var(--primary-color);
     line-height: 1.05;
@@ -92,384 +90,146 @@
 
 .bioText {
     font-family: var(--secondary-font);
-    font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+    font-size: clamp(0.95rem, 1.2vw, 1.1rem);
     line-height: 1.85;
     color: var(--primary-color);
     margin: 0;
-    opacity: 0.8;
-    max-width: 660px;
+    opacity: 0.75;
 }
 
-/* ── Accent Card ── */
-.accentCard {
-    grid-area: accent;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* ── Mesh / Orbs ── */
-.meshWrap {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    border-radius: inherit;
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-}
-
-.orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(42px);
-    mix-blend-mode: multiply;
-    will-change: transform;
-    opacity: 0.55;
-}
-
-.orb1 {
-    width: 70%;
-    height: 70%;
-    background: radial-gradient(circle, var(--quaternary-color) 0%, transparent 70%);
-    top: -15%;
-    left: -10%;
-    animation: orbDrift1 9s ease-in-out infinite alternate;
-}
-
-.orb2 {
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
-    bottom: -15%;
-    right: -10%;
-    animation: orbDrift2 11s ease-in-out infinite alternate;
-}
-
-.orb3 {
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, var(--tertiary-color) 0%, transparent 70%);
-    bottom: 20%;
-    left: 10%;
-    animation: orbDrift3 7s ease-in-out infinite alternate;
-}
-
-.orb4 {
-    width: 45%;
-    height: 45%;
-    background: radial-gradient(circle, var(--secondary-color) 0%, transparent 70%);
-    top: 15%;
-    right: 5%;
-    animation: orbDrift4 13s ease-in-out infinite alternate;
-}
-
-.meshNoise {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    background-size: 150px;
-    opacity: 0.35;
-    pointer-events: none;
-    mix-blend-mode: overlay;
-}
-
-@keyframes orbDrift1 {
-    0%   { transform: translate(0%, 0%)    scale(1); }
-    33%  { transform: translate(18%, 12%)  scale(1.08); }
-    66%  { transform: translate(8%, 22%)   scale(0.95); }
-    100% { transform: translate(22%, 5%)   scale(1.12); }
-}
-@keyframes orbDrift2 {
-    0%   { transform: translate(0%, 0%)     scale(1); }
-    33%  { transform: translate(-20%, -10%) scale(1.1); }
-    66%  { transform: translate(-8%, -25%)  scale(0.92); }
-    100% { transform: translate(-25%, -8%) scale(1.05); }
-}
-@keyframes orbDrift3 {
-    0%   { transform: translate(0%, 0%)    scale(1); }
-    50%  { transform: translate(25%, -18%) scale(1.15); }
-    100% { transform: translate(10%, -30%) scale(0.9); }
-}
-@keyframes orbDrift4 {
-    0%   { transform: translate(0%, 0%)    scale(1); }
-    40%  { transform: translate(-15%, 20%) scale(1.08); }
-    100% { transform: translate(-25%, 10%) scale(0.95); }
-}
-
-/* ── Skill Cards ── */
+/* ── Skill cards ── */
 .feCard    { grid-area: fe; }
 .beCard    { grid-area: be; }
 .toolsCard { grid-area: tools; }
 
 .skillCard {
-    padding: 1.5rem;
-    gap: 1rem;
+    padding: 1.1rem 1.25rem 1.25rem;
+    gap: 0.65rem;
 }
 
 .cardLabel {
     font-family: var(--primary-font);
-    font-size: 0.55rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--secondary-color);
-    opacity: 0.6;
-}
-
-.skillGrid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-content: flex-start;
-}
-
-/* ── Skill Decorators ── */
-.skillDecorGradient {
-    width: 52px;
-    height: 52px;
-    border-radius: 6px;
-    background: var(--decor-bg, linear-gradient(135deg, var(--quaternary-color), var(--secondary-color)));
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    padding: 5px 6px;
-    box-shadow: 0 4px 14px rgba(5, 10, 48, 0.15);
-    flex-shrink: 0;
-    transition: box-shadow 0.25s ease;
-}
-
-.skillDecorGradient:hover {
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
-}
-
-.skillDecorGradientLabel {
-    font-family: var(--primary-font);
-    font-size: 0.5rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.92);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-    line-height: 1;
-}
-
-.skillDecorCode {
-    width: 52px;
-    height: 52px;
-    border-radius: 6px;
-    background: rgba(5, 10, 48, 0.82);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(74, 78, 105, 0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(5, 10, 48, 0.18);
-    transition: box-shadow 0.25s ease;
-}
-
-.skillDecorCode:hover {
-    box-shadow: 0 8px 22px rgba(5, 10, 48, 0.28);
-}
-
-.skillDecorCodeText {
-    font-family: var(--primary-font), monospace;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    color: var(--quinary-color);
-}
-
-.skillDecorBadge {
-    height: 52px;
-    padding: 0 10px;
-    border-radius: 6px;
-    background: rgba(201, 173, 167, 0.28);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(201, 173, 167, 0.5);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(5, 10, 48, 0.07);
-    transition: background 0.25s ease;
-}
-
-.skillDecorBadge:hover {
-    background: rgba(201, 173, 167, 0.45);
-}
-
-.skillDecorBadgeLabel {
-    font-family: var(--primary-font);
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
     color: var(--secondary-color);
+    opacity: 0.65;
+    flex-shrink: 0;
 }
 
-.skillIcon {
-    width: 52px;
-    height: 52px;
-    padding: 8px;
+/* ── Skill grid: fills remaining card height, chips in 2-col grid ── */
+.skillGrid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 0.4rem;
+    min-height: 0;
+}
+
+/* ── Skill chip: fills its grid cell, content centered ── */
+.skillChip {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 6px;
-    border: 1px solid rgba(5, 10, 48, 0.06);
-    transition: all 0.3s ease;
+    gap: 0.55rem;
+    padding: 0 1rem;
+    background: rgba(5, 10, 48, 0.05);
+    border: 1px solid rgba(5, 10, 48, 0.09);
+    border-radius: 7px;
     cursor: default;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    min-width: 0;
+    min-height: 0;
 }
 
-.skillIcon:hover {
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+.skillChip:hover {
+    background: rgba(5, 10, 48, 0.1);
+    border-color: rgba(5, 10, 48, 0.18);
+}
+
+.chipIcon {
+    flex-shrink: 0;
+}
+
+.chipName {
+    font-family: var(--primary-font);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--primary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
 }
 
 /* ═══════════════════════════════════════════════
-   Responsive – Tablet (≤ 1024px)
+   Tablet (≤ 1024px) — bio top, skills 3-col row
    ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-    .main {
-        height: 100vh;
-        height: 100dvh;
-    }
+    .main { height: 100vh; height: 100dvh; }
 
     .bentoGrid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: 1.8fr 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1.4fr 1fr;
         grid-template-areas:
-            "bio    bio"
-            "accent fe"
-            "be     tools";
+            "bio   bio   bio"
+            "fe    be    tools";
         height: 100%;
-        padding: 0.75rem;
-        gap: 0.75rem;
     }
 
     .bioCard {
         padding: 2rem;
     }
 
-    .bioTitle {
-        font-size: clamp(2rem, 4vw, 3.5rem);
-    }
-
-    .skillCard {
-        padding: 1rem;
-        gap: 0.6rem;
+    .skillGrid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 /* ═══════════════════════════════════════════════
-   Responsive – Mobile (≤ 640px)
+   Mobile (≤ 640px)
    ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-    .main {
-        height: 100vh;
-        height: 100dvh;
-    }
+    .main { height: 100vh; height: 100dvh; }
 
     .bentoGrid {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1.6fr 1fr 1fr;
+        grid-template-rows: 1.5fr 1fr 1fr;
         grid-template-areas:
             "bio   bio"
             "fe    be"
             "tools tools";
-        height: 100%;
-        gap: 0.4rem;
-        padding: 0.4rem;
-    }
-
-    /* Hide decorative accent on small screens to save space */
-    .accentCard {
-        display: none;
+        gap: 0.45rem;
+        padding: 0.45rem;
     }
 
     .bioCard {
         padding: 1.25rem;
-        gap: 0.6rem;
+        gap: 0.75rem;
     }
 
-    .bioTitle {
-        font-size: clamp(1.5rem, 7vw, 2.25rem);
-    }
+    .bioTitle { font-size: clamp(1.5rem, 7vw, 2.25rem); }
 
     .bioText {
         font-size: 0.82rem;
         line-height: 1.6;
-        /* Clamp to 3 lines to save vertical space */
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .sectionLabel {
-        font-size: 0.6rem;
-        padding: 0.3rem 0.75rem;
-    }
+    .sectionLabel { font-size: 0.6rem; }
 
-    .skillCard {
-        padding: 0.75rem;
-        gap: 0.5rem;
-    }
+    .skillCard { padding: 0.75rem; gap: 0.45rem; }
 
-    .skillDecorGradient,
-    .skillDecorCode,
-    .skillIcon {
-        width: 38px;
-        height: 38px;
-    }
-
-    .skillDecorBadge {
-        height: 38px;
-        padding: 0 7px;
-    }
-
-    .skillDecorBadgeLabel {
-        font-size: 0.48rem;
-    }
-
-    .cardLabel {
-        font-size: 0.5rem;
-    }
-}
-
-/* ═══════════════════════════════════════════════
-   Responsive – Small Mobile (≤ 480px)
-   ═══════════════════════════════════════════════ */
-@media (max-width: 480px) {
-    .bentoGrid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1.4fr 1fr 1fr;
+    .skillGrid {
+        grid-template-columns: repeat(3, 1fr);
         gap: 0.3rem;
-        padding: 0.3rem;
     }
 
-    .bioTitle {
-        font-size: clamp(1.25rem, 8vw, 1.75rem);
-    }
-
-    .bioText {
-        font-size: 0.78rem;
-        -webkit-line-clamp: 2;
-    }
-
-    .skillDecorGradient,
-    .skillDecorCode,
-    .skillIcon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .skillDecorBadge {
-        height: 32px;
-        padding: 0 6px;
-    }
+    .skillChip { padding: 0 0.6rem; gap: 0.35rem; }
+    .chipName  { font-size: 0.55rem; }
 }
