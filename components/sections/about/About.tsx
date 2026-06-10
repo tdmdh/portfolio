@@ -5,11 +5,7 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import styles from "@/app/styles/About.module.css"
 import { useScrollAnimation } from "@/context/scroll-animation-controller"
-import {
-  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiSass, SiHtml5, SiCss,
-  SiGo, SiNodedotjs, SiPhp, SiPostgresql, SiMysql, SiRedis,
-  SiGit, SiDocker, SiGooglecloud, SiLinux, SiGithubactions,
-} from "react-icons/si"
+import * as si from "react-icons/si"
 import type { IconType } from "react-icons"
 
 gsap.registerPlugin(ScrollTrigger)
@@ -21,36 +17,36 @@ const skillCategories: { title: string; areaClass: string; skills: Skill[] }[] =
     title: "Frontend",
     areaClass: "feCard",
     skills: [
-      { name: "React",       icon: SiReact,       color: "#61DAFB" },
-      { name: "Next.js",     icon: SiNextdotjs,   color: "#000000" },
-      { name: "TypeScript",  icon: SiTypescript,  color: "#3178C6" },
-      { name: "Tailwind",    icon: SiTailwindcss, color: "#06B6D4" },
-      { name: "Sass",        icon: SiSass,        color: "#CC6699" },
-      { name: "HTML5",       icon: SiHtml5,       color: "#E34F26" },
-      { name: "CSS3",        icon: SiCss,         color: "#1572B6" },
+      { name: "React",       icon: si.SiReact,       color: "#61DAFB" },
+      { name: "Next.js",     icon: si.SiNextdotjs,   color: "#000000" },
+      { name: "TypeScript",  icon: si.SiTypescript,  color: "#3178C6" },
+      { name: "Tailwind",    icon: si.SiTailwindcss, color: "#06B6D4" },
+      { name: "Sass",        icon: si.SiSass,        color: "#CC6699" },
+      { name: "HTML5",       icon: si.SiHtml5,       color: "#E34F26" },
+      { name: "CSS3",        icon: ((si as any)["SiCss3"] ?? (si as any)["SiCss"]) as IconType,        color: "#1572B6" },
     ],
   },
   {
     title: "Backend",
     areaClass: "beCard",
     skills: [
-      { name: "Go",         icon: SiGo,         color: "#00ADD8" },
-      { name: "Node.js",    icon: SiNodedotjs,  color: "#5FA04E" },
-      { name: "PHP",        icon: SiPhp,        color: "#777BB4" },
-      { name: "MySQL",      icon: SiMysql,      color: "#4479A1" },
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
-      { name: "Redis",      icon: SiRedis,      color: "#FF4438" },
+      { name: "Go",         icon: si.SiGo,         color: "#00ADD8" },
+      { name: "Node.js",    icon: si.SiNodedotjs,  color: "#5FA04E" },
+      { name: "PHP",        icon: si.SiPhp,        color: "#777BB4" },
+      { name: "MySQL",      icon: si.SiMysql,      color: "#4479A1" },
+      { name: "PostgreSQL", icon: si.SiPostgresql, color: "#4169E1" },
+      { name: "Redis",      icon: si.SiRedis,      color: "#FF4438" },
     ],
   },
   {
     title: "Tools & Cloud",
     areaClass: "toolsCard",
     skills: [
-      { name: "Git",            icon: SiGit,            color: "#F05032" },
-      { name: "Docker",         icon: SiDocker,         color: "#2496ED" },
-      { name: "Google Cloud",   icon: SiGooglecloud,    color: "#4285F4" },
-      { name: "Linux",          icon: SiLinux,          color: "#FCC624" },
-      { name: "GitHub Actions", icon: SiGithubactions,  color: "#2088FF" },
+      { name: "Git",            icon: si.SiGit,            color: "#F05032" },
+      { name: "Docker",         icon: si.SiDocker,         color: "#2496ED" },
+      { name: "Google Cloud",   icon: si.SiGooglecloud,    color: "#4285F4" },
+      { name: "Linux",          icon: si.SiLinux,          color: "#FCC624" },
+      { name: "GitHub Actions", icon: si.SiGithubactions,  color: "#2088FF" },
     ],
   },
 ]
